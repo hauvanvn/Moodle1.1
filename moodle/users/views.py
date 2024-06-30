@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+
     if request.method == "POST":
         username = request.POST.get('user')
         password = request.POST.get('pass')
@@ -21,6 +24,9 @@ def loginPage(request):
     return render(request, 'users/Login.html')
 
 def resetP(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+
     if request.method == "POST":
         username = request.POST.get('user')
         password1 = request.POST.get('pass1')
@@ -38,3 +44,7 @@ def resetP(request):
             return redirect('login')
 
     return render(request, 'users/Forgot.html')
+
+def LogoutPage(request):
+    logout(request)
+    return redirect("/")
