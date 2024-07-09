@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from .models import User
 
 # Create your views here.
 
@@ -16,7 +16,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is None:
             messages.warning(request, 'Username or Password is incorrect.')
-            return redirect('login')
+            return redirect('users:login')
         else:
             login(request, user)
             return redirect('home')
@@ -35,16 +35,16 @@ def resetP(request):
         user_exist = User.objects.filter(username=username).exists()
         if(password1 != password2 or not user_exist):
             messages.warning(request, 'Password do not match or Wrong Username.')
-            return redirect('resetPass')
+            return redirect('users:resetPass')
         else:
             user = User.objects.get(username=username)
             user.set_password(password2)
             user.save()
             messages.success(request, 'Successfully change password for: ' + username + '.')
-            return redirect('login')
+            return redirect('users:login')
 
     return render(request, 'users/Forgot.html')
 
 def LogoutPage(request):
     logout(request)
-    return redirect("/")
+    return redirect('users:login')
