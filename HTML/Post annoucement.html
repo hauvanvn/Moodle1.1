@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle_1.1 - Post Announcement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            border-right: 1px solid #ccc;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h1 {
+            color: #4d4dff;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar ul li a:hover {
+            background-color: #e9e9e9;
+        }
+        .sidebar .help {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+        }
+        .main {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .main h2 {
+            color: #4d4dff;
+            margin-bottom: 20px;
+        }
+        .main form {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .main form .form-group {
+            margin-bottom: 15px;
+        }
+        .main form .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .main form .form-group input,
+        .main form .form-group select,
+        .main form .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .main form .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+        .main form .form-group button {
+            background-color: #4d4dff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .main form .form-group button:hover {
+            background-color: #3333cc;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .profile div {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile div span {
+            color: #333;
+        }
+        .notifications {
+            margin-top: 20px;
+        }
+        .notifications h3 {
+            color: #4d4dff;
+            margin-bottom: 10px;
+        }
+        .notifications .notification {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .notifications .notification img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .notifications .notification .text {
+            flex: 1;
+        }
+        .notifications .notification .text p {
+            margin: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Moodle_1.1</h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Coding space</a></li>
+            </ul>
+            <div class="help">
+                <img src="need-help.png" alt="Need help?" style="width: 100%;">
+                <p>Need help?</p>
+            </div>
+        </div>
+        <div class="main">
+            <h2>Post announcement</h2>
+            <div class="profile">
+                <img src="profile-pic.png" alt="Profile Picture">
+                <div>
+                    <span>Gia Kiet</span>
+                    <span>Student</span>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="class">Class</label>
+                    <select id="class" name="class">
+                        <option value="unidentified">Unidentified</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <select id="course" name="course">
+                        <option value="unidentified">Unidentified</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Finish</button>
+                </div>
+            </form>
+            <div class="notifications">
+                <h3>Notifications</h3>
+                <div class="notification">
+                    <img src="notification-icon.png" alt="Notification Icon">
+                    <div class="text">
+                        <p>CLC_K2022: [CTDA] - Thông báo...</p>
+                        <a href="#">View full notification</a>
+                    </div>
+                </div>
+                <div class="notification">
+                    <img src="notification-icon.png" alt="Notification Icon">
+                    <div class="text">
+                        <p>CLC_K2022: [CTDA] - Thông báo...</p>
+                        <a href="#">View full notification</a>
+                    </div>
+                </div>
+                <div class="notification">
+                    <img src="notification-icon.png" alt="Notification Icon">
+                    <div class="text">
+                        <p>CLC2324HK3_CSC13002_2...</p>
+                        <a href="#">View full notification</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

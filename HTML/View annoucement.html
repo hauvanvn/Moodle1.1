@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle_1.1 - View Announcement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            border-right: 1px solid #ccc;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h1 {
+            color: #4d4dff;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar ul li a:hover {
+            background-color: #e9e9e9;
+        }
+        .sidebar .help {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+        }
+        .main {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .main h2 {
+            color: #4d4dff;
+            margin-bottom: 20px;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .profile div {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile div span {
+            color: #333;
+        }
+        .notifications {
+            margin-top: 20px;
+        }
+        .notifications h3 {
+            color: #4d4dff;
+            margin-bottom: 10px;
+        }
+        .notifications .notification {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .notifications .notification .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .notifications .notification .notification-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .notifications .notification .notification-header .notification-title {
+            flex: 1;
+        }
+        .notifications .notification .notification-title h4 {
+            margin: 0;
+            color: #333;
+        }
+        .notifications .notification .notification-title span {
+            color: #999;
+            font-size: 14px;
+        }
+        .notifications .notification .notification-content {
+            color: #333;
+            line-height: 1.5;
+        }
+        .notifications .notification .notification-content a {
+            color: #4d4dff;
+            text-decoration: none;
+        }
+        .notifications .notification .notification-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Moodle_1.1</h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Coding space</a></li>
+            </ul>
+            <div class="help">
+                <img src="need-help.png" alt="Need help?" style="width: 100%;">
+                <p>Need help?</p>
+            </div>
+        </div>
+        <div class="main">
+            <h2>Notification</h2>
+            <div class="profile">
+                <img src="profile-pic.png" alt="Profile Picture">
+                <div>
+                    <span>Gia Kiet</span>
+                    <span>Student</span>
+                </div>
+            </div>
+            <div class="notifications">
+                <div class="notification">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <h4>CLC_K2022: [HP] Thông báo học phí HK3 NH: 2023-2024</h4>
+                            <span>By Ngân Bùi Thị Kim - Friday, 31 May 2024, 8:28 AM</span>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        <p>Chào các bạn,</p>
+                        <p>Các bạn vào đường dẫn sau xem các quy định về học phí: <a href="https://www.ctda.hcmus.edu.vn/vi/2024/05/thong-bao-ve-quy-dinh-dong-hoc-phi-hoc-ky-3-nam-hoc-2023-2024/">https://www.ctda.hcmus.edu.vn/vi/2024/05/thong-bao-ve-quy-dinh-dong-hoc-phi-hoc-ky-3-nam-hoc-2023-2024/</a></p>
+                        <p>Thời gian tra cứu học phí: 11/06/2024-13/06/2024.</p>
+                        <p>Thời gian đóng học phí: <strong>18/06/2024 - 08/07/2024.</strong></p>
+                        <p>Các cách thức đóng học phí sinh viên xem trong thông báo học phí.</p>
+                        <ul>
+                            <li>Đường dẫn đóng học phí qua "Cổng thanh toán học phí": <a href="https://hcmus.edu.vn/">https://hcmus.edu.vn/</a></li>
+                        </ul>
+                        <p>Hướng dẫn Gia hạn học phí: <a href="https://hcmus.edu.vn/quy-dinh-gia-han-thoi-gian-nop-hoc-phi-doi-voi-sinh-vien-hoc-vien-sau-dai-hoc-2/">https://hcmus.edu.vn/quy-dinh-gia-han-thoi-gian-nop-hoc-phi-doi-voi-sinh-vien-hoc-vien-sau-dai-hoc-2/</a></p>
+                    </div>
+                </div>
+                <div class="notifications-list">
+                    <h3>Notifications</h3>
+                    <div class="notification-item">
+                        <a href="#">CLC_K2022: [CTDA] - Thông báo...</a>
+                    </div>
+                    <div class="notification-item">
+                        <a href="#">CLC_K2022: [CTDA] - Thông báo...</a>
+                    </div>
+                    <div class="notification-item">
+                        <a href="#">CLC2324HK3_CSC13002_2...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
