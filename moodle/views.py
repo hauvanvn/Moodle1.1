@@ -8,5 +8,8 @@ def home(request):
     courses = []
     notifications = []
     if Class.objects.exists():
-        Class.objects.filter(users=name).order_by('date_create')
-    return render(request, 'Home.html', {'courses' : courses, 'notifies' : notifications})
+        courses_temp = Class.objects.filter(participants=name).order_by('date_created')
+        for course in courses_temp:
+            teacher = course.participants.filter(is_staff=1)
+            courses.append({'course': course, 'teacher': teacher})
+    return render(request, 'Home.html', {'user': request.user, 'courses' : courses, 'notifies' : notifications})

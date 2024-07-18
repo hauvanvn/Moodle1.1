@@ -23,6 +23,23 @@ def loginPage(request):
 
     return render(request, 'users/Login.html')
 
+def resetP_getCode(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
+    if request.method == "POST":
+        username = request.POST.get('user')
+
+        user_exist = User.objects.filter(username=username).exists()
+        if (not user_exist):
+            messages.warning(request, 'Wrong Username.')
+            return redirect('users:resetPass')
+        else:
+            user = User.objects.get(username=username)
+            return redirect('users:resetPass_1')
+
+    return render(request, 'users/Forgot.html')
+
 def resetP(request):
     if request.user.is_authenticated:
         return redirect("home")
@@ -43,7 +60,7 @@ def resetP(request):
             messages.success(request, 'Successfully change password for: ' + username + '.')
             return redirect('users:login')
 
-    return render(request, 'users/Forgot.html')
+    return render(request, 'users/Forgot_1.html')
 
 def LogoutPage(request):
     logout(request)

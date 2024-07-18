@@ -1,7 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import os
+from django.dispatch import receiver
+from django.conf import settings
 # Create your models here.
+
+def upload_path_handle(instance, filename):
+    return 'users/{id}/{file}'.format(id=instance.username, file=filename)
 
 class User(AbstractUser):
     class Gender(models.TextChoices):
@@ -14,4 +19,19 @@ class User(AbstractUser):
     sex = models.CharField(max_length=6, choices=Gender, default=Gender.NONE)
     country = models.CharField(max_length=100, default="Viet Nam")
     city = models.CharField(max_length=100, default="Ho Chi Minh City")
-    avatar = models.ImageField(null=True, blank=True, upload_to='users/image')
+    avatar = models.ImageField(default='users/avatar.svg', upload_to=upload_path_handle)
+
+# Delete old Avatar image
+@receiver(models.signals.pre_save, sender=User)
+def auto_delete_material(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+    try:
+        old_avatar = sender.objects.get(pk=instance.pk).avatar
+    except sender.DoesNotExist:
+        return False
+    
+    new_avatar = instance.avatar
+    if not old_avatar == new_avatar and old_avatar.name != 'users/avatar.svg':
+        if os.path.isfile(old_avatar.path):
+            os.remove(old_avatar.path)

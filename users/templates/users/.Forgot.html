@@ -1,0 +1,58 @@
+{% extends "users/LogLayout.html" %}
+
+{% load static %}
+
+{% block title %}
+{% endblock  %}
+
+{% block content %}
+    <div class="container d-flex align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow d-flex align-items-center mainFrame">
+            <div class="col-5 text-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    <img src="{% static 'img/login/School_logo.png' %}" class="img-fluid" alt="">
+
+                    <p>Insert the code that we have sent you at ********@student.hcmus.edu.vn to reset your password.</p>
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="user" placeholder="Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="pass1" placeholder="New password">
+                    </div>
+
+                    <div class="mb-4">
+                        <input type="text" class="form-control" name="pass2" placeholder="Confirm password">
+                    </div>
+                    
+                    <div class="mb-5">
+                        <button type="submit" class="w-100 btn btn-primary btn-lg">Reset password</button>
+                    </div>
+                </form>
+
+                {% if messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <strong>Hey! </strong> {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <p class="text-body-tertiary fw-light fst-italic">Remembered your password? <a href="\" class="link-underline link-underline-opacity-0"><span>Log in</span></a></p>
+            </div>
+
+            <div class="col-7 rounded-4">
+                <div class="feature-image d-flex flex-column align-items-center">
+                <!-- AI_bot image path insert here -->
+                <img src="{% static 'img/login/AI_bot.jpg' %}" class="img-fluid">
+                <!-- Moodle 1.1 logo path insert here -->
+                <img src="{% static 'img/login/logo.svg' %}" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

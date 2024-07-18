@@ -21,7 +21,7 @@ class CourseClass(models.Model):
     slug = models.SlugField()
 
     def __str__(self):
-        return Course.get_deferred_fields(self=self.course) + '_' + self.className
+        return str(self.course) + '_' + self.className
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=50)

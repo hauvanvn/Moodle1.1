@@ -11,7 +11,7 @@
 			<div class="col-5 text-center">
 				<form method="POST">
 					{% csrf_token %}
-					<img src="{% static 'img/School_logo.png' %}" class="img-fluid" alt="">
+					<img src="{% static 'img/login/School_logo.png' %}" class="img-fluid" alt="">
 
 					<div class="mb-3">
 						<input type="text" class="form-control" name="user" placeholder="Username">
@@ -39,16 +39,16 @@
 					</div>
 				{% endif %}
 
-				<a href="/resetPass" class="link-underline link-underline-opacity-0">Forget password ?</a>
+				<a href="{% url 'users:resetPass' %}" class="link-underline link-underline-opacity-0">Forget password ?</a>
 				<p class="text-body-tertiary fs-6 fw-light fst-italic">*Note: You must enter username before reseting password.</p>
 			</div>
 
 			<div class="col-7 rounded-4">
 				<div class="feature-image d-flex flex-column align-items-center">
 					<!-- AI_bot image path insert here -->
-					<img src="{% static 'img/AI_bot.jpg' %}" class="img-fluid">
+					<img src="{% static 'img/login/AI_bot.jpg' %}" class="img-fluid">
 					<!-- Moodle 1.1 logo path insert here -->
-					<img src="{% static 'img/logo.svg' %}" class="img-fluid">
+					<img src="{% static 'img/login/logo.svg' %}" class="img-fluid">
 				</div>
 			</div>
 		</div>
