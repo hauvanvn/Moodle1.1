@@ -1,5 +1,7 @@
 from django.db import models
-from users.models import User
+from users.models import User, file_size
+import os
+from django.dispatch import receiver
 
 # Create your models here.
 class Course(models.Model):
@@ -23,10 +25,34 @@ class CourseClass(models.Model):
     def __str__(self):
         return str(self.course) + '_' + self.className
 
+def upload_file_path_handle(instance, filename):
+    return 'courses/{id}/{file}'.format(id=instance.inClass.id, file=filename)
+
 class FileUpload(models.Model):
+    class FileGroup(models.TextChoices):
+        GENERAL = "GENERAL", "General"
+        LECTURE = "LECTURE", "Lecture"
+
+    class FileType(models.TextChoices):
+        FILE = "FILE", "File"
+        LINK = "LINK", "Link"
+
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50)
-    file = models.FileField()
+    group = models.CharField(max_length=7, choices=FileGroup, default=FileGroup.LECTURE)
+    type = models.CharField(max_length=4, choices=FileType, default=FileType.FILE)
+    file = models.FileField(blank=True, null=True, upload_to=upload_file_path_handle, validators=[file_size])
+    link = models.URLField(blank=True, null=True)
     inClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+@receiver(models.signals.post_delete, sender=FileUpload)
+def auto_delete_material(sender, instance, **kwargs):
+    if instance.file:
+        if os.path.isfile(instance.file.path):
+            os.remove(instance.file.path)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

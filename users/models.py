@@ -3,7 +3,13 @@ from django.contrib.auth.models import AbstractUser
 import os
 from django.dispatch import receiver
 from django.conf import settings
+from django.core.exceptions import ValidationError
 # Create your models here.
+
+def file_size(value):
+    limit = 20 * 1024 * 1024 #MiB
+    if value.size > limit:
+        raise ValidationError('File too large. size should not exceed 20 MiB')
 
 def upload_path_handle(instance, filename):
     return 'users/{id}/{file}'.format(id=instance.username, file=filename)
@@ -19,7 +25,7 @@ class User(AbstractUser):
     sex = models.CharField(max_length=6, choices=Gender, default=Gender.NONE)
     country = models.CharField(max_length=100, default="Viet Nam")
     city = models.CharField(max_length=100, default="Ho Chi Minh City")
-    avatar = models.ImageField(default='users/avatar.svg', upload_to=upload_path_handle)
+    avatar = models.ImageField(default='users/avatar.svg', upload_to=upload_path_handle, validators=[file_size])
 
 # Delete old Avatar image
 @receiver(models.signals.pre_save, sender=User)

@@ -21,5 +21,8 @@ from . import views
 app_name = 'courses'
 
 urlpatterns = [
-    path('courses/', views.view_class_list, name='class_list')
+    path('', views.view_class_list, name='class_list'),
+    path('<slug:slug>', views.view_class_page, name='class_page'),
+    path('<slug:slug>/participants', views.view_participants, name='participants'),
+    path('<slug:slug>/<str:filename>', views.view_material, name='view_material'),
 ]

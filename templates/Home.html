@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/Nav.css' %}">
     <title>Learning Management System - fit@hcmus - 1.1</title>
-    <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}"
+    <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
 </head>
 <body>
     <div class="container-fluid">
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="d-flex flex-column align-items-center">
-                    <img src="image 20.png" alt="need Help" class="img-fluid">
+                    <img src="{% static 'img/home/Help.png' %}" alt="need Help" class="img-fluid">
                     <a href="#"> Need help?</a>
                 </div>
             </div>
@@ -89,12 +89,12 @@
                     <h4>Active courses</h4>
                     <div class="row row-cols-3 g-3 course-box">
                         {% for course in courses %}
-                            <div class="col-md-4 bg-white rounded-4 p-4 shadow border">
+                            <a href="{% url 'courses:class_page' slug=course.course.slug %}" class="col-md-4 bg-white rounded-4 p-4 shadow border link-dark link-underline link-underline-opacity-0" >
                                 <h3>{{ course.course }}</h3>
                                 {% for teacher in course.teacher %}
                                     <p>Teacher: {{ teacher.first_name }} {{ teacher.last_name }}</p>
                                 {% endfor %}
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 </div>
