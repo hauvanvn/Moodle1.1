@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+body{
+    font-family: "Roboto Flex", sans-serif;
+    background: linear-gradient(135deg, #F5E5FF 0%, #EBD4FE 44%, #C0CFFA 100%);
+}
+
+.box-area {
+    height: 90%;
+    max-height: 700px;
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+.custom-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.custom-button {
+    background-color: #507df0;
+    color: white;
+    border-radius: 20px;
+}
+.custom-button:hover {
+    background-color: #4060d8;
+}
+.text-secondary {
+    color: #6c757d !important;
+}
+.illustration {
+    max-width: 100%;
+    height: auto;
+}
