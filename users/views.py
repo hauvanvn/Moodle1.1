@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -65,3 +66,7 @@ def resetP(request):
 def LogoutPage(request):
     logout(request)
     return redirect('users:login')
+
+@login_required(login_url='users:login')
+def View_Profile(request):
+    return render(request, 'users/View_profile.html', {'user': request.user})
