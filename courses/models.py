@@ -2,6 +2,7 @@ from django.db import models
 from users.models import User, file_size
 import os
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Create your models here.
 class Course(models.Model):
@@ -63,10 +64,12 @@ class Comment(models.Model):
         return User.get_deferred_fields(self=self.user) + self.text
 
 class Notification(models.Model):
+    id = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    ForClass = models.ManyToManyField(CourseClass)
+    ForClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
     text = models.TextField()
-    date_create = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return User.get_deferred_fields(self=self.author) + self.text
+        return self.author.first_name + self.author.last_name + " - " + self.title

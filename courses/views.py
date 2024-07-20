@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import CourseClass as Class, FileUpload
+from .models import CourseClass as Class, FileUpload, Notification
 from users.models import User
 
 # Create your views here.
@@ -40,3 +41,30 @@ def view_material(request, slug, filename):
     file = FileUpload.objects.get(name=filename)
     print(file.file.url)
     return render(request, 'courses/material_view.html', {'user': request.user,'file': file})
+
+@login_required(login_url='users:login')
+def view_announcement(reuqest, slug, id):
+    notify = Notification.objects.get(id=id)
+
+    if Notification.objects.exists():
+        notifications = Notification.objects.filter(ForClass__participants__exact=reuqest.user.id)
+
+    return render(reuqest, 'courses/View_annoucement.html', {'notify': notify, 'notifies' : notifications})
+
+@login_required(login_url='users:login')
+def view_post_announcement(request, slug):
+    course = Class.objects.get(slug=slug)
+
+    if request.method == "POST":
+        title = request.POST.get('title')
+        text = request.POST.get('description')
+
+        notify = Notification(author=request.user, ForClass=course, title=title, text=text)
+        notify.save()
+        messages.success(request, 'Successfully post announcement!')
+        return redirect('courses:class_page', slug=slug)
+
+    if Notification.objects.exists():
+        notifications = Notification.objects.filter(ForClass__participants__exact=request.user.id).order_by('date_created')
+
+    return render(request, 'courses/Post_annoucement.html', {'notifies' : notifications})
