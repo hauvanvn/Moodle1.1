@@ -4,6 +4,7 @@ import os
 from django.dispatch import receiver
 from django.conf import settings
 from django.core.exceptions import ValidationError
+import secrets
 # Create your models here.
 
 def file_size(value):
@@ -26,6 +27,12 @@ class User(AbstractUser):
     country = models.CharField(max_length=100, default="Viet Nam")
     city = models.CharField(max_length=100, default="Ho Chi Minh City")
     avatar = models.ImageField(default='users/avatar.svg', upload_to=upload_path_handle, validators=[file_size])
+
+class OtpToken(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="otps")
+    otp_code = models.CharField(max_length=6, default=secrets.token_hex(3))
+    tp_created_at = models.DateTimeField(auto_now_add=True)
+    otp_expired_at = models.DateTimeField(blank=True, null=True)
 
 # Delete old Avatar image
 @receiver(models.signals.pre_save, sender=User)

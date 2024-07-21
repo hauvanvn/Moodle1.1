@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User, OtpToken
 from django.contrib.auth.decorators import login_required
 
+from .sendMail import sendOtp
+from django.utils import timezone
 # Create your views here.
 
 def loginPage(request):
@@ -36,7 +38,9 @@ def resetP_getCode(request):
             messages.warning(request, 'Wrong Username.')
             return redirect('users:resetPass')
         else:
+            request.session['username'] = username
             user = User.objects.get(username=username)
+            sendOtp(user)
             return redirect('users:resetPass_1')
 
     return render(request, 'users/Forgot.html')
@@ -46,20 +50,29 @@ def resetP(request):
         return redirect("home")
 
     if request.method == "POST":
-        username = request.POST.get('user')
+        username = request.session['username']
         password1 = request.POST.get('pass1')
         password2 = request.POST.get('pass2')
+        code = request.POST.get('code')
 
-        user_exist = User.objects.filter(username=username).exists()
-        if(password1 != password2 or not user_exist):
-            messages.warning(request, 'Password do not match or Wrong Username.')
-            return redirect('users:resetPass')
+        user = User.objects.get(username=username)
+        otp = OtpToken.objects.filter(user=user).last()
+        
+        if otp.otp_expired_at > timezone.now():
+            if(password1 != password2):
+                messages.warning(request, 'Password do not match.')
+                return redirect('users:resetPass_1')
+            elif code != otp.otp_code:
+                messages.warning(request, 'Wrong otp.')
+                return redirect('users:resetPass_1')
+            else:
+                user.set_password(password2)
+                user.save()
+                messages.success(request, 'Successfully change password for: ' + username + '.')
+                return redirect('users:login')
         else:
-            user = User.objects.get(username=username)
-            user.set_password(password2)
-            user.save()
-            messages.success(request, 'Successfully change password for: ' + username + '.')
-            return redirect('users:login')
+            messages.warning(request, 'OTP has expired.')
+            return redirect('users:resetPass')
 
     return render(request, 'users/Forgot_1.html')
 

@@ -34,6 +34,15 @@
                     <button type="submit" class="w-100 btn btn-primary btn-md mb-2">Confirm</button>
                 </form>
                 <hr>
+
+                {% if messages %}
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						{% for message in messages %}
+						<strong>Hey! </strong> {{message}}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						{% endfor %}
+					</div>
+				{% endif %}
                 <small class="text-body-tertiary fw-light">Remembered your password? <a href="{% url 'users:login' %}" class="link-underline link-underline-opacity-0 text-body-italic"><span>Log in</span></a></small>
             </div>
 

@@ -30,8 +30,6 @@
                         <input type="text" name="code" id="code" class="form-control form-control-xl fs-6" placeholder="Code">
                     </div>
 
-                    <button type="submit" class="w-100 btn btn-primary btn-md mb-3">Confirm code</button>
-
                     <div class="mb-3">
                         <input type="password" name="pass1" id="pass1" class="form-control form-control-xl fs-6" placeholder="New password">
                     </div>
@@ -43,6 +41,16 @@
                     <button type="submit" class="w-100 btn btn-primary btn-md mb-2">Reset password</button>
                 </form>
                 <hr>
+
+                {% if messages %}
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						{% for message in messages %}
+						<strong>Hey! </strong> {{message}}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						{% endfor %}
+					</div>
+				{% endif %}
+
                 <small class="text-body-tertiary fw-light">Remembered your password? <a href="{% url 'users:login' %}" class="link-underline link-underline-opacity-0 text-body-italic"><span>Log in</span></a></small>
             </div>
 
