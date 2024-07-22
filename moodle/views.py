@@ -15,6 +15,6 @@ def home(request):
             courses.append({'course': course, 'teacher': teacher})
 
     if Notification.objects.exists():
-        notifications = Notification.objects.filter(ForClass__participants__exact=name)
+        notifications = Notification.objects.filter(ForClass__participants__exact=name)[:3]
 
     return render(request, 'Home.html', {'user': request.user, 'courses' : courses, 'notifies' : notifications})
