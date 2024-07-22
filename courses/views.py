@@ -7,12 +7,26 @@ from users.models import User
 
 # Create your views here.
 @login_required(login_url='users:login')
-def view_class_list(request, slug):
+def view_class_list(request):
+    # name = request.user.id
+    # courses = []
+    # if Class.objects.exists():
+    #     Class.objects.filter(users=name).order_by('date_create')
+    # return render(request, 'Home.html', {'courses' : courses})
     name = request.user.id
     courses = []
+    notifications = []
+
     if Class.objects.exists():
-        Class.objects.filter(users=name).order_by('date_create')
-    return render(request, 'Hourse.html', {'courses' : courses})
+        courses_temp = Class.objects.filter(participants=name).order_by('date_created')
+        for course in courses_temp:
+            teacher = course.participants.filter(is_staff=1)
+            courses.append({'course': course, 'teacher': teacher})
+
+    if Notification.objects.exists():
+        notifications = Notification.objects.filter(ForClass__participants__exact=name)
+
+    return render(request, 'Home.html', {'user': request.user, 'courses' : courses, 'notifies' : notifications})
 
 @login_required(login_url='users:login')
 def view_class_page(request, slug):
