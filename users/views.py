@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from .sendMail import sendOtp
 from django.utils import timezone
+
+from moodle.nav_infomation import getIn4
 # Create your views here.
 
 def loginPage(request):
@@ -82,4 +84,5 @@ def LogoutPage(request):
 
 @login_required(login_url='users:login')
 def View_Profile(request):
-    return render(request, 'users/View_profile.html', {'user': request.user})
+    user, notifications = getIn4(request)
+    return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications})

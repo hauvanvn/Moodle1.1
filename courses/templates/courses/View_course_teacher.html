@@ -1,3 +1,5 @@
+{% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="Nav.css">
+    <link rel="stylesheet" href="{% static 'css/Nav.css' %}">
 
-    <title>Welcome</title>
+    <title>Course: {{ course }}</title>
+    <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
 </head>
 <body>
     <div class="container-fluid">
@@ -17,7 +20,7 @@
             <div class="col-2 d-flex flex-column justify-content-between bg-white min-vh-100" style="position: fixed;">
                 <div>
                     <a class="d-flex align-items-center ms-4 mt-4" role="button" href="#">
-                        <img src="Group 239.png" alt="logo" class="img-fluid" >
+                        <img src="{% static 'img/home/moodle.svg' %}" alt="logo" class="img-fluid" >
                     </a>
                 </div>
 
@@ -68,7 +71,7 @@
                     
                     <div class="ms-auto">
                         <button type="button" class="btn btn-outline-secondary" style="--bs-btn-border-color: none"><i class="bi bi-bell"></i></button>
-                        <button type="button" class="btn btn-outline-secondary" style="--bs-btn-border-color: none"><i class="bi bi-box-arrow-right"></i></button>
+                        <buttontype="button" class="btn btn-outline-secondary" style="--bs-btn-border-color: none"><i class="bi bi-box-arrow-right"></i></button>
                     </div>
                 </div>
 
@@ -78,7 +81,7 @@
 
                 <div class="container-fluid box_course mb-4">
                     <a href="#" class="active">Course</a>
-                    <a href="#">Participants</a>
+                    <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
                     <a href="#">Grade</a>
                 </div>
 
@@ -94,7 +97,8 @@
                 <div>
                     <div class="collapse" id="collapseGen">
                         <div class="card card-body">
-                            <form class="d-flex flex-column">
+                            <form method="POST" enctype="multipart/form-data" class="d-flex flex-column">
+                                {% csrf_token %}
                                 <h3>Add material</h3>
 
                                 <div class="row">
@@ -103,47 +107,42 @@
                                     </div>
 
                                     <div class="col">
-                                        <input class="form-control" type="text" name="material" id="mat" placeholder="Name">
+                                        {% render_field form.name class="form-control" type="text" id="mat" placeholder="Name" %}
                                     </div>
                                 </div>
 
                                 <div class="mt-3">
-                                    <input class="form-control" type="file" id="formFile">
+                                    {% render_field form.file class="form-control" type="file" %}
                                 </div>
 
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="submit" name="submit_general" class="btn btn-primary">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <i class="bi bi-file-earmark-fill fs-1"></i>
+                {% for file in files %}
+                    {% if file.group == "GENERAL" %}
+                        <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                                </div>
+                                <div class="col d-flex align-items-center">
+                                    {% if file.type == "FILE" %}
+                                        <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                                    {% else %}
+                                        <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
+                                    {% endif %}
+                                    <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="link-dark link-underline link-underline-opacity-0">Name1</a>
-                            <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <i class="bi bi-file-earmark-fill fs-1"></i>
-                        </div>
-
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="link-dark link-underline link-underline-opacity-0">Name2</a>
-                            <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
-                </div>
+                        <br>
+                    {% endif %}
+                {% endfor %}
 
                 <div class="container-fluid d-inline-flex gap-2">
                     <p class="fs-5">Lecture</p>
@@ -157,7 +156,8 @@
                 <div>
                     <div class="collapse" id="collapseLec">
                         <div class="card card-body">
-                            <form class="d-flex flex-column">
+                            <form method="POST" enctype="multipart/form-data" class="d-flex flex-column">
+                                {% csrf_token %}
                                 <h3>Add material</h3>
 
                                 <div class="row">
@@ -166,60 +166,42 @@
                                     </div>
 
                                     <div class="col">
-                                        <input class="form-control" type="text" name="material" id="mat" placeholder="Name">
+                                        {% render_field form.name class="form-control" type="text" id="mat" placeholder="Name" %}
                                     </div>
                                 </div>
 
                                 <div class="mt-3">
-                                    <input class="form-control" type="file" id="formFile">
+                                    {% render_field form.file class="form-control" type="file" %}
                                 </div>
 
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="submit" name="submit_lecture" class="btn btn-primary">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <i class="bi bi-file-earmark-fill fs-1"></i>
+                {% for file in files %}
+                    {% if file.group == "LECTURE" %}
+                        <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                                </div>
+                                <div class="col d-flex align-items-center">
+                                    {% if file.type == "FILE" %}
+                                        <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                                    {% else %}
+                                        <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
+                                    {% endif %}
+                                    <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="link-dark link-underline link-underline-opacity-0">Name3</a>
-                            <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <i class="bi bi-file-earmark-fill fs-1"></i>
-                        </div>
-
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="link-dark link-underline link-underline-opacity-0">Name4</a>
-                            <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container-fluid border rounded-4 p-3 mb-3 bg-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <i class="bi bi-file-earmark-fill fs-1"></i>
-                        </div>
-
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="link-dark link-underline link-underline-opacity-0">Name</a>
-                            <button class="btn btn-outline-secondary ms-auto" type="button" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
-                </div>
+                        <br>
+                    {% endif %}
+                {% endfor %}
             </div>
 
             <div class="col-2 offset-10 bg-white min-vh-100" style="position: fixed;">

@@ -42,7 +42,7 @@ Course: {{ course }}
                             </div>
                             <div class="col-11">
                                 {% if file.type == "FILE" %}
-                                    <a href="{% url 'courses:view_material' slug=slug file=file %}" class="nav-link">{{ file.name }}</a>
+                                    <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
                                 {% else %}
                                     <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                                 {% endif %}
@@ -62,7 +62,7 @@ Course: {{ course }}
                             </div>
                             <div class="col-11">
                                 {% if file.type == "FILE" %}
-                                    <a href="{% url 'courses:view_material' slug=slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                                    <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
                                 {% else %}
                                     <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                                 {% endif %}

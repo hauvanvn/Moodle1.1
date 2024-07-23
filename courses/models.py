@@ -3,6 +3,8 @@ from users.models import User, file_size
 import os
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.timesince import timesince
+import datetime
 
 # Create your models here.
 class Course(models.Model):
@@ -22,6 +24,9 @@ class CourseClass(models.Model):
     date_created = models.DateField(auto_now_add=True)
     date_end = models.DateField(blank=True, null=True)
     slug = models.SlugField()
+
+    def is_course_end(self):
+        return self.date_end < datetime.date.today()
 
     def __str__(self):
         return str(self.course) + '_' + self.className

@@ -3,36 +3,62 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import CourseClass as Class, FileUpload, Notification
+from .forms import FileUploadForm
 from users.models import User
+
+from moodle.nav_infomation import getIn4
+
+import datetime
 
 # Create your views here.
 @login_required(login_url='users:login')
 def view_class_list(request):
-    # name = request.user.id
-    # courses = []
-    # if Class.objects.exists():
-    #     Class.objects.filter(users=name).order_by('date_create')
-    # return render(request, 'Home.html', {'courses' : courses})
-    name = request.user.id
+    user, notifications = getIn4(request)
+
     courses = []
-    notifications = []
 
     if Class.objects.exists():
-        courses_temp = Class.objects.filter(participants=name).order_by('date_created')
-        for course in courses_temp:
-            teacher = course.participants.filter(is_staff=1)
-            courses.append({'course': course, 'teacher': teacher})
+        cur_date = datetime.date.today()
+        open_date = datetime.date(cur_date.year - 3, cur_date.month, cur_date.day)
 
-    if Notification.objects.exists():
-        notifications = Notification.objects.filter(ForClass__participants__exact=name)
+        courses = Class.objects.filter(participants=user.id).order_by('-date_created')
 
-    return render(request, 'Home.html', {'user': request.user, 'courses' : courses, 'notifies' : notifications})
+    return render(request, 'courses/View_courses_list.html', {'user': user, 'notifies': notifications, 'courses': courses})
 
 @login_required(login_url='users:login')
 def view_class_page(request, slug):
     course = Class.objects.get(slug=slug)
     files = FileUpload.objects.filter(inClass=course.id)
-    return render(request, 'courses/Course.html', {'user': request.user, 'course' : course, 'files': files, 'slug': slug})
+
+    user, notifications = getIn4(request)
+    
+    if request.method == "POST":
+        name = request.POST.get('name')
+        if 'submit_general' in request.POST:
+            group = FileUpload.FileGroup.GENERAL
+        else:
+            group = FileUpload.FileGroup.LECTURE
+
+        type = FileUpload.FileType.FILE
+        link = ""
+
+        form = FileUploadForm({'name': name, 'group': group, 'type': type, 'inClass': course}, request.FILES)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('courses:class_page', slug=slug)
+        else:
+            return render(request, 'courses/View_course_teacher.html', 
+                     {'user': user, 'notifies': notifications, 'course' : course, 'files': files, 'form': form})
+    
+    # Teacher view
+    if user.is_staff:# and not user.is_superuser:
+        return render(request, 'courses/View_course_teacher.html', 
+                  {'user': user, 'notifies': notifications, 'course' : course, 'files': files, 'form': FileUploadForm()})
+    else:
+    # Student view
+        return render(request, 'courses/View_course.html', 
+                    {'user': user, 'notifies': notifications, 'course' : course, 'files': files})
 
 @login_required(login_url='users:login')
 def view_participants(request, slug):
@@ -48,22 +74,26 @@ def view_participants(request, slug):
     except EmptyPage:
         participants = page.page(page.num_pages)
 
-    return render(request, 'courses/Participants.html', {'user': request.user, 'participants': participants, 'course' : course})
+    user, notifications = getIn4(request)
+
+    return render(request, 'courses/View_participants.html', {'user': user, 'notifies': notifications, 'participants': participants, 'course' : course})
 
 @login_required(login_url='users:login')
 def view_material(request, slug, filename):
     file = FileUpload.objects.get(name=filename)
     print(file.file.url)
-    return render(request, 'courses/material_view.html', {'user': request.user,'file': file})
+
+    user, notifications = getIn4(request)
+
+    return render(request, 'courses/View_material.html', {'user': user, 'notifies': notifications,'file': file})
 
 @login_required(login_url='users:login')
 def view_announcement(reuqest, slug, id):
     notify = Notification.objects.get(id=id)
 
-    if Notification.objects.exists():
-        notifications = Notification.objects.filter(ForClass__participants__exact=reuqest.user.id)
+    user, notifications = getIn4(request)
 
-    return render(reuqest, 'courses/View_annoucement.html', {'notify': notify, 'notifies' : notifications})
+    return render(reuqest, 'courses/View_annoucement.html', {'user': user, 'notifies': notifications, 'notify': notify})
 
 @login_required(login_url='users:login')
 def view_post_announcement(request, slug):
@@ -78,7 +108,6 @@ def view_post_announcement(request, slug):
         messages.success(request, 'Successfully post announcement!')
         return redirect('courses:class_page', slug=slug)
 
-    if Notification.objects.exists():
-        notifications = Notification.objects.filter(ForClass__participants__exact=request.user.id).order_by('date_created')
+    user, notifications = getIn4(request)
 
-    return render(request, 'courses/Post_annoucement.html', {'notifies' : notifications})
+    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications})
