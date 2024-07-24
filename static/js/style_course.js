@@ -1,3 +1,13 @@
+// window.onload = function() {
+//   var opt1 = document.getElementById('option1');
+//   var opt2 = document.getElementById('option2');
+//   var opt3 = document.getElementById('option3');
+
+//   opt1.onclick = filterSelection("all");
+//   opt2.onclick = filterSelection("completed");
+//   opt3.onclick = filterSelection("active");
+// }
+
 filterSelection("all")
 function filterSelection(c) {
   var x, i;

@@ -88,12 +88,12 @@ def view_material(request, slug, filename):
     return render(request, 'courses/View_material.html', {'user': user, 'notifies': notifications,'file': file})
 
 @login_required(login_url='users:login')
-def view_announcement(reuqest, slug, id):
+def view_announcement(request, slug, id):
     notify = Notification.objects.get(id=id)
 
     user, notifications = getIn4(request)
 
-    return render(reuqest, 'courses/View_annoucement.html', {'user': user, 'notifies': notifications, 'notify': notify})
+    return render(request, 'courses/View_annoucement.html', {'user': user, 'notifies': notifications, 'notify': notify})
 
 @login_required(login_url='users:login')
 def view_post_announcement(request, slug):
