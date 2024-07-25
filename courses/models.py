@@ -28,6 +28,9 @@ class CourseClass(models.Model):
     def is_course_end(self):
         return self.date_end < datetime.date.today()
 
+    def is_active(self):
+        return self.date_end >= datetime.date.today()
+
     def __str__(self):
         return str(self.course) + '_' + self.className
 

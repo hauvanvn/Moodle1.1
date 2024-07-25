@@ -42,75 +42,76 @@ My courses
         <label class="btn" for="option3" style="--bs-btn-active-color: blue; border-color: transparent">
             Active
         </label>
-
-        {% comment %} <ul class="list-group list-group-horizontal">
-            <li class="list-group-item">
-                <button class="btn active link-secondary list-group-item list-group-item-action" onclick="filterSelection('all')">All</button>
-            </li>
-
-            <li class="list-group-item">
-                <button class="btn link-secondary list-group-item list-group-item-action" onclick="filterSelection('completed')">Completed</button>
-            </li>
-
-            <li class="list-group-item">
-                <button class="btn link-secondary list-group-item list-group-item-action" onclick="filterSelection('active')">Active</button>
-            </li>
-        </ul> {% endcomment %}
     </div>
     
-    {% for course in courses %}
-        <div class="filterDiv all container-fluid border rounded-5 p-3 mt-3 bg-white">
-            <div class="row">
-                <div class="col-auto">
-                    <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
-                </div>
+    <div id="activeDiv">
+        {% for course in courses %}
+            {% if course.is_active %}
+                <div class="activeDiv container-fluid border rounded-5 p-3 mt-3 bg-white">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
+                        </div>
 
-                <div class="col d-flex align-items-start flex-column">
-                    <p class="fs-4" style="color: #3343A1">{{ course }}</p>
-                </div>
+                        <div class="col d-flex align-items-start flex-column">
+                            <p class="fs-4" style="color: #3343A1">{{ course }}</p>
+                        </div>
 
-                <div class="col-3 d-flex align-items-end flex-column">
-                    <p>Start: {{ course.date_created }} </p>
-                    <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
-                </div>
-            </div>
-        </div>
-
-        {% if course.is_course_end %}
-            <div class="filterDiv completed container-fluid border rounded-5 p-3 mt-3 bg-white">
-                <div class="row">
-                    <div class="col-auto">
-                        <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
-                    </div>
-
-                    <div class="col d-flex align-items-start flex-column">
-                        <p class="fs-4" style="color: #3343A1"> {{ course }} </p>
-                    </div>
-
-                    <div class="col-3 d-flex align-items-end flex-column">
-                        <p>Start: {{ course.date_created }} </p>
-                        <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
+                        <div class="col-3 d-flex align-items-end flex-column">
+                            <p>Start: {{ course.date_created }} </p>
+                            <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <div class="filterDiv active container-fluid border rounded-5 p-3 mt-3 bg-white">
-                <div class="row">
-                    <div class="col-auto">
-                        <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
-                    </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
-                    <div class="col d-flex align-items-start flex-column">
-                        <p class="fs-4" style="color: #3343A1">{{ course }}</p>
-                    </div>
+    <div id="completedDiv">
+        {% for course in courses %}
+            {% if course.is_course_end %}
+                <div class="container-fluid border rounded-5 p-3 mt-3 bg-white">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
+                        </div>
 
-                    <div class="col-3 d-flex align-items-end flex-column">
-                        <p>Start: {{ course.date_created }} </p>
-                        <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
+                        <div class="col d-flex align-items-start flex-column">
+                            <p class="fs-4" style="color: #3343A1">{{ course }}</p>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-end flex-column">
+                            <p>Start: {{ course.date_created }} </p>
+                            <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <script>
+        const activeCourseDiv = document.getElementById('activeDiv');
+        const completedCourseDiv = document.getElementById('completedDiv');
+
+        const allRadio = document.getElementById('option1');
+        const activeRadio = document.getElementById('option2');
+        const completedRadio = document.getElementById('option3');
+
+        allRadio.addEventListener('change', () => {
+            activeCourseDiv.style.display = 'block';
+            completedCourseDiv.style.display = 'block';
+        });
+
+        activeRadio.addEventListener('change', () => {
+            activeCourseDiv.style.display = 'block';
+            completedCourseDiv.style.display = 'none';
+        });
+
+        completedRadio.addEventListener('change', () => {
+            activeCourseDiv.style.display = 'none';
+            completedCourseDiv.style.display = 'block';
+        });
+    </script>
 </div>
 {% endblock content %}
