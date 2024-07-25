@@ -53,47 +53,22 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-auto">
-                <img src="images/avatar.svg" alt="avatar" height="100%" class="img-fluid">
-            </div>
-            <div class="col">
-                <div class="card comment-card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-1">Jane Doe</h5>
-                        <p class="card-text">Thanks for sharing!</p>
+        {% for comment in comments %}
+            <div class="row">
+                <div class="col-auto">
+                    <img src="{{ comment.user.avatar.url }}" alt="avatar" height="100%" class="img-fluid">
+                </div>
+                <div class="col">
+                    <div class="card comment-card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+                            <p class="card-text">{{ comment.text }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>                   
-        
-        <div class="row">
-            <div class="col-auto">
-                <img src="images/avatar.svg" alt="avatar" height="100%" class="img-fluid">
-            </div>
-            <div class="col">
-                <div class="card comment-card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-1">Jane Doe</h5>
-                        <p class="card-text">Thanks for sharing!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </div>  
+        {% endfor %}                 
 
-        <div class="row">
-            <div class="col-auto">
-                <img src="images/avatar.svg" alt="avatar" height="100%" class="img-fluid">
-            </div>
-            <div class="col">
-                <div class="card comment-card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-1">Jane Doe</h5>
-                        <p class="card-text">Thanks for sharing!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

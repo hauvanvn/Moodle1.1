@@ -68,8 +68,10 @@ class Comment(models.Model):
     file = models.ForeignKey(FileUpload, on_delete=models.CASCADE)
     text = models.TextField()
 
+    date_created = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return User.get_deferred_fields(self=self.user) + self.text
+        return self.user.first_name + " " + self.user.last_name + ": " + self.text
 
 class Notification(models.Model):
     id = models.AutoField(primary_key=True)

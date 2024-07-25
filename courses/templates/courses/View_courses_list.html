@@ -46,7 +46,7 @@ My courses
     
     <div id="activeDiv">
         {% for course in courses %}
-            {% if course.is_active %}
+            {% if not course.is_course_end %}
                 <div class="activeDiv container-fluid border rounded-5 p-3 mt-3 bg-white">
                     <div class="row">
                         <div class="col-auto">
