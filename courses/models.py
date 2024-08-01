@@ -32,7 +32,7 @@ class CourseClass(models.Model):
         return str(self.course) + '_' + self.className
 
 def upload_file_path_handle(instance, filename):
-    return 'courses/{id}/{file}'.format(id=instance.inClass.id, file=filename)
+    return 'courses/{id}/materials/{file}'.format(id=instance.inClass.id, file=filename)
 
 class FileUpload(models.Model):
     class FileGroup(models.TextChoices):
@@ -54,12 +54,6 @@ class FileUpload(models.Model):
     def __str__(self):
         return self.name
 
-@receiver(models.signals.post_delete, sender=FileUpload)
-def auto_delete_material(sender, instance, **kwargs):
-    if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.ForeignKey(FileUpload, on_delete=models.CASCADE)
@@ -79,4 +73,39 @@ class Notification(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.author.first_name + self.author.last_name + " - " + self.title
+        return self.author.first_name + " " + self.author.last_name + ": " + self.title
+    
+class Assignment(models.Model):
+    id = models.AutoField(primary_key=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ForClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    text = models.TextField()
+
+    date_opened = models.DateTimeField()
+    date_closed = models.DateTimeField()
+
+    def __str__(self):
+        return self.author.first_name + " " + self.author.last_name + ": " + self.title
+
+def upload_submission_file_path_handle(instance, filename):
+    return 'courses/{c_id}/assignments/{id}/{user}/{file}'.format(c_id=instance.ForAssignment.ForClass.id, id=instance.ForAssignment.id, user=instance.author.username, file=filename)
+
+class Submission(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ForAssignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    file = models.FileField(blank=True, null=True, upload_to=upload_submission_file_path_handle, validators=[file_size])
+
+    grade = models.FloatField(null=True, blank=True)
+    grade_comment = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.ForAssignment.title + " - " + self.author.username
+
+@receiver(models.signals.post_delete, sender=FileUpload)
+@receiver(models.signals.post_delete, sender=Submission)
+def auto_delete_material(sender, instance, **kwargs):
+    if instance.file:
+        if os.path.isfile(instance.file.path):
+            os.remove(instance.file.path)
