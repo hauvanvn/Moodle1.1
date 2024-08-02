@@ -96,6 +96,7 @@ class Submission(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     ForAssignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     file = models.FileField(blank=True, null=True, upload_to=upload_submission_file_path_handle, validators=[file_size])
+    date_upload = models.DateTimeField(auto_now_add=True)
 
     grade = models.FloatField(null=True, blank=True)
     grade_comment = models.TextField(blank=True, null=True)
