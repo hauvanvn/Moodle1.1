@@ -1,210 +1,33 @@
+{% extends "NavLayout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{% static 'css/Nav.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style_course.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style_participants.css' %}">
 
-    <title>Moodle_1.1 - View Announcement</title>
-    <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
+{% block title %}
+Moodle_1.1 - View Announcement
+{% endblock title %}
 
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            position: static;
-        }
-        .container {
-            display: flex;
-        }
-        .main {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .main h2 {
-            color: #3343A1;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/style_viewPost.css" %}">
+{% endblock extra_css %}
 
-        .main h4{
-            color: #3343A1;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .notifications {
-            margin-top: 20px;
-        }
-        .notifications h3 {
-            color: #4d4dff;
-            margin-bottom: 10px;
-        }
-        .notifications .notification {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        .notifications .notification .notification-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .notifications .notification .notification-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .notifications .notification .notification-header .notification-title {
-            flex: 1;
-        }
-        .notifications .notification .notification-title h4 {
-            margin: 0;
-            color: #333;
-        }
-        .notifications .notification .notification-title span {
-            color: #999;
-            font-size: 14px;
-        }
-        .notifications .notification .notification-content {
-            color: #333;
-            line-height: 1.5;
-        }
-        .notifications .notification .notification-content a {
-            color: #4d4dff;
-            text-decoration: none;
-        }
-        .notifications .notification .notification-content a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Left bar -->
-            <div class="left-bar col-2 d-flex flex-column justify-content-between bg-white">
-                <div>
-                    <a class="d-flex align-items-center ms-4 mt-4" role="button" href="{% url 'home' %}">
-                        <img src="{% static 'img/home/logo.png' %}" alt="logo" class="img-fluid" style="max-width: 80%;">
-                    </a>
-                </div>
+{% block header %}{% endblock header %}
 
-                <div>
-                    <ul class="nav nav-pills flex-column">
-                        <li class="nav-item fs-4">
-                            <a href="{% url 'home' %}" class="nav-link" style = "{% if request.resolver_match.url_name == 'home' %} color:#3343A1; font-weight: 700 !important{% else %} color:#828282 {% endif %}">
-                                <i class="bi bi-house-fill"></i>
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item fs-4">
-                            <a href="{% url 'courses:class_list' %}" class="nav-link" style = " {% if request.resolver_match.url_name == 'class_list' %} 
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% elif request.resolver_match.url_name == 'class_page' %}
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% elif request.resolver_match.url_name == 'participants' %}
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% elif request.resolver_match.url_name == 'view_announcement' %}
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% elif request.resolver_match.url_name == 'post_announcement' %}
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% elif request.resolver_match.url_name == 'view_material' %}
-                                                                        color:#3343A1; font-weight: 700 !important
-                                                                    {% else %} color:#828282 {% endif %}">
-                                <i class="bi bi-book-fill"></i>
-                                Courses
-                            </a>
-                        </li>
-                    </ul>
-                    
-                </div>
-
-                <div></div>
-                <div></div>
-            </div>
-            <!-- Main content -->
-            <div class="col-8 border-1 rounded-5 p-4">
-                <div class="main">
-                    <h2>View announcement</h2>
-                    <div class="notifications">
-                        <div class="notification">
-                            <div class="notification-header">
-                                <div class="notification-title">
-                                    <h4>{{ notify.title }}</h4>
-                                    <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created }}</span>
-                                </div>
-                            </div>
-                            <div class="notification-content">
-                                <p>
-                                    {{ notify.text }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+{% block content %}
+<div class="main">
+    <h2>View announcement</h2>
+    <div class="notifications">
+        <div class="notification">
+            <div class="notification-header">
+                <div class="notification-title">
+                    <h4>{{ notify.title }}</h4>
+                    <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created }}</span>
                 </div>
             </div>
-            <!-- Right bar -->
-            <div class="col-2 offset-10 bg-white min-vh-100" style="position: fixed;">
-                <div class=" mt-5 mb-2">
-                    <a href="{% url 'users:profile' %}" class="d-flex flex-column align-items-center link-dark link-underline link-underline-opacity-0">
-                        <img src="{{ user.avatar.url }}" alt="avatar" width="150" height="150" class="img-fluid" style="border-radius: 50%;"> 
-                        <p class="mt-3 fs-5 fw-bold" style="color: #618CEE">{{ user.first_name }} {{ user.last_name }}</p>
-                        <p class="fs-6">{% if user.is_superuser %}
-                                Admin
-                            {% elif user.is_staff %}
-                                Teacher
-                            {% else %}
-                                Student
-                            {% endif %}
-                        </p>
-                    </a>
-                </div>
-                <hr>
-
-                <div class="d-flex flex-column mt-2">
-                    <p class="fs-6 fw-bold fst-italic" style="color: #3343A1">Notifications:</p>
-
-                    {% for notify in notifies %}
-                        <div class="card mb-3">
-                            <div class="card-body" style="--bs-card-spacer-y: 0">
-                                <a href="{% url 'courses:view_announcement' slug=notify.ForClass.slug id=notify.id %}" class="link-dark link-underline link-underline-opacity-0"> 
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-auto fs-5">
-                                            <i class="bi bi-bell"></i>
-                                        </div>
-
-                                        <div class="col text-truncate">
-                                            <p></p>
-                                            <p class="fw-light" style="color: #618CEE">{{ notify.title }}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                    <a href="#" class="text-center fst-italic link-dark link-underline link-underline-opacity-0">View all notifications</a>
-                </div>
-                    
-                </div>
-                
+            <div class="notification-content">
+                <p>
+                    {{ notify.text }}
+                </p>
             </div>
         </div>
-    </div>  
-</body>
-</html>
+    </div>
+</div>
+{% endblock content %}
