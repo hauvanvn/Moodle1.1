@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom right, rgba(255, 220, 216, 0.5), rgba(191, 170, 226, 0.5));
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: static;
+}
+.main {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.main h2 {
+    color: #3343A1;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.main h4{
+    color: #3343A1;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.main form {
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+.main form .form-group {
+    margin-bottom: 15px;
+}
+.main form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+.main form .form-group input,
+.main form .form-group select,
+.main form .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.main form .form-group textarea {
+    height: 250px; /*Để cho textarea có thể kéo dãn*/
+    resize: none;
+}
+.main form .form-group button {
+    background-color: #3343A1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.main form .form-group button:hover {
+    background-color: #C0CFFA;
+}
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.profile div {
+    display: flex;
+    flex-direction: column;
+}
+.profile div span {
+    color: #333;
+}
+.notifications {
+    margin-top: 20px;
+}
+.notifications h3 {
+    color: #4d4dff;
+    margin-bottom: 10px;
+}
+.notifications .notification {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.notifications .notification img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.notifications .notification .text {
+    flex: 1;
+}
+.notifications .notification .text p {
+    margin: 0;
+    color: #333;
+} 

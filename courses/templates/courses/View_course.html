@@ -7,71 +7,54 @@ Course: {{ course }}
 {% endblock title %}
 
 {% block content %}
-<div class="col-8 border-1 rounded-5 p-4 mt-3">
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="col-4">
-            <div class="input-group search-input">
-                <span class="input-group-text bg-white search-icon"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search...">
-            </div>
-        </div>
-        <div class="col-auto">
-            <button class="settings-button">
-                <i class="bi bi-gear-fill"></i>
-            </button>
-        </div>
+<br>
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url 'courses:class_page' slug=course.slug %}" class="active">Course</a>
+        <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
     </div>
-    <hr>
     
     <br>
-    <div class="container">
-        <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
-        <div class="box_course">
-            <a href="{% url 'courses:class_page' slug=course.slug %}" class="active">Course</a>
-            <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
-        </div>
-        
-        <br>
-        <h4 style="color:#3343A1">General</h4>
-            {% for file in files %}
-                {% if file.group == "GENERAL" %}
-                    <div class="card p-4 custom-card">
-                        <div class="row  align-items-center">
-                            <div class="col-1">
-                                <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
-                            </div>
-                            <div class="col-11">
-                                {% if file.type == "FILE" %}
-                                    <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
-                                {% else %}
-                                    <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
-                                {% endif %}
-                            </div>
+    <h4 style="color:#3343A1">General</h4>
+        {% for file in files %}
+            {% if file.group == "GENERAL" %}
+                <div class="card p-4 custom-card">
+                    <div class="row  align-items-center">
+                        <div class="col-1">
+                            <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                        </div>
+                        <div class="col-11">
+                            {% if file.type == "FILE" %}
+                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                            {% else %}
+                                <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
+                            {% endif %}
                         </div>
                     </div>
-                    <br>
-                {% endif %}
-            {% endfor %}
-        <h4 style="color:#3343A1">Lecture</h4>
-            {% for file in files %}
-                {% if file.group == "LECTURE" %}
-                    <div class="card p-4 custom-card">
-                        <div class="row align-items-center">
-                            <div class="col-1">
-                                <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
-                            </div>
-                            <div class="col-11">
-                                {% if file.type == "FILE" %}
-                                    <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
-                                {% else %}
-                                    <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
-                                {% endif %}
-                            </div>
+                </div>
+                <br>
+            {% endif %}
+        {% endfor %}
+    <h4 style="color:#3343A1">Lecture</h4>
+        {% for file in files %}
+            {% if file.group == "LECTURE" %}
+                <div class="card p-4 custom-card">
+                    <div class="row align-items-center">
+                        <div class="col-1">
+                            <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                        </div>
+                        <div class="col-11">
+                            {% if file.type == "FILE" %}
+                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                            {% else %}
+                                <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
+                            {% endif %}
                         </div>
                     </div>
-                    <br>
-                {% endif %}
-            {% endfor %}
-    </div>
+                </div>
+                <br>
+            {% endif %}
+        {% endfor %}
 </div>
 {% endblock content %}
