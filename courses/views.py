@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import CourseClass as Class, FileUpload, Notification, Comment
-from .forms import FileUploadForm
+from .forms import FileUploadForm, AnnouncementForm
 from users.models import User
 
 from moodle.nav_infomation import getIn4
@@ -122,19 +122,37 @@ def view_announcement(request, slug, id):
 
     return render(request, 'courses/View_annoucement.html', {'user': user, 'notifies': notifications, 'notify': notify})
 
+# @login_required(login_url='users:login')
+# def view_post_announcement(request, slug):
+#     course = Class.objects.get(slug=slug)
+
+#     if request.method == "POST":
+#         title = request.POST.get('title')
+#         text = request.POST.get('description')
+
+#         notify = Notification(author=request.user, ForClass=course, title=title, text=text)
+#         notify.save()
+#         messages.success(request, 'Successfully post announcement!')
+#         return redirect('courses:class_page', slug=slug)
+
+#     user, notifications = getIn4(request)
+
+#     return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications})
+
 @login_required(login_url='users:login')
 def view_post_announcement(request, slug):
     course = Class.objects.get(slug=slug)
-
+    form = AnnouncementForm
     if request.method == "POST":
-        title = request.POST.get('title')
-        text = request.POST.get('description')
+        notify = Notification(author=request.user, ForClass=course)
+        form = AnnouncementForm(request.POST, instance=notify)
+        if form.is_valid:
+            form.save()
+            form = AnnouncementForm
 
-        notify = Notification(author=request.user, ForClass=course, title=title, text=text)
-        notify.save()
-        messages.success(request, 'Successfully post announcement!')
-        return redirect('courses:class_page', slug=slug)
+            messages.success(request, 'Successfully post announcement!')
+            return redirect('courses:class_page', slug=slug)
 
     user, notifications = getIn4(request)
 
-    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications})
+    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': form})

@@ -13,6 +13,7 @@ Course: {{ course }}
     <div class="box_course">
         <a href="{% url 'courses:class_page' slug=course.slug %}" class="active">Course</a>
         <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
+        <a href="#">Grade</a>
     </div>
     
     <br>

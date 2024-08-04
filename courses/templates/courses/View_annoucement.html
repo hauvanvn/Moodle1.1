@@ -7,6 +7,7 @@ Moodle_1.1 - View Announcement
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/style_viewPost.css" %}">
+<script src="{% static "js/ckeditor5/config.js" %}"></script>
 {% endblock extra_css %}
 
 {% block header %}{% endblock header %}
@@ -24,7 +25,7 @@ Moodle_1.1 - View Announcement
             </div>
             <div class="notification-content">
                 <p>
-                    {{ notify.text }}
+                    {{ notify.text|safe }}
                 </p>
             </div>
         </div>

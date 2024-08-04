@@ -14,7 +14,6 @@ Course: {{ course }}
     <div class="box_course">
         <a href="#" class="active">Course</a>
         <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
-        <a href="#">Grade</a>
         <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
     </div>
 </div>
@@ -141,11 +140,11 @@ Course: {{ course }}
         <div class="card p-4 custom-card">
             <form method="POST" enctype="multipart/form-data" class="d-flex flex-column">
                 {% csrf_token %}
-                <h3 class="text-center">Add material</h3>
+                <h3 class="text-center">Add Lecture</h3>
 
                 <div class="row">
                     <div class="col-auto">
-                        <label class="col-form-label fs-5" for="mat">Material name: </label>
+                        <label class="col-form-label fs-5" for="mat">Lecture name: </label>
                     </div>
 
                     <div class="col">
@@ -227,4 +226,58 @@ Course: {{ course }}
         </div>
     {% endif %}
 {% endfor %}
+
+<div class="container-fluid gap-2">
+    <h4 class="d-inline-block" style="color:#3343A1">Assignment</h4>
+    
+    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAssign">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</div>
+
+<div class="container-fluid mb-4">
+    <div class="collapse" id="collapseAssign">
+        <div class="card p-4 custom-card">
+            <form method="POST" enctype="multipart/form-data" class="d-flex flex-column">
+                {% csrf_token %}
+                <h3 class="text-center">Add Assignment</h3>
+
+                <div class="row">
+                    <div class="col-3">
+                        <label class="col-form-label fs-5" for="assign">Assignment name: </label>
+                    </div>
+
+                    <div class="col">
+                        {% render_field form.name class="form-control" type="text" id="assign" placeholder="Enter name" required="True" %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <label class="col-form-label fs-5" for="assignFile">Choose file: </label>
+                    </div>
+    
+                    <div class="col">
+                        {% render_field form.file class="form-control" type="file" id="assignFile"%}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-3">
+                        <label class="col-form-label fs-5" for="dateEnd">Assignment deadline: </label>
+                    </div>
+
+                    <div class="col">
+                        <input type="datetime-local" id="dateEnd" class="form-control">
+                    </div>
+                </div>
+                
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}
