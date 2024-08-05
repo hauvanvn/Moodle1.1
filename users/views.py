@@ -19,7 +19,7 @@ def loginPage(request):
         password = request.POST.get('pass')
 
         user = authenticate(request, username=username, password=password)
-        if user is None:
+        if user is None or not user.is_active:
             messages.warning(request, 'Username or Password is incorrect.')
             return redirect('users:login')
         else:

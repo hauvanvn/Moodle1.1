@@ -142,17 +142,17 @@ def view_announcement(request, slug, id):
 @login_required(login_url='users:login')
 def view_post_announcement(request, slug):
     course = Class.objects.get(slug=slug)
-    form = AnnouncementForm
-    if request.method == "POST":
-        notify = Notification(author=request.user, ForClass=course)
-        form = AnnouncementForm(request.POST, instance=notify)
-        if form.is_valid:
-            form.save()
-            form = AnnouncementForm
-
-            messages.success(request, 'Successfully post announcement!')
-            return redirect('courses:class_page', slug=slug)
-
     user, notifications = getIn4(request)
 
-    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': form})
+    if request.method == "POST":
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        form = AnnouncementForm({'title' : title, 'text' : text, 'author' : user, 'ForClass' : course})
+        if form.is_valid:
+            form.save()
+            messages.success(request, 'Successfully post announcement!')
+            return redirect('courses:class_page', slug=slug)
+        else:
+            return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': form})
+
+    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': AnnouncementForm()})

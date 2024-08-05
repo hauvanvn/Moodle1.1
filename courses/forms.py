@@ -1,5 +1,6 @@
 from django import forms
 from .models import FileUpload, Notification
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 class FileUploadForm(forms.ModelForm):
     class Meta:
@@ -7,11 +8,12 @@ class FileUploadForm(forms.ModelForm):
         fields = ('id', 'name', 'group', 'type', 'file', 'link', 'inClass')
 
 class AnnouncementForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["text"].required = False
-
     class Meta:
         model = Notification
         # fields = '__all__'
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'author', 'ForClass')
+        widgets = {
+            'text': CKEditor5Widget(
+                  attrs={"class": "django_ckeditor_5"}, config_name="extends"
+            )
+        }

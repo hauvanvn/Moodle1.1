@@ -8,6 +8,7 @@ Moodle_1.1 - View Announcement
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/style_viewPost.css" %}">
 <script src="{% static "js/ckeditor5/config.js" %}"></script>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css" />
 {% endblock extra_css %}
 
 {% block header %}{% endblock header %}
@@ -23,7 +24,7 @@ Moodle_1.1 - View Announcement
                     <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created }}</span>
                 </div>
             </div>
-            <div class="notification-content">
+            <div class="ck-content">
                 <p>
                     {{ notify.text|safe }}
                 </p>
