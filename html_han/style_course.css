@@ -1,0 +1,44 @@
+.box_course {
+    text-align: left;
+}
+
+.box_course a {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: rgb(163, 179, 254);
+    background-color: rgb(237, 237, 237);
+    border-radius: 5px;
+}
+
+.box_course a.active {
+    background-color: rgb(163, 179, 254);
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+}
+
+.box_course a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.box_object {
+    text-align: left;
+}
+
+.box_object a {
+    display: inline-block;
+    padding: 40px 400px;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.box_object a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
