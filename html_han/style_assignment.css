@@ -32,9 +32,9 @@
     display: inline-block;
     padding: 15px 30px;
     text-decoration: none;
+    border-radius: 5px;
     color: rgb(163, 179, 254);
     background-color: rgb(237, 237, 237);
-    border-radius: 5px;
 }
 
 .box_course a.active {

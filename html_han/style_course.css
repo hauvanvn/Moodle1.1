@@ -8,6 +8,7 @@
     text-decoration: none;
     color: rgb(163, 179, 254);
     background-color: rgb(237, 237, 237);
+    border-radius: 5px;
 }
 
 .box_course a.active {

@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="Nav.css">
+    <link rel="stylesheet" href="style_nav.css">
     <link rel="stylesheet" href="style_participants.css">
     <title>Course</title>
     <style>
@@ -57,21 +58,20 @@
                 <div>
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item fs-4">
-                            <a href="" class="nav-link fw-bold" style="color:#3343A1">
-                            <!-- <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}fw-bold{% endif %}"> -->
-                                <i class="bi bi-house-fill"></i>
+                            <a href="" class="nav-link" style="color:#828282">
+                                <i class="fa-solid fa-house"></i>
                                 Home
                             </a>
                         </li>
                         <li class="nav-item fs-4">
-                            <a href="Course.html" class="nav-link" style="color:#828282">
-                                <i class="bi bi-book-fill"></i>
+                            <a href="View_course.html" class="nav-link fw-bold" style="color:#3343A1">
+                                <i class="fa-solid fa-book-open"></i>
                                 Courses
                             </a>
                         </li>
                         <li class="nav-item fs-4">
                             <a href="" class="nav-link" style="color:#828282">
-                                <i class="bi bi-bug-fill"></i>
+                                <i class="fa-solid fa-bug"></i>
                                 Coding Space
                             </a>
                         </li>
@@ -90,132 +90,138 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="col-4">
                         <div class="input-group search-input">
-                            <span class="input-group-text bg-white search-icon"><i class="bi bi-search"></i></span>
+                            <span class="input-group-text bg-white search-icon"><i class="fa-solid fa-magnifying-glass" style="color:#828282"></i></span>
                             <input type="text" class="form-control" placeholder="Search...">
                         </div>
                     </div>
                     <div class="col-auto">
-                        <button class="settings-button">
-                            <i class="bi bi-gear-fill"></i>
+                        <button type="button" class="btn btn-outline-secondary">
+                            <a href="" class="nav-link">
+                                <i class="fa-solid fa-bell" style="color:#828282"></i>
+                            </a>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary">
+                            <a href="" class="nav-link">
+                                <i class="fa-solid fa-right-from-bracket" style="color:#828282"></i>
+                            </a>
                         </button>
                     </div>
                 </div>
                 <hr>
-
                 <br>
                 <div class="container">
                     <h2 style="color:#3343A1"><b>Introduction to Artificial Intelligence</b></h2>
                     <div class="box_course">
-                        <a href="Course.html">Course</a>
-                        <a href="Participants3.html" class="active">Participants</a>
+                        <a href="View_course.html">Course</a>
+                        <a href="View_participants.html" class="active">Participants</a>
+                        <a href="View_assignment_teacher.html">Grades</a>
                     </div>
-
                     <br>
                     <h4 style="color:#3343A1">Enrolled users</h4>
                     <br>
-                    <table border="1">
-                        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
+                    <table class="table_ass">
+                        <tr>
                             <th width="300">Name</th>
                             <th width="300">Role</th>
                             <th width="300">Class</th>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
                         
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: rgb(224, 224, 224)">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
                         </tr>
-                        <tr align="center" style="background-color: white">
+                        <tr>
                             <td>Nguyen Duy An</td>
                             <td>Student</td>
                             <td>22CLC08</td>
@@ -224,11 +230,11 @@
                 </div>
                 <br>
                 <div class="pagination">
-                    <a href="Participants2.html"><</a>
-                    <a href="Participants.html">1</a>
-                    <a href="Participants2.html">2</a>
-                    <a href="Participants3.html" class="active">3</a>
-                    <a href="Participants3.html">></a>
+                    <a href="View_participants.html" style="color: #828282;">< &nbsp Previous</a>
+                    <a href="View_participants.html" class="active">1</a>
+                    <a href="View_participants2.html">2</a>
+                    <a href="View_participants3.html">3</a>
+                    <a href="View_participants2.html">Next &nbsp ></a>
                 </div>
             </div>
             <!--    End courses     -->
