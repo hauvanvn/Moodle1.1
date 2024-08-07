@@ -258,7 +258,7 @@ Course: {{ course }}
                     </div>
     
                     <div class="col">
-                        {% render_field form.file class="form-control" type="file" id="assignFile"%}
+                        {% render_field form.file class="form-control" type="file" id="assignFile" required="True" %}
                     </div>
                 </div>
                 
@@ -268,7 +268,7 @@ Course: {{ course }}
                     </div>
 
                     <div class="col">
-                        <input type="datetime-local" id="dateEnd" class="form-control">
+                        <input type="datetime-local" id="dateEnd" class="form-control" required="True">
                     </div>
                 </div>
                 

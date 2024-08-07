@@ -18,7 +18,7 @@ Course
     <br>
     <h4 style="color:#3343A1">Enrolled users</h4>
     <br>
-    <table border="1">
+    <table border="table_ass">
         <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
             <th width="300">Name</th>
             <th width="300">Role</th>
@@ -69,5 +69,12 @@ Course
             <a href="?page={{ participants.next_page_number }}" class="active">next</a>
         {% endif %}
     </span>
+</div>
+<div class="pagination">
+    <a href="View_participants.html" style="color: #828282;">< &nbsp Previous</a>
+    <a href="View_participants.html" class="active">1</a>
+    <a href="View_participants2.html">2</a>
+    <a href="View_participants3.html">3</a>
+    <a href="View_participants2.html">Next &nbsp ></a>
 </div>
 {% endblock content %}
