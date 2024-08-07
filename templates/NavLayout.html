@@ -17,6 +17,9 @@
         {% endblock %}
     </title>
     <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
+
+    {% block extra_css %}
+    {% endblock extra_css %}
 </head>
 <body>
     <div class="container-fluid">
@@ -62,8 +65,18 @@
                 <div></div>
             </div>
 
-            {% block content %}
-            {% endblock content %}
+            <div class="col-8 border-1 rounded-5 p-4">
+                {% block header %}
+                    <div class="d-flex flex-row-reverse">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none"><i class="bi bi-box-arrow-right"></i></button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'home' %}';" style="--bs-btn-border-color: none"><i class="bi bi-bell"></i></button>
+                    </div>
+                    <hr>
+                {% endblock header %}
+
+                {% block content %}
+                {% endblock content %}
+            </div>
 
             <div class="col-2 offset-10 bg-white min-vh-100" style="position: fixed;">
                 <div class=" mt-5 mb-2">

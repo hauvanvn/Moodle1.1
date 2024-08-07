@@ -8,84 +8,66 @@ Course
 
 {% block content %}
 
-<div class="col-8 border-1 rounded-5 p-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="col-4">
-            <div class="input-group search-input">
-                <span class="input-group-text bg-white search-icon"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search...">
-            </div>
-        </div>
-        <div class="col-auto">
-            <button class="settings-button">
-                <i class="bi bi-gear-fill"></i>
-            </button>
-        </div>
-    </div>
-    <hr>
-
-    <br>
-    <div class="container">
-        <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
-        <div class="box_course">
-            <a href="{% url 'courses:class_page' slug=course.slug %}">Course</a>
-            <a href="#" class="active">Participants</a>
-        </div>
-        <br>
-        <h4 style="color:#3343A1">Enrolled users</h4>
-        <br>
-        <table border="1">
-            <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-                <th width="300">Name</th>
-                <th width="300">Role</th>
-                <th width="300">Class</th>
-            </tr>
-            {% for participant in participants %}
-                {% if forloop.counter|divisibleby:2 %}
-                    <tr align="center" style="background-color: rgb(224, 224, 224)">
-                        <td>{{ participant.first_name }} {{ participant.last_name }}</td>
-                        {% if participant.is_superuser %}
-                            <td>Admin</td>
-                        {% elif participant.is_staff %}
-                            <td>Teacher</td>
-                        {% else %}
-                            <td>Student</td>
-                        {% endif %}
-                        <td>{{ participant.inClass }}</td>
-                    </tr>
-                {% else %}
-                    <tr align="center" style="background-color: white">
-                        <td>{{ participant.first_name }} {{ participant.last_name }}</td>
-                        {% if participant.is_superuser %}
-                            <td>Admin</td>
-                        {% elif participant.is_staff %}
-                            <td>Teacher</td>
-                        {% else %}
-                            <td>Student</td>
-                        {% endif %}
-                        <td>{{ participant.inClass }}</td>
-                    </tr>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </table>
+<br>
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url 'courses:class_page' slug=course.slug %}">Course</a>
+        <a href="#" class="active">Participants</a>
     </div>
     <br>
-    <div class="pagination">
-        <span class="step-links">
-            {% if participants.has_previous %}
-                <a href="?page={{ participants.previous_page_number }}" class="active">previous</a>
+    <h4 style="color:#3343A1">Enrolled users</h4>
+    <br>
+    <table border="1">
+        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
+            <th width="300">Name</th>
+            <th width="300">Role</th>
+            <th width="300">Class</th>
+        </tr>
+        {% for participant in participants %}
+            {% if forloop.counter|divisibleby:2 %}
+                <tr align="center" style="background-color: rgb(224, 224, 224)">
+                    <td>{{ participant.first_name }} {{ participant.last_name }}</td>
+                    {% if participant.is_superuser %}
+                        <td>Admin</td>
+                    {% elif participant.is_staff %}
+                        <td>Teacher</td>
+                    {% else %}
+                        <td>Student</td>
+                    {% endif %}
+                    <td>{{ participant.inClass }}</td>
+                </tr>
+            {% else %}
+                <tr align="center" style="background-color: white">
+                    <td>{{ participant.first_name }} {{ participant.last_name }}</td>
+                    {% if participant.is_superuser %}
+                        <td>Admin</td>
+                    {% elif participant.is_staff %}
+                        <td>Teacher</td>
+                    {% else %}
+                        <td>Student</td>
+                    {% endif %}
+                    <td>{{ participant.inClass }}</td>
+                </tr>
+                </tr>
             {% endif %}
-    
-            <span class="current">
-                Page {{ participants.number }} of {{ participants.paginator.num_pages }}.
-            </span>
-    
-            {% if participants.has_next %}
-                <a href="?page={{ participants.next_page_number }}" class="active">next</a>
-            {% endif %}
-        </span>
-    </div>
+        {% endfor %}
+    </table>
 </div>
+<br>
+<div class="pagination">
+    <span class="step-links">
+        {% if participants.has_previous %}
+            <a href="?page={{ participants.previous_page_number }}" class="active">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ participants.number }} of {{ participants.paginator.num_pages }}.
+        </span>
+
+        {% if participants.has_next %}
+            <a href="?page={{ participants.next_page_number }}" class="active">next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock content %}

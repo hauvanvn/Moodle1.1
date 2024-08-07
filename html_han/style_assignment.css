@@ -1,0 +1,73 @@
+.pagination {
+    align-items: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination a.active {
+    background-color: rgb(163, 179, 254);
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.box_course {
+    text-align: left;
+}
+
+.box_course a {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: rgb(163, 179, 254);
+    background-color: rgb(237, 237, 237);
+}
+
+.box_course a.active {
+    background-color: rgb(163, 179, 254);
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+}
+
+.box_course a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.table_ass {
+    text-align: center;
+}
+
+.table_ass th {
+    background-color: rgb(163, 179, 254);
+    color: white;
+    text-decoration: solid;
+    height: 40px;
+}
+
+.table_ass tr {
+    height: 30px;
+}
+
+.table_ass tr:nth-child(even) {
+    background-color: rgb(224, 224, 224);
+}
+
+.table_ass tr:nth-child(odd) {
+    background-color: white;
+}
