@@ -56,21 +56,6 @@ Course
     </table>
 </div>
 <br>
-{% comment %} <div class="pagination">
-    <span class="step-links">
-        {% if participants.has_previous %}
-            <a href="?page={{ participants.previous_page_number }}" class="active">previous</a>
-        {% endif %}
-
-        <span >
-            Page {{ participants.number }} of {{ participants.paginator.num_pages }}.
-        </span>
-
-        {% if participants.has_next %}
-            <a href="?page={{ participants.next_page_number }}" class="active">next</a>
-        {% endif %}
-    </span>
-</div> {% endcomment %}
 
 <div class="container-fluid d-flex justify-content-center">
     <div class="pagination">

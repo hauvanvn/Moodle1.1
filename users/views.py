@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import User, OtpToken
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import make_password
 
 from .sendMail import sendOtp
 from django.utils import timezone
@@ -85,4 +87,30 @@ def LogoutPage(request):
 @login_required(login_url='users:login')
 def View_Profile(request):
     user, notifications = getIn4(request)
+
+    if request.method == "POST":
+        if "reset_password" in request.POST:
+            old_password = request.POST.get('old_pass')
+            new_password = request.POST.get('new_pass')
+            confirm_password = request.POST.get('con_pass')
+
+            if user.check_password(old_password):
+                if new_password == confirm_password:
+                    user.set_password(new_password)
+                    user.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, "Change password successful!")
+                    return redirect('users:profile')
+                else:
+                    messages.warning(request, "New password not match to Verify password!")
+                    return redirect('users:profile')
+            else:
+                messages.warning(request, "Your old password is not correct!")
+                return redirect('users:profile')
+        else:
+            user.avatar = request.FILES
+            user.save()
+            messages.success(request, "Change avatar successful!")
+            return redirect('uses:profile')
+
     return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications})

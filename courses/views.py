@@ -111,7 +111,7 @@ def view_class_page(request, slug):
 
         
     # Teacher view
-    if user.is_staff:# and not user.is_superuser:
+    if user.is_staff and not user.is_superuser:
         return render(request, 'courses/View_course_teacher.html', 
                   {'user': user, 'notifies': notifications, 
                    'course' : course, 'files': files, 'assignments': assignments,
@@ -135,26 +135,6 @@ def view_participants(request, slug):
     try:
         mode = 0
         participants = page.page(page_number)
-        #next_participants = next_page.page("3")
-        # if participants.has_next:
-        #     participants = page.page(participants.next_page_number)
-        #     mode += 1
-        #     participants = page.page(participants.previous_page_number)
-            # if participants.has_next:
-            #     participants = page.page(participants.previous_page_number)
-            #     mode += 1
-
-        # if participants.has_previous:
-        #     participants = page.page(participants.previous_page_number)
-        #     if participants.has_previous:
-        #         participants = page.page(participants.next_page_number)
-        #         mode += 2 
-        # if int(page_number) + 2 <= page.num_pages:
-        #     next_participants = page.page(int(page_number) + 2)
-        #     mode += 1
-        # elif int(page_number) - 2 >= 1:
-        #     pre_participants = page.page(int(page_number) - 2)
-        #     mode += 2
     except PageNotAnInteger:
         participants = page.page(1)
     except EmptyPage:
@@ -212,8 +192,15 @@ def view_assignment(request, slug, assignmentname):
         return HttpResponse("404 Not found!")
     
     assignment = Assignment.objects.get(id=assignmentname)
-    students_list = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1, is_superuser=1).order_by('username')
-    submission_list = Submission.objects.filter(ForAssignment=assignment.id).order_by('author')
+    students_list = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
+    submission_list = []
+    for student in students_list:
+        if Submission.objects.filter(author=student.id).exists():
+            submission = Submission.objects.get(author=student.id)
+        else:
+            submission = {'date_upload': '--', 'grade': None, 'author': None}
+        submission_list.append({'student': student, 'submit': submission})
+
     page = Paginator(submission_list, 20)
 
     page_number = request.GET.get("page")
@@ -225,7 +212,7 @@ def view_assignment(request, slug, assignmentname):
         submissions = page.page(page.num_pages)
 
     return render(request, 'courses/View_assignment_teacher.html', 
-                  {'user': user, 'notifies': notifications, 'slug': slug,
+                  {'user': user, 'notifies': notifications, 'course': course,
                    'numsub': len(submission_list), 'numall': len(students_list),
                     'assignment': assignment, 'submissions': submissions})
 
