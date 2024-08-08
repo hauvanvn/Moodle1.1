@@ -1,6 +1,7 @@
 {% extends "NavLayout.html" %}
 
 {% load static %}
+{% load participants_tag %}
 
 {% block title %}
 Course
@@ -20,9 +21,9 @@ Course
     <br>
     <table border="table_ass">
         <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-            <th width="300">Name</th>
-            <th width="300">Role</th>
-            <th width="300">Class</th>
+            <th width="310">Name</th>
+            <th width="310">Role</th>
+            <th width="310">Class</th>
         </tr>
         {% for participant in participants %}
             {% if forloop.counter|divisibleby:2 %}
@@ -55,13 +56,13 @@ Course
     </table>
 </div>
 <br>
-<div class="pagination">
+{% comment %} <div class="pagination">
     <span class="step-links">
         {% if participants.has_previous %}
             <a href="?page={{ participants.previous_page_number }}" class="active">previous</a>
         {% endif %}
 
-        <span class="current">
+        <span >
             Page {{ participants.number }} of {{ participants.paginator.num_pages }}.
         </span>
 
@@ -69,12 +70,54 @@ Course
             <a href="?page={{ participants.next_page_number }}" class="active">next</a>
         {% endif %}
     </span>
+</div> {% endcomment %}
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="pagination">
+        {% if participants.has_previous %}
+            <a href="?page={{ participants.previous_page_number }}">< &nbsp Previous</a>
+        {% elif not participants.has_previous %}
+            <a href="#" style="color: #828282;">< &nbsp Previous</a>
+        {% endif %}
+        
+        {% for i in participants.paginator.page_range %}
+            {% if i == 1 %}
+                {% if participants.number == i %}
+                    <a class=" active" href="">{{ i }}</a>
+                {% else %}
+                    <a class="" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+            {% if i != 1 and i != participants.paginator.page_range|last %}
+                {% if participants.number == i %}
+                    <a class=" active" href="">{{ i }}</a>
+                {% else %}
+                    {% if participants.number|add:-4 == i %}
+                        <a class="" href="">...</a>
+                    {% endif %}
+                    {% if participants.number|add:3 >= i and participants.number|add:-3 <= i %}
+                        <a class="" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% if participants.number|add:4 == i %}
+                        <a class="" href="">...</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if i == participants.paginator.page_range|last %}
+                {% if participants.number == i %}
+                    <a class=" active" href="">{{ participants.paginator.page_range|last }}</a>
+                {% else %}
+                    <a class="" href="?page={{ participants.paginator.page_range|last }}">{{ participants.paginator.page_range|last }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if participants.has_next %}
+            <a href="?page={{ participants.next_page_number }}">Next &nbsp ></a>
+        {% elif not participants.has_next %}
+            <a href="#" style="color: #828282;">Next &nbsp ></a>
+        {% endif %}
+    </div>  
 </div>
-<div class="pagination">
-    <a href="View_participants.html" style="color: #828282;">< &nbsp Previous</a>
-    <a href="View_participants.html" class="active">1</a>
-    <a href="View_participants2.html">2</a>
-    <a href="View_participants3.html">3</a>
-    <a href="View_participants2.html">Next &nbsp ></a>
-</div>
+
 {% endblock content %}
