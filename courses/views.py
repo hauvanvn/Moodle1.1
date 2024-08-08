@@ -94,7 +94,28 @@ def view_participants(request, slug):
 
     page_number = request.GET.get("page")
     try:
+        mode = 0
         participants = page.page(page_number)
+        #next_participants = next_page.page("3")
+        # if participants.has_next:
+        #     participants = page.page(participants.next_page_number)
+        #     mode += 1
+        #     participants = page.page(participants.previous_page_number)
+            # if participants.has_next:
+            #     participants = page.page(participants.previous_page_number)
+            #     mode += 1
+
+        # if participants.has_previous:
+        #     participants = page.page(participants.previous_page_number)
+        #     if participants.has_previous:
+        #         participants = page.page(participants.next_page_number)
+        #         mode += 2 
+        # if int(page_number) + 2 <= page.num_pages:
+        #     next_participants = page.page(int(page_number) + 2)
+        #     mode += 1
+        # elif int(page_number) - 2 >= 1:
+        #     pre_participants = page.page(int(page_number) - 2)
+        #     mode += 2
     except PageNotAnInteger:
         participants = page.page(1)
     except EmptyPage:
@@ -102,7 +123,7 @@ def view_participants(request, slug):
 
     user, notifications = getIn4(request)
 
-    return render(request, 'courses/View_participants.html', {'user': user, 'notifies': notifications, 'participants': participants, 'course' : course})
+    return render(request, 'courses/View_participants.html', {'user': user, 'notifies': notifications, 'participants': participants, 'course' : course, 'mode' : mode})
 
 @login_required(login_url='users:login')
 def view_material(request, slug, filename):
