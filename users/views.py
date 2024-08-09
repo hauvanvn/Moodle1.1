@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import User, OtpToken
+from .models import User, OtpToken, upload_path_handle
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import make_password
+from django.core.files.base import ContentFile
 
 from .sendMail import sendOtp
 from django.utils import timezone
@@ -108,7 +108,7 @@ def View_Profile(request):
                 messages.warning(request, "Your old password is not correct!")
                 return redirect('users:profile')
         else:
-            user.avatar = request.FILES
+            user.avatar = request.FILES['img']
             user.save()
             messages.success(request, "Change avatar successful!")
             return redirect('users:profile')

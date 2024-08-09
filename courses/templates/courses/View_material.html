@@ -24,21 +24,24 @@
     <div>
         <h2 style="color:#3343A1">Comments</h2>
 
-        <div class="row comment-row mb-2 align-self-center">
-            <div class="col-1">
-                <img src="{{ user.avatar.url }}" alt="avatar" width = "100%" class="img-fluid" style="border-radius: 50%">
-            </div>
-            <div class="col">
-                <div class="input-group comment-input h-100">
-                    <input type="text" class="form-control" placeholder="Insert comment" style="background-color: #EDEDED;">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row comment-row mb-2 align-self-center">
+                <div class="col-1">
+                    <img src="{{ user.avatar.url }}" alt="avatar" width = "100%" class="img-fluid" style="border-radius: 50%">
+                </div>
+                <div class="col">
+                    <div class="input-group comment-input h-100">
+                        <input name="comment" type="text" class="form-control" placeholder="Insert comment" style="background-color: #EDEDED;">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="d-grid d-md-flex justify-content-md-end">
-            <button type="button" class="btn " {% comment %}onclick="location.href='{% url 'users:logout' %}';{% endcomment %} style="--bs-btn-color: #111B88; background-color: #FAEBC0">
-                <img src="{% static 'img/course/send.svg' %}" alt="Comment" class="img-fluid" >
-            </button>
-        </div>
+            <div class="d-grid d-md-flex justify-content-md-end">
+                <button type="submit" class="btn " {% comment %}onclick="location.href='{% url 'users:logout' %}';{% endcomment %} style="--bs-btn-color: #111B88; background-color: #FAEBC0">
+                    <img src="{% static 'img/course/send.svg' %}" alt="Comment" class="img-fluid" >
+                </button>
+            </div>
+        </form>
         <hr>
         {% for comment in comments %}
             <div class="row">

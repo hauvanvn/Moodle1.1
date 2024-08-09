@@ -25,7 +25,7 @@ Profile
     <div class="row">
         <div class="col-auto text-center">
             <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="img-upload" class="custom-img-upload mt-2 mb-2">
                     Avatar <i class="bi bi-upload"></i>

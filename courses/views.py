@@ -151,6 +151,12 @@ def view_material(request, slug, filename):
     file = FileUpload.objects.get(id=filename)
     comments = Comment.objects.filter(file=file).order_by('-date_created')
 
+    if request.method == "POST":
+        text = request.POST.get("comment")
+        new_comment = Comment(user=user, file=file, text=text)
+        new_comment.save()
+        return redirect('courses:view_material', slug=slug, filename=filename)
+
     return render(request, 'courses/View_material.html', 
                   {'user': user, 'notifies': notifications,'file': file, 'comments': comments})
 
@@ -192,29 +198,42 @@ def view_assignment(request, slug, assignmentname):
         return HttpResponse("404 Not found!")
     
     assignment = Assignment.objects.get(id=assignmentname)
-    students_list = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
-    submission_list = []
-    for student in students_list:
-        if Submission.objects.filter(author=student.id).exists():
-            submission = Submission.objects.get(author=student.id)
+
+    if user.is_staff and not user.is_superuser:
+        # Teacher view
+        students_list = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
+        submission_list = []
+        for student in students_list:
+            if Submission.objects.filter(author=student.id).exists():
+                submission = Submission.objects.get(author=student.id)
+            else:
+                submission = {'date_upload': '--', 'grade': None, 'author': None}
+            submission_list.append({'student': student, 'submit': submission})
+
+        page = Paginator(submission_list, 20)
+
+        page_number = request.GET.get("page")
+        try:
+            submissions = page.page(page_number)
+        except PageNotAnInteger:
+            submissions = page.page(1)
+        except EmptyPage:
+            submissions = page.page(page.num_pages)
+
+        return render(request, 'courses/View_assignment_teacher.html', 
+                    {'user': user, 'notifies': notifications, 'course': course,
+                    'numsub': len(submission_list), 'numall': len(students_list),
+                        'assignment': assignment, 'submissions': submissions})
+    else:
+        # Student view
+        if Submission.objects.filter(author=user).exists():
+            submission = Submission.objects.get(author=user)
         else:
-            submission = {'date_upload': '--', 'grade': None, 'author': None}
-        submission_list.append({'student': student, 'submit': submission})
-
-    page = Paginator(submission_list, 20)
-
-    page_number = request.GET.get("page")
-    try:
-        submissions = page.page(page_number)
-    except PageNotAnInteger:
-        submissions = page.page(1)
-    except EmptyPage:
-        submissions = page.page(page.num_pages)
-
-    return render(request, 'courses/View_assignment_teacher.html', 
-                  {'user': user, 'notifies': notifications, 'course': course,
-                   'numsub': len(submission_list), 'numall': len(students_list),
-                    'assignment': assignment, 'submissions': submissions})
+            submission = {'file': None}
+            
+        return render(request, 'courses/View_assignment.html', 
+                      {'user': user, 'notifies': notifications, 
+                       'assignment': assignment, 'submisson': submission})
 
 def view_grading(request, slug, assignmentname, student):
     course = Class.objects.get(slug=slug)
