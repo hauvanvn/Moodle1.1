@@ -22,9 +22,47 @@
     {% endblock extra_css %}
 </head>
 <body>
+    <div class="container-fluid d-flex top-bar" style="background-image:linear-gradient( 
+        to right, #B0A8EA 0%, #DCBFFF 100%); z-index: 9999;">
+        <nav class="navbar navbar-expand">
+            <div class="container-fluid">
+                <a class="navbar-brand" role="button" href="{% url 'home' %}">
+                    <img src="{% static 'img/home/logo.png' %}" alt="logo" class="img-fluid" style="max-width: 80%;">
+                </a>
+                <div class="navbar-nav">
+                    <a href="{% url 'home' %}" class="nav-link fs-4" style = "{% if request.resolver_match.url_name == 'home' %} 
+                                                                            color:#3343A1; font-weight: 700 !important
+                                                                            {% elif request.resolver_match.url_name == 'profile' %}
+                                                                            color:#3343A1; font-weight: 700 !important
+                                                                            {% else %} color:#828282 {% endif %}">
+                        <i class="bi bi-house-fill"></i>
+                        Home
+                    </a>
+
+                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% elif request.resolver_match.url_name == 'class_page' %}
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% elif request.resolver_match.url_name == 'participants' %}
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% elif request.resolver_match.url_name == 'view_announcement' %}
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% elif request.resolver_match.url_name == 'post_announcement' %}
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% elif request.resolver_match.url_name == 'view_material' %}
+                                                                color:#3343A1; font-weight: 700 !important
+                                                            {% else %} color:#828282 {% endif %}">
+                        <i class="bi bi-book-fill"></i>
+                        Courses
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
-            <div class="left-bar col-2 d-flex flex-column justify-content-between bg-white">
+            {% comment %} <div class="left-bar col-2 d-flex flex-column justify-content-between bg-white">
                 <div>
                     <a class="d-flex align-items-center ms-4 mt-4" role="button" href="{% url 'home' %}">
                         <img src="{% static 'img/home/logo.png' %}" alt="logo" class="img-fluid" style="max-width: 80%;">
@@ -67,22 +105,14 @@
 
                 <div></div>
                 <div></div>
-            </div>
+            </div> {% endcomment %}
 
-            <div class="col-8 border-1 rounded-5 p-4">
-                {% block header %}
-                    <div class="d-flex flex-row-reverse">
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none"><i class="bi bi-box-arrow-right"></i></button>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='{% url 'home' %}';" style="--bs-btn-border-color: none"><i class="bi bi-bell"></i></button>
-                    </div>
-                    <hr>
-                {% endblock header %}
-
+            <div class="col-10 border-1 rounded-5 p-4">
                 {% block content %}
                 {% endblock content %}
             </div>
 
-            <div class="col-2 offset-10 bg-white min-vh-100" style="position: fixed;">
+            <div class="col-2 offset-10 bg-white" style = "position: fixed">
                 <div class=" mt-5 mb-2">
                     <a href="{% url 'users:profile' %}" class="d-flex flex-column align-items-center link-dark link-underline link-underline-opacity-0">
                         <img src="{{ user.avatar.url }}" alt="avatar" width="150" height="150" class="img-fluid" style="border-radius: 50%;"> 
@@ -123,9 +153,24 @@
 
                     <a href="#" class="text-center fst-italic link-dark link-underline link-underline-opacity-0">View all notifications</a>
                 </div>
-                    
-                </div>
-                
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="background-image:linear-gradient( 
+        to right, #B1A9EB 0%, #DCBFFF 100%);">
+        <div class="row" >
+            <div class="col-auto">
+                © 2024 Moodle_1.1, Inc.
+            </div>
+            <div class="col-auto">
+                © 2024 Moodle_1.1, Inc.
+            </div>
+            <div class="col-auto">
+                © 2024 Moodle_1.1, Inc.
+            </div>
+            <div class="col-auto">
+                © 2024 Moodle_1.1, Inc.
             </div>
         </div>
     </div>

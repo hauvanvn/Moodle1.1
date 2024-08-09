@@ -24,12 +24,22 @@ body{
     max-width: 100%;
     height: auto;
 }        
-.left-bar, .right-bar {
+.left-bar {
     position: sticky;
     top: 0;
     height: 100vh;
     overflow-y: auto; /* Cho phép cuộn khi nội dung vượt quá kích thước */
 }
+
+.right-bar {
+    position: sticky;
+}
+
+.top-bar {
+    position: sticky;
+    top: 0;
+}
+
 .row-equal-height {
     display: flex;
     align-items: stretch; /* Đảm bảo các cột căn chỉnh chiều cao theo chiều dọc */
