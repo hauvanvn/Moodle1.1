@@ -37,3 +37,8 @@ body{
     gap: 20px; /* Khoảng cách giữa các cột */
     margin-bottom: 20px; /* Khoảng cách giữa các hàng */
 }
+
+.hr {
+    border: 1px solid #ccc;
+    width: 100%;
+}
