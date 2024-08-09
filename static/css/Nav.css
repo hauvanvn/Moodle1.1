@@ -30,3 +30,7 @@ body{
     height: 100vh;
     overflow-y: auto; /* Cho phép cuộn khi nội dung vượt quá kích thước */
 }
+.row-equal-height {
+    display: flex;
+    align-items: stretch; /* Đảm bảo các cột căn chỉnh chiều cao theo chiều dọc */
+}

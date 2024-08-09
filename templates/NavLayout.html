@@ -34,7 +34,11 @@
                 <div>
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item fs-4">
-                            <a href="{% url 'home' %}" class="nav-link" style = "{% if request.resolver_match.url_name == 'home' %} color:#3343A1; font-weight: 700 !important{% else %} color:#828282 {% endif %}">
+                            <a href="{% url 'home' %}" class="nav-link" style = "{% if request.resolver_match.url_name == 'home' %} 
+                                                                                    color:#3343A1; font-weight: 700 !important
+                                                                                 {% elif request.resolver_match.url_name == 'profile' %}
+                                                                                    color:#3343A1; font-weight: 700 !important
+                                                                                 {% else %} color:#828282 {% endif %}">
                                 <i class="bi bi-house-fill"></i>
                                 Home
                             </a>

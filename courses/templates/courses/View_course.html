@@ -27,7 +27,7 @@ Course: {{ course }}
                         </div>
                         <div class="col-11">
                             {% if file.type == "FILE" %}
-                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                             {% else %}
                                 <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                             {% endif %}
@@ -47,7 +47,7 @@ Course: {{ course }}
                         </div>
                         <div class="col-11">
                             {% if file.type == "FILE" %}
-                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                                <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                             {% else %}
                                 <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                             {% endif %}
@@ -57,5 +57,20 @@ Course: {{ course }}
                 <br>
             {% endif %}
         {% endfor %}
+    <h4 style="color:#3343A1">Assignment</h4>
+        {% for assignment in assignments %}
+                <div class="card p-4 custom-card">
+                    <div class="row align-items-center">
+                        <div class="col-1">
+                            <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                        </div>
+                        <div class="col-11 d-flex align-items-center">
+                                <a href="{% url 'courses:view_assignment' slug=course.slug assignmentname=assignment.id %}" class="nav-link">{{ assignment.title }}</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+        {% endfor %}
+    
 </div>
 {% endblock content %}

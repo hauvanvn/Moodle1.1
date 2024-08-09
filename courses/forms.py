@@ -1,5 +1,5 @@
 from django import forms
-from .models import FileUpload, Notification
+from .models import FileUpload, Notification, Assignment
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 class FileUploadForm(forms.ModelForm):
@@ -17,3 +17,8 @@ class AnnouncementForm(forms.ModelForm):
                   attrs={"class": "django_ckeditor_5"}, config_name="extends"
             )
         }
+
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ('author', 'ForClass', 'title', 'file', 'date_closed')

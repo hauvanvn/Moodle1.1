@@ -2,8 +2,7 @@ from django.db import models
 from users.models import User, file_size
 import os
 from django.dispatch import receiver
-from django.utils import timezone
-from django.utils.timesince import timesince
+import uuid
 import datetime
 
 from django_ckeditor_5.fields import CKEditor5Field
@@ -77,15 +76,21 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.author.first_name + " " + self.author.last_name + ": " + self.title
-    
+
+def upload_assignment_file_path_handle(instance, filename):
+    return 'courses/{c_id}/assignments/{id}/{file}'.format(c_id=instance.ForClass.pk, id=instance.id, file=filename)
+
 class Assignment(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(
+         primary_key = True,
+         default = uuid.uuid4,
+         editable = False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     ForClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
-    text = models.TextField()
+    file = models.FileField(blank=True, null=True, upload_to=upload_assignment_file_path_handle, validators=[file_size])
 
-    date_opened = models.DateTimeField()
+    date_opened = models.DateTimeField(auto_now_add=True)
     date_closed = models.DateTimeField()
 
     def __str__(self):
@@ -108,6 +113,7 @@ class Submission(models.Model):
         return self.ForAssignment.title + " - " + self.author.username
 
 @receiver(models.signals.post_delete, sender=FileUpload)
+@receiver(models.signals.post_delete, sender=Assignment)
 @receiver(models.signals.post_delete, sender=Submission)
 def auto_delete_material(sender, instance, **kwargs):
     if instance.file:

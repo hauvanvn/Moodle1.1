@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style_nav.css">
-    <link rel="stylesheet" href="style_assignment.css">
+    <link rel="stylesheet" href="{% static "css/Nav.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_assignment.css" %}">
     <title>Course</title>
     <style>
         .custom-card {
@@ -114,14 +116,14 @@
                 <hr>
                 <br>
                 <div class="container">
-                    <h2 style="color:#3343A1"><b>Introduction to Artificial Intelligence</b></h2>
+                    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
                     <div class="box_course">
-                        <a href="View_course.html">Course</a>
-                        <a href="View_participants.html">Participants</a>
-                        <a href="View_assignment_teacher.html" class="active">Grades</a>
+                        <a href="{% url "courses:class_page" slug=course.slug %}">Course</a>
+                        <a href="{% url "courses:participants" slug=course.slug %}">Participants</a>
+                        <a href="" class="active">Grades</a>
                     </div>
                     <br>
-                    <h4 style="color:#3343A1">Submissions: Homework 1</h4>
+                    <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
                     <br>
                     <table class="table_ass">
                         <tr>
@@ -130,135 +132,71 @@
                             <th>Grading</th>
                             <th>Submission time</th>
                         </tr>
+                        {% for submit in submissions %}
                         <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
+                            <td>{{ submit.student }}</td>
+                            {% if submit.submit.grade %}
+                                <td>{{ submit.submit.grade }}</td>
+                            {% else %}
+                                <td>--</td>
+                            {% endif %}
+                            {% if submit.submit.author %}
+                                <td><a href="{% url "courses:view_grading" slug=course.slug assignmentname=assignment.id student=submit.submit.author %}">Grade this assignment</a></td>
+                            {% else %}
+                            <td><a href="#">Grade this assignment</a></td>
+                            {% endif %}
+                            <td>{{ submit.submit.date_upload }}</td>
                         </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr> 
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
-                        <tr>
-                            <td>22127001</td>
-                            <td>--</td>
-                            <td><a href="">Grade this assignment</a></td>
-                            <td>19:20:45 25/07/2024</td>
-                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
                 <br>
-                <div class="pagination">
-                    <a href="" style="color: #828282;">< &nbsp Previous</a>
-                    <a href="" class="active">1</a>
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">Next &nbsp ></a>
+                <div class="container-fluid d-flex justify-content-center">
+                    <div class="pagination">
+                        {% if submissions.has_previous %}
+                            <a href="?page={{ submissions.previous_page_number }}">< &nbsp Previous</a>
+                        {% elif not submissions.has_previous %}
+                            <a href="#" style="color: #828282;">< &nbsp Previous</a>
+                        {% endif %}
+                        
+                        {% for i in submissions.paginator.page_range %}
+                            {% if i == 1 %}
+                                {% if submissions.number == i %}
+                                    <a class=" active" href="">{{ i }}</a>
+                                {% else %}
+                                    <a class="" href="?page={{ i }}">{{ i }}</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if i != 1 and i != submissions.paginator.page_range|last %}
+                                {% if submissions.number == i %}
+                                    <a class=" active" href="">{{ i }}</a>
+                                {% else %}
+                                    {% if submissions.number|add:-4 == i %}
+                                        <a class="" href="">...</a>
+                                    {% endif %}
+                                    {% if submissions.number|add:3 >= i and submissions.number|add:-3 <= i %}
+                                        <a class="" href="?page={{ i }}">{{ i }}</a>
+                                    {% endif %}
+                                    {% if submissions.number|add:4 == i %}
+                                        <a class="" href="">...</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            {% if i == submissions.paginator.page_range|last %}
+                                {% if submissions.number == i %}
+                                    <a class=" active" href="">{{ submissions.paginator.page_range|last }}</a>
+                                {% else %}
+                                    <a class="" href="?page={{ submissions.paginator.page_range|last }}">{{ submissions.paginator.page_range|last }}</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                
+                        {% if submissions.has_next %}
+                            <a href="?page={{ submissions.next_page_number }}">Next &nbsp ></a>
+                        {% elif not submissions.has_next %}
+                            <a href="#" style="color: #828282;">Next &nbsp ></a>
+                        {% endif %}
+                    </div>  
                 </div>
             </div>
             <!--    End courses     -->
