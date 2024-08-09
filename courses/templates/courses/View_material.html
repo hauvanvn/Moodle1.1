@@ -32,7 +32,7 @@
                 </div>
                 <div class="col">
                     <div class="input-group comment-input h-100">
-                        <input name="comment" type="text" class="form-control" placeholder="Insert comment" style="background-color: #EDEDED;">
+                        <input name="comment" type="text" class="form-control border-0" placeholder="Insert comment" style="background-color: #EDEDED;">
                     </div>
                 </div>
             </div>
@@ -44,13 +44,13 @@
         </form>
         <hr>
         {% for comment in comments %}
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col-1">
                     <img src="{{ comment.user.avatar.url }}" alt="avatar" width = "100%" class="img-fluid" style="border-radius: 50%">
                 </div>
                 <div class="col">
-                    <div class="card comment-card">
-                        <div class="card-body" style="background-color: #EDEDED;">
+                    <div class="card comment-card rounded-4 border-0">
+                        <div class="card-body rounded-4" style="background-color: #EDEDED;">
                             <h5 class="card-title mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
                             <p class="card-text">{{ comment.text }}</p>
                         </div>
