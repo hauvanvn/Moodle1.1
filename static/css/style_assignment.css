@@ -1,3 +1,15 @@
+.custom-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-ellipsis {
+    width: 200px; /* Đặt chiều rộng cố định */
+    white-space: nowrap; /* Không xuống dòng */
+    overflow: hidden; /* Ẩn phần bị tràn */
+    text-overflow: ellipsis; /* Thêm dấu ba chấm */
+}
+
 .pagination {
     align-items: auto;
     text-align: center;
@@ -70,4 +82,13 @@
 
 .table_ass tr:nth-child(odd) {
     background-color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.col-w {
+    width: calc((100% - 250px)/3);
 }

@@ -19,17 +19,22 @@ Course
     <div class="box_course">
         <a href="{% url 'courses:class_page' slug=course.slug %}">Course</a>
         <a href="#" class="active">Participants</a>
-        <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+        {% if user.is_staff and not user.is_superuser %}
+            <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+        {% else %}
+            <a href="#">Grade</a>
+        {% endif %}
+        
     </div> 
     <br>
 
     <h4 style="color:#3343A1">Enrolled users</h4>
     <br>
-    <table border="table_ass">
+    <table border="table_ass mb-4">
         <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-            <th width="310">Name</th>
-            <th width="310">Role</th>
-            <th width="310">Class</th>
+            <th width="355">Name</th>
+            <th width="355">Role</th>
+            <th width="355">Class</th>
         </tr>
         {% for participant in participants %}
             {% if forloop.counter|divisibleby:2 %}
