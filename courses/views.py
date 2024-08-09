@@ -227,9 +227,9 @@ def view_assignment(request, slug, assignmentname):
     else:
         # Student view
         if Submission.objects.filter(author=user).exists():
-            submission = Submission.objects.get(author=user)
+            submission = Submission.objects.get(author=user).file.name.split('/')[-1]
         else:
-            submission = {'file': None}
+            submission = "--"
             
         return render(request, 'courses/View_assignment.html', 
                       {'user': user, 'notifies': notifications, 
