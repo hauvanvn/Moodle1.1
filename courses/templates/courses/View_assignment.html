@@ -81,10 +81,10 @@
                 <hr>
                 <table>
                     <tr align="center" style="color: white; background-color: #B9ADEE">
-                        <th class = "col-w">Release</th>
-                        <th class = "col-w">Due</th>
-                        <th class = "col-w">Time remaining</th>
-                        <th width = "250px">Submission</th>
+                        <th class="col-w">Release</th>
+                        <th class="col-w">Due</th>
+                        <th class="col-w">Time remaining</th>
+                        <th width="250px">Submission</th>
                     </tr>
                     <tr align="center" style="background-color: white">
                         <td>{{ assignment.date_opened }}</td>
@@ -107,7 +107,8 @@
                 <br>
                 <div class="d-grid gap-3 d-md-flex justify-content-md-end">
                     <button type="button" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Edit submission</button>
-                    <button type="button" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Add submission</button>
+                    <input type="file" id="actual-btn" hidden/>
+                    <label for="actual-btn" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Add submission</label>
                 </div>
             </div>
             <!--    End view     -->
@@ -124,5 +125,11 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('actual-btn').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
 </body>
 </html>
