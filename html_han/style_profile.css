@@ -7,6 +7,13 @@
     object-fit: cover;
 }
 
+.crop {
+    width:300px;
+    height:300px;
+    object-fit: cover;
+    object-position: 50% 50%; /* ngoài ra bạn có thể thêm cái này để xác định vị trí hình ảnh trong box */
+}
+
 .button {
     color: #828282;
 }
