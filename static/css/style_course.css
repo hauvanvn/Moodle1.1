@@ -22,26 +22,6 @@
     border-radius: 5px;
 }
 
-.box_object {
-    text-align: left;
-}
-
-.box_object a {
-    display: inline-block;
-    padding: 40px 400px;
-    text-decoration: none;
-    color: black;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-}
-
-.box_object a:hover:not(.active) {
-    background-color: #ddd;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 .custom-card {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -60,13 +40,7 @@
 .illustration {
     max-width: 100%;
     height: auto;
-}        
-.left-bar, .right-bar {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto; /* Cho phép cuộn khi nội dung vượt quá kích thước */
-}
+} 
 .text-ellipsis {
         width: 200px; /* Đặt chiều rộng cố định */
         white-space: nowrap; /* Không xuống dòng */
@@ -74,7 +48,7 @@
         text-overflow: ellipsis; /* Thêm dấu ba chấm */
 }
 
-  .btn.active {
-    background-color: #666;
-    color: white;
-  }
+.btn.active {
+background-color: #666;
+color: white;
+}

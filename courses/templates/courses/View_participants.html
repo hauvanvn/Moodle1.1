@@ -7,6 +7,10 @@
 Course
 {% endblock title %}
 
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static 'css/style_participants.css' %}">
+{% endblock extra_attach %}
+
 {% block content %}
 
 <br>
@@ -15,8 +19,10 @@ Course
     <div class="box_course">
         <a href="{% url 'courses:class_page' slug=course.slug %}">Course</a>
         <a href="#" class="active">Participants</a>
-    </div>
+        <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+    </div> 
     <br>
+
     <h4 style="color:#3343A1">Enrolled users</h4>
     <br>
     <table border="table_ass">

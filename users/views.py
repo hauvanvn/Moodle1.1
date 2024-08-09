@@ -111,6 +111,6 @@ def View_Profile(request):
             user.avatar = request.FILES
             user.save()
             messages.success(request, "Change avatar successful!")
-            return redirect('uses:profile')
+            return redirect('users:profile')
 
     return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications})

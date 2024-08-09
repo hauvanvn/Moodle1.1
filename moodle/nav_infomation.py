@@ -5,6 +5,6 @@ def getIn4(request):
     notifications = []
 
     if Notification.objects.exists():
-        notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')[:3]
+        notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')[:4]
 
     return user, notifications

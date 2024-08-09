@@ -6,6 +6,10 @@
 Course: {{ course }}
 {% endblock title %}
 
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static 'css/style_course.css' %}">
+{% endblock extra_attach %}
+
 {% block content %}
 <br>
 <div class="container">

@@ -5,6 +5,26 @@ body{
     background-color: #F8F9FE;
 }
 
+.top-bar {
+    position: sticky;
+    top: 0;
+}
+
+.box_nav {
+    text-align: left;
+}
+
+.box_nav a {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+}
+
+.box_nav a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
 .custom-card {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -17,30 +37,16 @@ body{
 .custom-button:hover {
     background-color: #4060d8;
 }
+
 .text-secondary {
     color: #6c757d !important;
 }
 .illustration {
     max-width: 100%;
     height: auto;
-}        
-.left-bar {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto; /* Cho phép cuộn khi nội dung vượt quá kích thước */
-}
+}         
 
-.right-bar {
-    position: sticky;
-}
-
-.top-bar {
-    position: sticky;
-    top: 0;
-}
-
-.row-equal-height {
+ .row-equal-height {
     display: flex;
     align-items: stretch; /* Đảm bảo các cột căn chỉnh chiều cao theo chiều dọc */
 }

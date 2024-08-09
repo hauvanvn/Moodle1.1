@@ -1,37 +1,3 @@
-.custom-card {
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-    width: 450px;
-}
-.custom-button {
-    background-color: #507df0;
-    color: white;
-    border-radius: 20px;
-}
-.custom-button:hover {
-    background-color: #4060d8;
-}
-.text-secondary {
-    color: #6c757d !important;
-}
-.illustration {
-    max-width: 100%;
-    height: auto;
-}        
-.left-bar, .right-bar {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto; /* Cho phép cuộn khi nội dung vượt quá kích thước */
-}
-.text-ellipsis {
-        width: 200px; /* Đặt chiều rộng cố định */
-        white-space: nowrap; /* Không xuống dòng */
-        overflow: hidden; /* Ẩn phần bị tràn */
-        text-overflow: ellipsis; /* Thêm dấu ba chấm */
-}
-
 .avatar {
     width: 300px;
     height: 300px;
@@ -62,8 +28,8 @@
 input[type="file"] {
     display: none;
 }
+
 .custom-img-upload {
-    /* border: 1px solid #ccc; */
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;

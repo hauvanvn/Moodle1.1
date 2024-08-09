@@ -165,6 +165,7 @@ customColorPalette = [
     ]
 
 CKEDITOR_5_CUSTOM_CSS = 'css/ckeditor5/admin_dark_mode_fix.css'
+CKEDITOR_5_FILE_STORAGE = "moodle.storage.CustomStorage"
 
 CKEDITOR_5_CONFIGS = {
     'default': {
