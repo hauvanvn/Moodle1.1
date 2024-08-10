@@ -230,9 +230,9 @@ def view_assignment(request, slug, assignmentname):
             submission = Submission.objects.get(author=user).file.name.split('/')[-1]
         else:
             submission = "--"
-            
+        
         return render(request, 'courses/View_assignment.html', 
-                      {'user': user, 'notifies': notifications, 
+                      {'user': user, 'notifies': notifications, 'course': course,
                        'assignment': assignment, 'submission': submission})
 
 def view_grading(request, slug, assignmentname, student):
