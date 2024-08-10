@@ -19,3 +19,6 @@ def home(request):
     user, notifications = getIn4(request)
 
     return render(request, 'View_home.html', {'user': user, 'courses' : courses, 'notifies' : notifications})
+
+def Http404NotFound(request):
+    return render(request, '404.html')

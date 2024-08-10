@@ -7,10 +7,10 @@ from .forms import FileUploadForm, AnnouncementForm, AssignmentForm
 from users.models import User
 
 from moodle.nav_infomation import getIn4
+from moodle.views import Http404NotFound
+from django.http import HttpResponse
 
 import datetime
-
-from django.http import HttpResponse
 
 # Create your views here.
 @login_required(login_url='users:login')
@@ -32,7 +32,7 @@ def view_class_page(request, slug):
     course = Class.objects.get(slug=slug)
     user, notifications = getIn4(request)
     if user not in course.participants.all():
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
 
     files = FileUpload.objects.filter(inClass=course.id)
     assignments = Assignment.objects.filter(ForClass=course.id)
@@ -126,7 +126,7 @@ def view_participants(request, slug):
     course = Class.objects.get(slug=slug)
     user, notifications = getIn4(request)
     if user not in course.participants.all():
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
 
     users = User.objects.filter(id__in=course.participants.all()).order_by('-is_superuser', '-is_staff', 'username')
     page = Paginator(users, 20)
@@ -146,7 +146,7 @@ def view_participants(request, slug):
 def view_material(request, slug, filename):
     user, notifications = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
     
     file = FileUpload.objects.get(id=filename)
     comments = Comment.objects.filter(file=file).order_by('-date_created')
@@ -164,7 +164,7 @@ def view_material(request, slug, filename):
 def view_announcement(request, slug, id):
     user, notifications = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
     
     notify = Notification.objects.get(id=id)
 
@@ -175,7 +175,7 @@ def view_post_announcement(request, slug):
     course = Class.objects.get(slug=slug)
     user, notifications = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
 
     if request.method == "POST":
         title = request.POST.get('title')
@@ -195,7 +195,7 @@ def view_assignment(request, slug, assignmentname):
     user, notifications = getIn4(request)
     course = Class.objects.get(slug=slug)
     if user not in course.participants.all():
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
     
     assignment = Assignment.objects.get(id=assignmentname)
 
@@ -233,12 +233,12 @@ def view_assignment(request, slug, assignmentname):
             
         return render(request, 'courses/View_assignment.html', 
                       {'user': user, 'notifies': notifications, 
-                       'assignment': assignment, 'submisson': submission})
+                       'assignment': assignment, 'submission': submission})
 
 def view_grading(request, slug, assignmentname, student):
     course = Class.objects.get(slug=slug)
     user, notifications = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
-        return HttpResponse("404 Not found!")
+        return Http404NotFound(request)
 
     return HttpResponse("Grading")
