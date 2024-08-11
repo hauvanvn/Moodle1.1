@@ -15,7 +15,97 @@
         {% endblock %}
     </title>
     <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
+    <style>
+        .calendar {
+            display: flex;
+            width: 100%;
+            height: auto;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5%;
+        }
 
+        .calendar .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Distributes space between the buttons and the month */
+            width: 100%;
+            padding: 10px;
+        }
+        
+        .calendar .header button {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0; /* Prevents buttons from shrinking too much */
+            border-radius: 50%;
+        }
+        
+        .calendar .month {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #618CEE;
+            margin: 0 10px; /* Optional: adds a small margin for spacing */
+        }
+
+        .calendar .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar .day {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #618CEE;
+            width: 14.28%;
+            text-align: center;
+        }
+
+        .calendar .dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            align-items: center;
+        }
+
+        .calendar .date {
+            color: #618CEE;
+            width: 14.28%;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            transition: 0.3s;
+        }
+
+        .calendar .date:hover {
+            background-color: #618CEE;
+            color: #fff;
+        }
+
+        .calendar .date.today {
+            background-color: #618CEE;
+            color: #fff;
+        }
+
+        .calendar .date.inactive {
+            color: #ccc;
+        }
+
+        .calendar .date.inactive:hover {
+            background-color: transparent;
+            color: #ccc;
+        }
+
+    </style>
     {% block extra_attach %}
     {% endblock extra_attach %}
 </head>
@@ -86,7 +176,7 @@
                     </a>
                 </div>
                 <hr>
-
+                <!--
                 <div class="d-flex flex-column mt-2">
                     <p class="fs-6 fw-bold fst-italic" style="color: #3343A1">Notifications:</p>
 
@@ -110,6 +200,28 @@
                     {% endfor %}
 
                     <a href="#" class="text-center fst-italic link-dark link-underline link-underline-opacity-0">View all notifications</a>
+                </div>
+                -->
+                <div class="d-flex calendar">
+                    <div class="calendar header">
+                        <button id="prev">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <div class="calendar month" id="monthYear"></div>
+                        <button id="next">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar days">
+                        <div class="day">Mon</div>
+                        <div class="day">Tue</div>
+                        <div class="day">Wed</div>
+                        <div class="day">Thu</div>
+                        <div class="day">Fri</div>
+                        <div class="day">Sat</div>
+                        <div class="day">Sun</div>
+                    </div>
+                    <div class="calendar dates" id="dates"></div>
                 </div>
             </div>
         </div>
@@ -144,7 +256,62 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        const monthYear = document.getElementById('monthYear');
+        const dates = document.getElementById('dates');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+
+        let currentDate = new Date();
+
+        const updateCalendar = () => {
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth();
+        
+            const firstDay = new Date(currentYear, currentMonth, 0);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const totalDays = lastDay.getDate();
+            const firstDayIndex = firstDay.getDay();
+        
+            const monthYearStr = currentDate.toLocaleString('default', { month: 'long' }) + ' ' + currentYear;
+            monthYear.innerHTML = monthYearStr;
+        
+            let days = '';
+            for (let x = firstDayIndex; x > 0; x--) {
+                const prevDate = new Date(currentYear, currentMonth, 1 - x);
+                days += `<div class="date inactive">${prevDate.getDate()}</div>`;
+            }
+        
+            for (let i = 1; i <= totalDays; i++) {
+                if (i === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()) {
+                    days += `<div class="date today">${i}</div>`;
+                } else {
+                    days += `<div class="date">${i}</div>`;
+                }
+            }
+        
+            const remainingDays = 7 - (firstDayIndex + totalDays) % 7;
+            for (let j = 1; j <= remainingDays && remainingDays < 7; j++) {
+                const nextDate = new Date(currentYear, currentMonth + 1, j);
+                days += `<div class="date inactive">${nextDate.getDate()}</div>`;
+            }
+        
+            dates.innerHTML = days;
+        }
+        
+
+        prev.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        next.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+        updateCalendar();
+    </script>
 </body>
 </html>
 
