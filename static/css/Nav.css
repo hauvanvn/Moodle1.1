@@ -46,7 +46,11 @@ body{
     height: auto;
 }         
 
- .row-equal-height {
+.row-equal-height {
     display: flex;
     align-items: stretch; /* Đảm bảo các cột căn chỉnh chiều cao theo chiều dọc */
+}
+
+.pad-notify{
+    padding: 50px 50px 0px 50px;
 }

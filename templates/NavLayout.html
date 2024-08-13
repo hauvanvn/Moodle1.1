@@ -148,8 +148,40 @@
         </nav>
 
         <div class="ms-auto d-flex align-items-center" style="color: #FFFFFF;">
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'home' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-bell"></i></button>
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-box-arrow-right"></i></button>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary fs-5 dropdown-toggle" type="button" data-bs-toggle="dropdown" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
+                    <i class="bi bi-bell"></i>
+                </button>
+                <ul class="dropdown-menu pt-4 px-4" style="--bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
+                    {% for notify in notifies %}
+                        <li>
+                            <div class="dropdown-item card mb-3" style="background: rgba(229, 209, 252, 0.53)">
+                                <div class="card-body" style="--bs-card-spacer-y: 0">
+                                    <a href="#" class="link-dark link-underline link-underline-opacity-0"> 
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-auto fs-5" style="color: #717171;">
+                                                <i class="bi bi-bell"></i>
+                                            </div>
+        
+                                            <div class="col">
+                                                <p></p>
+                                                <p class="fw-light" style="color: #56407B; --bs-dropdown-link-active-bg: none; white-space: pre-wrap">{{ notify.title }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <div class="d-flex flex-row-reverse align-items-center" style="background: rgba(170, 148, 205, 0.87);">
+                        <p>View all notifications</p>
+                    </div>
+                </ul>
+                
+            </div>
+            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
+                <i class="bi bi-box-arrow-right"></i>
+            </button>
         </div>
     </div>
 
@@ -176,7 +208,7 @@
                     </a>
                 </div>
                 <hr>
-                
+
                 <div class="d-flex calendar">
                     <div class="calendar header d-flex flex-row">
                         <button id="prev">
