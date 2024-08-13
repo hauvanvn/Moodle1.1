@@ -1,4 +1,4 @@
-{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{% static 'css/Nav.css' %}">
+    <link rel="stylesheet" href="Grading.css">
     <title>
-        {% block title %}
             Moodle 1.1
-        {% endblock %}
     </title>
     <link rel="icon" type="image/icon" href="{% static 'img/icon.ico' %}">
     <style>
@@ -106,8 +104,6 @@
         }
 
     </style>
-    {% block extra_attach %}
-    {% endblock extra_attach %}
 </head>
 <body>
     <div class="container-fluid d-flex top-bar" style="background-image:linear-gradient( 
@@ -115,31 +111,15 @@
         <nav class="navbar navbar-expand">
             <div class="container-fluid">
                 <a class="navbar-brand" role="button" href="{% url 'home' %}">
-                    <img src="{% static "img/home/logo.png" %}" alt="logo" class="img-fluid" style="max-width: 80%;">
+                    <img src="#" alt="logo" class="img-fluid" style="max-width: 80%;">
                 </a>
                 <div class="navbar-nav box_nav gap-4">
-                    <a href="{% url 'home' %}" class="nav-link fs-5 rounded-4" style = "{% if request.resolver_match.url_name == 'home' %} 
-                                                                            color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                                            {% elif request.resolver_match.url_name == 'profile' %}
-                                                                            color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                                            {% else %} color:#FFFFFF {% endif %}">
+                    <a href="{% url 'home' %}" class="nav-link fs-5 rounded-4" >
                         <i class="bi bi-house-fill"></i>
                         Home
                     </a>
 
-                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5  rounded-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% elif request.resolver_match.url_name == 'class_page' %}
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% elif request.resolver_match.url_name == 'participants' %}
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% elif request.resolver_match.url_name == 'view_announcement' %}
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% elif request.resolver_match.url_name == 'post_announcement' %}
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% elif request.resolver_match.url_name == 'view_material' %}
-                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% else %} color:#FFFFFF {% endif %}">
+                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5  rounded-4" >
                         <i class="bi bi-book-fill"></i>
                         Courses
                     </a>
@@ -148,16 +128,51 @@
         </nav>
 
         <div class="ms-auto d-flex align-items-center" style="color: #FFFFFF;">
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'home' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-bell"></i></button>
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-box-arrow-right"></i></button>
+            <button type="button" class="btn btn-outline-secondary fs-5" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-bell"></i></button>
+            <button type="button" class="btn btn-outline-secondary fs-5" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff"><i class="bi bi-box-arrow-right"></i></button>
         </div>
     </div>
 
     <div class="container-fluid" style="min-height: 90vh">
         <div class="row">
             <div class="col-9 border-1 rounded-5 p-4">
-                {% block content %}
-                {% endblock content %}
+
+                <div class="d-inline-flex align-items-center">
+                    <h2 class="me-2 rounded-2" style="background-color: #B9ADEE; color: white;"><i class="bi bi-file-earmark-text"></i></h2>
+                    <h3 class="fw-bold" style="color: #111B88;">Submissions: Homework 1</h3>
+                </div>
+                
+                <div class="d-flex align-items-center fs-4">
+                    <p class="me-1">StudentID:</p>
+                    <p>22127105</p>
+                    <div class="mt-3 ms-auto d-flex align-items-center">
+                        <p class="me-1">Submissions time:</p>
+                        <p>19:20:45 25/07/2024</p>
+                    </div>
+                </div>
+
+                <div class = "row">
+                    <iframe class="pdf" 
+                        src= "{{ assignment.file.url }}" height="700">
+                    </iframe>
+                </div>
+                <br>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="review" class="form-label">Review:</label>
+                        <textarea class="form-control" id="review" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3 d-inline-flex align-items-center">
+                        <label for="exampleFormControlInput1" class="me-2">Score:</label>
+                        <input type="number" class="form-control" style="width: 70px;" step="0.01" id="exampleFormControlInput1" placeholder="Score">
+                    </div>
+
+                    <div class="d-flex flex-row-reverse">
+                        <button type="submit" style="--bs-btn-color: #111B88; background-color: #FAEBC0"><i class="bi bi-send"></i></button>
+                    </div> 
+                </form>
             </div>
 
             <div class="col bg-white">
@@ -206,7 +221,7 @@
         to right, #B1A9EB 0%, #DCBFFF 100%); color: #FFFFFF">
         <div class="row" >
             <div class="col-3 d-flex align-items-center">
-                <img src="{% static "img/home/letterM1.png" %}" alt="LetterM" class="d-inline-block align-text-center me-4">
+                <img src="#" alt="LetterM" class="d-inline-block align-text-center me-4">
                 © 2024 Moodle_1.1,Inc.
             </div>
             <div class="col-3 d-flex flex-column">

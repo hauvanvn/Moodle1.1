@@ -14,7 +14,7 @@ class AnnouncementForm(forms.ModelForm):
         fields = ('title', 'text', 'author', 'ForClass')
         widgets = {
             'text': CKEditor5Widget(
-                  attrs={"class": "django_ckeditor_5"}, config_name="extends"
+                  attrs={"class": "django_ckeditor_5"}, config_name="announcement"
             )
         }
 

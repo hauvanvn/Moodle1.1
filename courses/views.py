@@ -10,6 +10,7 @@ from moodle.nav_infomation import getIn4
 from moodle.views import Http404NotFound
 from django.http import HttpResponse
 
+from .sendMail import sendNotification
 import datetime
 
 # Create your views here.
@@ -182,7 +183,8 @@ def view_post_announcement(request, slug):
         text = request.POST.get('text')
         form = AnnouncementForm({'title' : title, 'text' : text, 'author' : user, 'ForClass' : course})
         if form.is_valid:
-            form.save()
+            notify = form.save()
+            sendNotification(notify)
             messages.success(request, 'Successfully post announcement!')
             return redirect('courses:class_page', slug=slug)
         else:
@@ -203,8 +205,10 @@ def view_assignment(request, slug, assignmentname):
         # Teacher view
         students_list = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
         submission_list = []
+        numsub = 0
         for student in students_list:
             if Submission.objects.filter(author=student.id).exists():
+                numsub += 1
                 submission = Submission.objects.get(author=student.id)
             else:
                 submission = {'date_upload': '--', 'grade': None, 'author': None}
@@ -222,7 +226,7 @@ def view_assignment(request, slug, assignmentname):
 
         return render(request, 'courses/View_assignment_teacher.html', 
                     {'user': user, 'notifies': notifications, 'course': course,
-                    'numsub': len(submission_list), 'numall': len(students_list),
+                    'numsub': numsub, 'numall': len(students_list),
                         'assignment': assignment, 'submissions': submissions})
     else:
         # Student view
@@ -240,5 +244,12 @@ def view_grading(request, slug, assignmentname, student):
     user, notifications = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
         return Http404NotFound(request)
+    
+    # assignment = Assignment.objects.get(id=assignmentname) 
+    # Student = User.objects.get(id=student)
+    # Submission = 
+    # if request.method == "POST":
 
-    return HttpResponse("Grading")
+
+    return render(request, 'courses/Grading.html',
+                  {'user': user})

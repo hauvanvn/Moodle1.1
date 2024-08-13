@@ -21,6 +21,31 @@ Course
     <br>
     <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
     <br>
+
+    <table>
+        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
+            <th class = "col-w">Release</th>
+            <th class = "col-w">Due</th>
+            <th class = "col-w">Time remaining</th>
+            <th width = "250px">Submission</th>
+        </tr>
+        <tr align="center" style="background-color: rgb(224, 224, 224)">
+            <td>{{ assignment.date_opened }}</td>
+            <td>{{ assignment.date_closed }}</td>
+            <td></td>
+            <td>{{ numsub }}/{{ numall }}</td>
+    </table>
+
+    
+
+    <br>
+    <div class = "row">
+        <iframe class="pdf" 
+            src= "{{ assignment.file.url }}" height="700">
+        </iframe>
+    </div>
+    <br>
+
     <table class="table_ass mb-4">
         <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
             <th width="266">ID</th>

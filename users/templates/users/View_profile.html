@@ -24,7 +24,7 @@ Profile
     <h5 style="color: #3343A1">User detail</h5>
     <div class="row">
         <div class="col-auto text-center">
-            <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar">
+            <img src="{{ user.avatar.url }}" alt="Avatar" class="crop avatar">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="img-upload" class="custom-img-upload mt-2 mb-2">

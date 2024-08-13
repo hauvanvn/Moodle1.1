@@ -3,6 +3,8 @@ from django.conf import settings
 from .models import Notification, CourseClass as Class
 from users.models import User
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.utils import timezone
 from django.urls import reverse
 
@@ -16,6 +18,5 @@ def sendNotification(notification):
     """
     
     sender = settings.EMAIL_HOST_USER
-    #receiver = [st.email for st in students]
-    receiver = [User.objects.get(username='admin').email]
-    send_mail(subject, message, sender, receiver, fail_silently=False)
+    receiver = [User.objects.get(username='admin1').email]
+    send_mail(subject, message=message, from_email=sender, recipient_list=receiver, fail_silently=False, html_message=message)
