@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import CourseClass as Class, FileUpload, Notification, Comment, Assignment, Submission
-from .forms import FileUploadForm, AnnouncementForm, AssignmentForm
+from .forms import FileUploadForm, AnnouncementForm, AssignmentForm, GradingForm
 from users.models import User
 
 from moodle.nav_infomation import getIn4
@@ -239,17 +239,25 @@ def view_assignment(request, slug, assignmentname):
                       {'user': user, 'notifies': notifications, 'course': course,
                        'assignment': assignment, 'submission': submission})
 
-def view_grading(request, slug, assignmentname, student):
+def view_grading(request, slug, assignmentname, submission):
     course = Class.objects.get(slug=slug)
     user, notifications = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
         return Http404NotFound(request)
     
-    # assignment = Assignment.objects.get(id=assignmentname) 
-    # Student = User.objects.get(id=student)
-    # Submission = 
-    # if request.method == "POST":
+    assignment = Assignment.objects.get(id=assignmentname) 
+    submit = Submission.objects.get(id=submission)
+    
+    
+    if request.method == "POST":
+        form = GradingForm(request.POST, instance=submit)
+        if form.is_valid():
+            form.save()
+            return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
+    else:
+        form = GradingForm(instance=submit)
 
 
-    return render(request, 'courses/Grading.html',
-                  {'user': user})
+    return render(request, 'courses/View_grading.html',
+                  {'user': user, 'notifies': notifications, 
+                   'course': course, 'assignment': assignment, 'submit': submit, 'form': form})

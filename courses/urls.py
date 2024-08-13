@@ -28,5 +28,5 @@ urlpatterns = [
     path('<slug:slug>/annoucement/post/', views.view_post_announcement, name='post_announcement'),
     path('<slug:slug>/material/^<str:filename>?/', views.view_material, name='view_material'),
     path('<slug:slug>/assignment/id=^<str:assignmentname>?/', views.view_assignment, name='view_assignment'),
-    path('<slug:slug>/assignment/id=^<str:assignmentname>?/grading-id=<str:student>', views.view_grading, name='view_grading'),
+    path('<slug:slug>/assignment/id=^<str:assignmentname>?/grading-id=?^<str:submission>?', views.view_grading, name='view_grading'),
 ]

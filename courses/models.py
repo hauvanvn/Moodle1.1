@@ -107,7 +107,7 @@ class Submission(models.Model):
     date_upload = models.DateTimeField(auto_now_add=True)
 
     grade = models.FloatField(null=True, blank=True)
-    grade_comment = models.TextField(blank=True, null=True)
+    grade_comment = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
 
     def __str__(self):
         return self.ForAssignment.title + " - " + self.author.username

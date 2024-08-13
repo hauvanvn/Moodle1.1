@@ -32,7 +32,7 @@ Course
         <tr align="center" style="background-color: rgb(224, 224, 224)">
             <td>{{ assignment.date_opened }}</td>
             <td>{{ assignment.date_closed }}</td>
-            <td></td>
+            <td>{{ assignment.date_opened|timesince:assignment.date_closed }}</td>
             <td>{{ numsub }}/{{ numall }}</td>
     </table>
 
@@ -62,7 +62,7 @@ Course
                 <td>--</td>
             {% endif %}
             {% if submit.submit.author %}
-                <td><a href="{% url "courses:view_grading" slug=course.slug assignmentname=assignment.id student=submit.submit.author %}">Grade this assignment</a></td>
+                <td><a href="{% url "courses:view_grading" slug=course.slug assignmentname=assignment.id submission=submit.submit.id %}">Grade this assignment</a></td>
             {% else %}
             <td><a href="#">Grade this assignment</a></td>
             {% endif %}
