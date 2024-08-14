@@ -10,13 +10,13 @@ from moodle.nav_infomation import getIn4
 from moodle.views import Http404NotFound
 from django.http import HttpResponse
 
-from .sendMail import sendNotification
+from .sendMail import sendNotification, Create_Notification_Assignment
 import datetime
 
 # Create your views here.
 @login_required(login_url='users:login')
 def view_class_list(request):
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
 
     courses = []
 
@@ -26,12 +26,12 @@ def view_class_list(request):
 
         courses = Class.objects.filter(participants=user.id).order_by('-date_created')
 
-    return render(request, 'courses/View_courses_list.html', {'user': user, 'notifies': notifications, 'courses': courses})
+    return render(request, 'courses/View_courses_list.html', {'user': user, 'notifies': notifications, 'events': events, 'courses': courses})
 
 @login_required(login_url='users:login')
 def view_class_page(request, slug):
     course = Class.objects.get(slug=slug)
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in course.participants.all():
         return Http404NotFound(request)
 
@@ -91,7 +91,7 @@ def view_class_page(request, slug):
                     return redirect('courses:class_page', slug=slug)
                 else:
                     return render(request, 'courses/View_course_teacher.html', 
-                            {'user': user, 'notifies': notifications, 
+                            {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments, 
                              'form': form, 'aform' : AssignmentForm()})
             else:
@@ -102,11 +102,12 @@ def view_class_page(request, slug):
 
                 if aform.is_valid():
                     aform.save()
+                    Create_Notification_Assignment(aform.instance)
                     messages.success(request, "Upload " + title + "assignment successful!")
                     return redirect('courses:class_page', slug=slug)
                 else:
                     return render(request, 'courses/View_course_teacher.html', 
-                            {'user': user, 'notifies': notifications, 
+                            {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments,
                              'aform': aform, 'form' : FileUploadForm()})
 
@@ -114,18 +115,19 @@ def view_class_page(request, slug):
     # Teacher view
     if user.is_staff and not user.is_superuser:
         return render(request, 'courses/View_course_teacher.html', 
-                  {'user': user, 'notifies': notifications, 
+                  {'user': user, 'notifies': notifications, 'events': events,
                    'course' : course, 'files': files, 'assignments': assignments,
                     'form': FileUploadForm(), 'aform' : AssignmentForm()})
     else:
     # Student view
         return render(request, 'courses/View_course.html', 
-                    {'user': user, 'notifies': notifications, 'course' : course, 'files': files, 'assignments': assignments})
+                    {'user': user, 'notifies': notifications, 'events': events,
+                     'course' : course, 'files': files, 'assignments': assignments})
 
 @login_required(login_url='users:login')
 def view_participants(request, slug):
     course = Class.objects.get(slug=slug)
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in course.participants.all():
         return Http404NotFound(request)
 
@@ -141,11 +143,13 @@ def view_participants(request, slug):
     except EmptyPage:
         participants = page.page(page.num_pages)
 
-    return render(request, 'courses/View_participants.html', {'user': user, 'notifies': notifications, 'participants': participants, 'course' : course})
+    return render(request, 'courses/View_participants.html', 
+                  {'user': user, 'notifies': notifications, 'events': events,
+                   'participants': participants, 'course' : course})
 
 @login_required(login_url='users:login')
 def view_material(request, slug, filename):
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
         return Http404NotFound(request)
     
@@ -159,22 +163,24 @@ def view_material(request, slug, filename):
         return redirect('courses:view_material', slug=slug, filename=filename)
 
     return render(request, 'courses/View_material.html', 
-                  {'user': user, 'notifies': notifications,'file': file, 'comments': comments})
+                  {'user': user, 'notifies': notifications, 'events': events,
+                   'file': file, 'comments': comments})
 
 @login_required(login_url='users:login')
 def view_announcement(request, slug, id):
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
         return Http404NotFound(request)
     
     notify = Notification.objects.get(id=id)
 
-    return render(request, 'courses/View_annoucement.html', {'user': user, 'notifies': notifications, 'notify': notify})
+    return render(request, 'courses/View_annoucement.html', 
+                  {'user': user, 'notifies': notifications, 'events': events, 'notify': notify})
 
 @login_required(login_url='users:login')
 def view_post_announcement(request, slug):
     course = Class.objects.get(slug=slug)
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
         return Http404NotFound(request)
 
@@ -188,13 +194,15 @@ def view_post_announcement(request, slug):
             messages.success(request, 'Successfully post announcement!')
             return redirect('courses:class_page', slug=slug)
         else:
-            return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': form})
+            return render(request, 'courses/Post_annoucement.html', 
+                          {'user': user, 'notifies': notifications, 'events': events, 'form': form})
 
-    return render(request, 'courses/Post_annoucement.html', {'user': user, 'notifies': notifications, 'form': AnnouncementForm()})
+    return render(request, 'courses/Post_annoucement.html', 
+                  {'user': user, 'notifies': notifications, 'events': events, 'form': AnnouncementForm()})
 
 @login_required(login_url='users:login')
 def view_assignment(request, slug, assignmentname):
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     course = Class.objects.get(slug=slug)
     if user not in course.participants.all():
         return Http404NotFound(request)
@@ -225,7 +233,7 @@ def view_assignment(request, slug, assignmentname):
             submissions = page.page(page.num_pages)
 
         return render(request, 'courses/View_assignment_teacher.html', 
-                    {'user': user, 'notifies': notifications, 'course': course,
+                    {'user': user, 'notifies': notifications, 'events': events, 'course': course,
                     'numsub': numsub, 'numall': len(students_list),
                         'assignment': assignment, 'submissions': submissions})
     else:
@@ -236,12 +244,12 @@ def view_assignment(request, slug, assignmentname):
             submission = "--"
         
         return render(request, 'courses/View_assignment.html', 
-                      {'user': user, 'notifies': notifications, 'course': course,
+                      {'user': user, 'notifies': notifications, 'events': events, 'course': course,
                        'assignment': assignment, 'submission': submission})
 
 def view_grading(request, slug, assignmentname, submission):
     course = Class.objects.get(slug=slug)
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
     if user not in course.participants.all() or not(user.is_staff and not user.is_superuser):
         return Http404NotFound(request)
     
@@ -259,5 +267,5 @@ def view_grading(request, slug, assignmentname, submission):
 
 
     return render(request, 'courses/View_grading.html',
-                  {'user': user, 'notifies': notifications, 
+                  {'user': user, 'notifies': notifications, 'events': events,
                    'course': course, 'assignment': assignment, 'submit': submit, 'form': form})

@@ -20,3 +20,16 @@ def sendNotification(notification):
     sender = settings.EMAIL_HOST_USER
     receiver = [User.objects.get(username='admin1').email]
     send_mail(subject, message=message, from_email=sender, recipient_list=receiver, fail_silently=False, html_message=message)
+
+def Create_Notification_Assignment(assignment):
+    course = Class.objects.get(id=assignment.ForClass.id)
+    students = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
+
+    notification = Notification()
+    notification.author = assignment.author
+    notification.ForClass = assignment.ForClass
+    notification.title = assignment.title
+    notification.text = ""
+
+    notification.save()
+    sendNotification(notification)
