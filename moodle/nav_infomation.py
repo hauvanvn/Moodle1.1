@@ -17,4 +17,16 @@ def getIn4(request):
 
         events = Assignment.objects.filter(ForClass__in=courses).order_by('date_opened', 'date_opened')
 
-    return user, notifications, events
+        event_list = []
+        for event in events:
+            datetime = event.date_closed
+            # stringDate = datetime.strftime("%d/%m/%Y")
+            # stringTime = datetime.strftime("%H:%M")
+            # stringDateTime = stringDate + "," + stringTime
+
+            event_list.append(event.title)
+            event_list.append(datetime.strftime("%Y"))
+            event_list.append(datetime.strftime("%m"))
+            event_list.append(datetime.strftime("%d"))
+            
+    return user, notifications, event_list

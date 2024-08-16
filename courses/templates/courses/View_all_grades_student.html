@@ -16,10 +16,10 @@ Course
     <div class="box_course">
         <a href="{% url "courses:class_page" slug=course.slug %}">Course</a>
         <a href="{% url "courses:participants" slug=course.slug %}">Participants</a>
-        <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+        <a href="{% url 'courses:view_all_grades' slug=course.slug %}">Grade</a>
     </div>
     <br>
-    <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
+    <h4 style="color:#3343A1">Submissions: </h4>
     <br>
 
     <table class="table_ass mb-4">
@@ -29,7 +29,13 @@ Course
             <th width="267">Comment</th>
             <th width="267">Submission time</th>
         </tr>
-        {% for submit in submissions %}
+        <tr>
+            <td>Lab 1</td>
+            <td>1</td>
+            <td><a href="{% url 'courses:view_comment' slug=course.slug %}">View comment</a></td>
+            <td>Time</td>
+        </tr>
+        {% comment %} {% for submit in submissions %}
         <tr>
             <td>{{ submit.student }}</td>
             {% if submit.submit.grade %}
@@ -44,7 +50,7 @@ Course
             {% endif %}
             <td>{{ submit.submit.date_upload }}</td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
     </table>
 </div>
 

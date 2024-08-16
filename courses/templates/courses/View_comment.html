@@ -1,0 +1,39 @@
+{% extends "NavLayout.html" %}
+
+{% load static %}
+
+{% block title %}
+Course
+{% endblock title %}
+
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static "css/style_assignment.css" %}">
+<script src="{% static "js/ckeditor5/config.js" %}"></script>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css" />
+{% endblock extra_attach %}
+
+
+{% block content %}
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url "courses:class_page" slug=course.slug %}">Course</a>
+        <a href="{% url "courses:participants" slug=course.slug %}">Participants</a>
+        <a href="{% url 'courses:view_all_grades' slug=course.slug %}">Grade</a>
+    </div>
+    <br>
+    <h4 style="color:#3343A1">Submissions: </h4>
+    <h4 style="color:#3343A1">Grade: </h4>
+    <h4 style="color:#3343A1">Comment: </h4>
+    <br>
+
+    <p>Me tire so yea :))</p>
+
+    <div class="ck-content">
+        <p>
+            {% comment %} {{ notify.text|safe }} {% endcomment %}
+        </p>
+    </div>
+
+</div>
+{% endblock content %}

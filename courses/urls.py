@@ -29,4 +29,6 @@ urlpatterns = [
     path('<slug:slug>/material/^<str:filename>?/', views.view_material, name='view_material'),
     path('<slug:slug>/assignment/id=^<str:assignmentname>?/', views.view_assignment, name='view_assignment'),
     path('<slug:slug>/assignment/id=^<str:assignmentname>?/grading-id=?^<str:submission>?', views.view_grading, name='view_grading'),
+    path('<slug:slug>/grades/', views.view_all_grades, name='view_all_grades'),
+    path('<slug:slug>/randombullshiet', views.view_comment, name='view_comment'),
 ]

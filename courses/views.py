@@ -269,3 +269,25 @@ def view_grading(request, slug, assignmentname, submission):
     return render(request, 'courses/View_grading.html',
                   {'user': user, 'notifies': notifications, 'events': events,
                    'course': course, 'assignment': assignment, 'submit': submit, 'form': form})
+
+def view_all_grades(request, slug):
+    course = Class.objects.get(slug=slug)
+    user, notifications, events = getIn4(request)
+    if user not in course.participants.all() or user.is_staff :
+        return Http404NotFound(request)
+    
+    assignments = Assignment.objects.filter(ForClass=course).order_by('date_opened', 'date_opened')
+    return render(request, 'courses/View_all_grades_student.html',
+                  {'user': user, 'notifies': notifications, 'events': events,
+                   'course': course, 'assignments': assignments})
+
+def view_comment(request, slug):
+    course = Class.objects.get(slug=slug)
+    user, notifications, events = getIn4(request)
+    if user not in course.participants.all() or user.is_staff :
+        return Http404NotFound(request)
+    
+    assignments = Assignment.objects.filter(ForClass=course).order_by('date_opened', 'date_opened')
+    return render(request, 'courses/View_comment.html',
+                  {'user': user, 'notifies': notifications, 'events': events,
+                   'course': course, 'assignments': assignments})
