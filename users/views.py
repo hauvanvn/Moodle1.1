@@ -86,7 +86,7 @@ def LogoutPage(request):
 
 @login_required(login_url='users:login')
 def View_Profile(request):
-    user, notifications = getIn4(request)
+    user, notifications, events = getIn4(request)
 
     if request.method == "POST":
         if "reset_password" in request.POST:
@@ -113,4 +113,4 @@ def View_Profile(request):
             messages.success(request, "Change avatar successful!")
             return redirect('users:profile')
 
-    return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications})
+    return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications, 'events': events})
