@@ -22,12 +22,20 @@ Course
         <a href="{% url 'courses:view_all_grades' slug=course.slug %}">Grade</a>
     </div>
     <br>
-    <h4 style="color:#3343A1">Submissions: </h4>
-    <h4 style="color:#3343A1">Grade: </h4>
+    <h4 style="color:#3343A1">Submissions:</h4>
+    <div class = "row">
+        <iframe class="pdf" 
+            src= "{{ submit.file.url }}" height="700">
+        </iframe>
+    </div>
+    <h4 style="color:#3343A1">Grade: {{ submit.grade }}</h4>
     <h4 style="color:#3343A1">Comment: </h4>
+    <div class="ck-content">
+        <p>
+            {{ submit.grade_comment|safe }}
+        </p>
+    </div>
     <br>
-
-    <p>Me tire so yea :))</p>
 
     <div class="ck-content">
         <p>

@@ -29,28 +29,19 @@ Course
             <th width="267">Comment</th>
             <th width="267">Submission time</th>
         </tr>
-        <tr>
-            <td>Lab 1</td>
-            <td>1</td>
-            <td><a href="{% url 'courses:view_comment' slug=course.slug %}">View comment</a></td>
-            <td>Time</td>
-        </tr>
-        {% comment %} {% for submit in submissions %}
-        <tr>
-            <td>{{ submit.student }}</td>
-            {% if submit.submit.grade %}
-                <td>{{ submit.submit.grade }}</td>
-            {% else %}
-                <td>--</td>
-            {% endif %}
-            {% if submit.submit.author %}
-                <td><a href="{% url "courses:view_grading" slug=course.slug assignmentname=assignment.id submission=submit.submit.id %}">Grade this assignment</a></td>
-            {% else %}
-            <td><a href="#">View comment</a></td>
-            {% endif %}
-            <td>{{ submit.submit.date_upload }}</td>
-        </tr>
-        {% endfor %} {% endcomment %}
+        {% for submit in submissions %}
+            <tr>
+                <td>{{ submit.ForAssignment.title }}</td>
+                {% if submit.grade is None %}
+                    <td>---</td>
+                    <td><a href="#">View comment</a></td>
+                {% else %}
+                    <td>{{ submit.grade}}</td>
+                    <td><a href="{% url 'courses:view_comment' slug=course.slug assignmentname=submit.ForAssignment.id submission=submit.id %}">View comment</a></td>
+                {% endif %}
+                <td>{{ submit.date_upload }}</td>
+            </tr>
+        {% endfor %}
     </table>
 </div>
 

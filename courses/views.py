@@ -238,6 +238,23 @@ def view_assignment(request, slug, assignmentname):
                         'assignment': assignment, 'submissions': submissions})
     else:
         # Student view
+        if request.method == "POST":
+            if "add_assignment" in request.POST:
+                # Add submission
+                new_submit = Submission()
+                new_submit.author = user
+                new_submit.ForAssignment = assignment
+                new_submit.file = request.FILES['submit_file']
+                new_submit.save()
+                messages.success(request, "Submit successful!")
+                return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
+            else:
+                # Delete submission
+                submit = Submission.objects.get(auhor=user)
+                submit.delete()
+                messages.warning(request, "Delete submission successful!")
+                return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
+
         if Submission.objects.filter(author=user).exists():
             submission = Submission.objects.get(author=user).file.name.split('/')[-1]
         else:
@@ -273,21 +290,25 @@ def view_grading(request, slug, assignmentname, submission):
 def view_all_grades(request, slug):
     course = Class.objects.get(slug=slug)
     user, notifications, events = getIn4(request)
-    if user not in course.participants.all() or user.is_staff :
+    if user not in course.participants.all() or user.is_staff:
         return Http404NotFound(request)
     
     assignments = Assignment.objects.filter(ForClass=course).order_by('date_opened', 'date_opened')
+    submissions = Submission.objects.filter(ForAssignment__in=assignments, author=user).order_by('-date_upload')
     return render(request, 'courses/View_all_grades_student.html',
                   {'user': user, 'notifies': notifications, 'events': events,
-                   'course': course, 'assignments': assignments})
+                   'course': course, 'submissions': submissions})
 
-def view_comment(request, slug):
+def view_comment(request, slug, assignmentname, submission):
     course = Class.objects.get(slug=slug)
     user, notifications, events = getIn4(request)
-    if user not in course.participants.all() or user.is_staff :
+
+    assignments = Assignment.objects.get(id=assignmentname)
+    submit = Submission.objects.get(id=submission)
+    if not user == submit.author:
         return Http404NotFound(request)
     
-    assignments = Assignment.objects.filter(ForClass=course).order_by('date_opened', 'date_opened')
-    return render(request, 'courses/View_comment.html',
+    
+    return render(request, 'courses/View_grade_comment.html',
                   {'user': user, 'notifies': notifications, 'events': events,
-                   'course': course, 'assignments': assignments})
+                   'course': course, 'submit': submit})
