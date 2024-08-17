@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style_nav.css">
-    <link rel="stylesheet" href="style_notfications.css">
+    <link rel="stylesheet" href="{% static "css/style_nav.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_notfications.css" %}">
     <title>Profile</title>
     <style>
         .custom-card {
@@ -71,61 +72,19 @@
         <div class="container border bg-white shadow rounded-4 p-4 notifications">
             <div class="col-4" style="overflow-y: auto; overflow-x:hidden;">
                 <div class="box_noti row">
-                    <a href="" class="active nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope"></i>
+                    {% for notify in notifies %}
+                        <a href="" class="nav-link">
+                            <div class="row">
+                                <div class="col-1">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </div>
+                                <div class="col-11">
+                                    <p style="margin: 2px;">{{ notify.title }}</p>
+                                    <p style="margin: 2px;">{{ notify.date_created|timesince }} ago</p>
+                                </div>
                             </div>
-                            <div class="col-11">
-                                <p style="margin: 2px;">CLC_K2022: [TLSV]_Kết quả dự kiến Điểm rèn luyện sinh viên HK2/2023-2024 dành cho sinh viên Chương trình Đề án</p>
-                                <p style="margin: 2px;">18 days 21 hours ago</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="" class="nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
-                            </div>
-                            <div class="col-11">
-                                <p  style="margin: 2px;">CLC_K2022: [TLSV]_Kết quả dự kiến Điểm rèn luyện sinh viên HK2/2023-2024 dành cho sinh viên Chương trình Đề án</p>
-                                <p style="color: #828282; margin: 2px;">18 days 21 hours ago</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="" class="nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
-                            </div>
-                            <div class="col-11">
-                                <p  style="margin: 2px;">CLC_K2022: [TLSV]_Kết quả dự kiến Điểm rèn luyện sinh viên HK2/2023-2024 dành cho sinh viên Chương trình Đề án</p>
-                                <p style="color: #828282; margin: 2px;">18 days 21 hours ago</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="" class="nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
-                            </div>
-                            <div class="col-11">
-                                <p  style="margin: 2px;">CLC_K2022: [TLSV]_Kết quả dự kiến Điểm rèn luyện sinh viên HK2/2023-2024 dành cho sinh viên Chương trình Đề án</p>
-                                <p style="color: #828282; margin: 2px;">18 days 21 hours ago</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="" class="nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
-                            </div>
-                            <div class="col-11">
-                                <p  style="margin: 2px;">CLC_K2022: [TLSV]_Kết quả dự kiến Điểm rèn luyện sinh viên HK2/2023-2024 dành cho sinh viên Chương trình Đề án</p>
-                                <p style="color: #828282; margin: 2px;">18 days 21 hours ago</p>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
 

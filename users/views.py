@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import User, OtpToken, upload_path_handle
+from .models import User, OtpToken
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.core.files.base import ContentFile
 
 from .sendMail import sendOtp
 from django.utils import timezone
 
 from moodle.nav_infomation import getIn4
+from courses.models import Notification
 # Create your views here.
 
 def loginPage(request):
@@ -114,3 +114,12 @@ def View_Profile(request):
             return redirect('users:profile')
 
     return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications, 'events': events})
+
+@login_required(login_url='users:login')
+def view_all_announcements(request):
+    user, notifications, events = getIn4(request)
+
+    notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')
+
+    return render(request, 'users/View_all_anouncements.html', 
+                  {'user': user, 'notifies': notifications, 'events': events})

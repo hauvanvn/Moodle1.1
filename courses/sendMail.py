@@ -18,7 +18,8 @@ def sendNotification(notification):
     """
     
     sender = settings.EMAIL_HOST_USER
-    receiver = [User.objects.get(username='admin1').email]
+    receiver = [User.objects.get(username='admin').email]
+    #receiver = [st.email for st in students]
     send_mail(subject, message=message, from_email=sender, recipient_list=receiver, fail_silently=False, html_message=message)
 
 def Create_Notification_Assignment(assignment):

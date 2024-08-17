@@ -8,5 +8,6 @@ urlpatterns = [
     path('getcode/', views.resetP_getCode, name="resetPass"),
     path('resetPass/', views.resetP, name="resetPass_1"),
     path('logout/', views.LogoutPage, name='logout'),
-    path('profile/', views.View_Profile, name='profile')
+    path('profile/', views.View_Profile, name='profile'),
+    path('annoucements/', views.view_all_announcements, name='all_announcements'),
 ]

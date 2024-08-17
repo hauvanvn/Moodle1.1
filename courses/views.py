@@ -215,9 +215,9 @@ def view_assignment(request, slug, assignmentname):
         submission_list = []
         numsub = 0
         for student in students_list:
-            if Submission.objects.filter(author=student.id).exists():
+            if Submission.objects.filter(author=student.id, ForAssignment=assignment).exists():
                 numsub += 1
-                submission = Submission.objects.get(author=student.id)
+                submission = Submission.objects.get(author=student.id, ForAssignment=assignment)
             else:
                 submission = {'date_upload': '--', 'grade': None, 'author': None}
             submission_list.append({'student': student, 'submit': submission})
@@ -255,8 +255,8 @@ def view_assignment(request, slug, assignmentname):
                 messages.warning(request, "Delete submission successful!")
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
 
-        if Submission.objects.filter(author=user).exists():
-            submission = Submission.objects.get(author=user).file.name.split('/')[-1]
+        if Submission.objects.filter(author=user, ForAssignment=assignment).exists():
+            submission = Submission.objects.get(author=user, ForAssignment=assignment).file.name.split('/')[-1]
         else:
             submission = "--"
         
