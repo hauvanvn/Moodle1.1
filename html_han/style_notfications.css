@@ -1,0 +1,40 @@
+.box_noti {
+    text-align: left;
+}
+
+.box_noti a {
+    display: inline-block;
+    padding: 5px 20px;
+    color: black;
+    background-color: #f1f1f1;
+    margin: 5px;
+}
+
+.box_noti a.active {
+    background-color: rgb(163, 179, 254);
+    color: white;
+}
+
+.box_noti a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.notifications {
+    display: flex;
+    width: 80%;
+    height: 90vh;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: block;
+    object-fit: cover;
+}
+
+.crop-avt {
+    width: 40px;
+    height: 40px;
+    object-position: 50% 50%;
+}
