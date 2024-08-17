@@ -103,6 +103,15 @@
             background-color: transparent;
             color: #ccc;
         }
+
+        {% comment %} Toolip {% endcomment %}
+        .custom-tooltip {
+        }
+
+        .tooltip-inner {
+            text-align: left;
+        }
+
     </style>
     
     {% block extra_attach %}
@@ -142,6 +151,10 @@
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% elif request.resolver_match.url_name == 'view_assignment' %}
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
+                                                            {% elif request.resolver_match.url_name == 'view_all_grades' %}
+                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
+                                                            {% elif request.resolver_match.url_name == 'view_comment' %}
+                                                                color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% else %} color:#FFFFFF {% endif %}">
                         <i class="bi bi-book-fill"></i>
                         Courses
@@ -152,7 +165,9 @@
 
         <div class="ms-auto d-flex align-items-center" style="color: #FFFFFF;">
             <div class="dropdown">
-                <button class="btn btn-outline-secondary fs-5 dropdown-toggle" type="button" data-bs-toggle="dropdown" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
+                <button class="btn btn-outline-secondary fs-5 dropdown-toggle" type="button" data-bs-toggle="dropdown" 
+                style="--bs-btn-border-color: none; --bs-btn-color: #fff; --bs-btn-hover-bg: #ddd;
+                --bs-btn-active-bg: rgb(237, 237, 237); --bs-btn-active-color: #AEA7E9;">
                     <i class="bi bi-bell"></i>
                 </button>
                 <ul class="dropdown-menu pt-4 px-4" style="--bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
@@ -176,9 +191,10 @@
                             </div>
                         </li>
                     {% endfor %}
-                    <div class="d-flex flex-row-reverse align-items-center" style="background: rgba(170, 148, 205, 0.87);">
-                        <a href="#" class="fw-bold link-light link-underline link-underline-opacity-0">View all notifications</a>
+                    <div class="d-flex flex-row-reverse align-items-center">
+                        <a href="#" class="fw-bold link-underline link-underline-opacity-0" style="color: #56407B;">View all notifications</a>
                     </div>
+                    <li><hr class="dropdown-divider"></li>
                 </ul>
                 
             </div>
@@ -246,9 +262,15 @@
             </div>
             <div class="col-3 d-flex flex-column">
                 <p class="fw-bold">About us</p>
-                <p><a href="#" class="link-light link-offset-2 link-underline link-underline-opacity-0">HCMUS website</a></p>
-                <p><a href="#" class="link-light link-offset-2 link-underline link-underline-opacity-0">FIT-HCMUS website</a></p>
-                <p><a href="#" class="link-light link-offset-2 link-underline link-underline-opacity-0">CTDA website</a></p>
+                <p><a href="https://hcmus.edu.vn/" class="link-light link-offset-2 link-underline link-underline-opacity-0">
+                    HCMUS website
+                </a></p>
+                <p><a href="https://www.fit.hcmus.edu.vn/" class="link-light link-offset-2 link-underline link-underline-opacity-0">
+                    FIT-HCMUS website
+                </a></p>
+                <p><a href="https://www.ctda.hcmus.edu.vn/" class="link-light link-offset-2 link-underline link-underline-opacity-0">
+                    CTDA website
+                </a></p>
             </div>
 
             <div class="col-3 d-flex flex-column">
@@ -276,6 +298,8 @@
 
         let currentDate = new Date();
 
+        let content = 'abc';
+
         const updateCalendar = () => {
             const currentYear = currentDate.getFullYear();
             const currentMonth = currentDate.getMonth();
@@ -294,12 +318,15 @@
                 var month = events[i + 2];
                 var day = events[i + 3];
                 Deadline = new Date(year, month - 1, day);
-                Deadline_list[Deadline] = events[i];
+
+                if (!(Deadline in Deadline_list)){
+                    var array = [];
+                    Deadline_list[Deadline] = array;
+                }
+                Deadline_list[Deadline].push(events[i]);
                 i += 3;
             }
             const Deadline_date_list = Object.keys(Deadline_list);
-
-            console.log(Date.parse(Deadline_date_list[0]))
 
             let days = '';
             for (let x = firstDayIndex; x > 0; x--) {
@@ -312,22 +339,24 @@
                     var timeStamp = Date.parse(Deadline_date_list[i]);
 
                     if (prevDate.getTime() == timeStamp){
-                        assign_list.push(Deadline_list[Deadline_date_list[i]])
+                        for (let j = 0; j < Deadline_list[Deadline_date_list[i]].length; ++j){
+                            assign_list.push(Deadline_list[Deadline_date_list[i]][j]);
+                        }
                     }
                 }
 
                 if (assign_list.length != 0){
                     content = ''
                     for (let i = 0; i < assign_list.length; ++i){
-                        if (i != 0){
-                            content += '<br>';
+                        content += assign_list[i] ;
+                        if (i != assign_list.length - 1){
+                            content += '<hr>'
                         }
-                        content += assign_list[i];
                     }
                 }
 
                 days += `<button type="button" class="date inactive btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="${content}">${prevDate.getDate()}</button>`;
+                data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="${content}" style="white-space: nowrap;">${prevDate.getDate()}</button>`;
             }
         
             for (let i = 1; i <= totalDays; i++) {
@@ -340,17 +369,19 @@
                     var timeStamp = Date.parse(Deadline_date_list[i]);
 
                     if (curDate.getTime() == timeStamp){
-                        assign_list.push(Deadline_list[Deadline_date_list[i]])
+                        for (let j = 0; j < Deadline_list[Deadline_date_list[i]].length; ++j){
+                            assign_list.push(Deadline_list[Deadline_date_list[i]][j]);
+                        }
                     }
                 }
                 
                 if (assign_list.length != 0){
                     content = ''
                     for (let i = 0; i < assign_list.length; ++i){
-                        if (i != 0){
-                            content += '<br>';
+                        content += assign_list[i] ;
+                        if (i != assign_list.length - 1){
+                            content += '<hr>'
                         }
-                        content += assign_list[i];
                     }
                 }
 
@@ -368,23 +399,25 @@
                 const nextDate = new Date(currentYear, currentMonth + 1, j);
 
                 let content = '<b>No event today</b>';
-                
+
                 let assign_list = []
                 for (let i = 0; i < Deadline_date_list.length; ++i){
                     var timeStamp = Date.parse(Deadline_date_list[i]);
 
                     if (nextDate.getTime() == timeStamp){
-                        assign_list.push(Deadline_list[Deadline_date_list[i]])
+                        for (let j = 0; j < Deadline_list[Deadline_date_list[i]].length; ++j){
+                            assign_list.push(Deadline_list[Deadline_date_list[i]][j]);
+                        }
                     }
                 }
 
                 if (assign_list.length != 0){
                     content = ''
                     for (let i = 0; i < assign_list.length; ++i){
-                        if (i != 0){
-                            content += '<br>';
+                        content += assign_list[i] ;
+                        if (i != assign_list.length - 1){
+                            content += '<hr>'
                         }
-                        content += assign_list[i];
                     }
                 }
 
@@ -393,6 +426,9 @@
             }
             days += '<br>'
             dates.innerHTML = days;
+
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         }
         
 
@@ -407,11 +443,11 @@
         });
 
         updateCalendar();
+        
     </script>
 
     <script>
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        
     </script>
 </body>
 </html>

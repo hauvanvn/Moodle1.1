@@ -87,7 +87,7 @@ def view_class_page(request, slug):
                 
                 if form.is_valid():
                     form.save()
-                    messages.success(request, "Upload " + name + "successful!")
+                    messages.success(request, "Upload " + name + " successful!")
                     return redirect('courses:class_page', slug=slug)
                 else:
                     return render(request, 'courses/View_course_teacher.html', 
@@ -103,7 +103,7 @@ def view_class_page(request, slug):
                 if aform.is_valid():
                     aform.save()
                     Create_Notification_Assignment(aform.instance)
-                    messages.success(request, "Upload " + title + "assignment successful!")
+                    messages.success(request, "Upload " + title + " assignment successful!")
                     return redirect('courses:class_page', slug=slug)
                 else:
                     return render(request, 'courses/View_course_teacher.html', 
@@ -311,4 +311,4 @@ def view_comment(request, slug, assignmentname, submission):
     
     return render(request, 'courses/View_grade_comment.html',
                   {'user': user, 'notifies': notifications, 'events': events,
-                   'course': course, 'submit': submit})
+                   'course': course, 'submit': submit, 'assignment' : assignments})

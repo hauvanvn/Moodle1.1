@@ -13,13 +13,12 @@ Course
 {% block content %}
 <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
 <div class="box_course">
-    <a href="{% url "courses:class_page" slug=course.slug %}">Course</a>
-    <a href="{% url "courses:participants" slug=course.slug %}">Participants</a>
-    <a href="#" class="active">Grade</a>
+    <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+    <a href="{% url "courses:participants" slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+    <a href="{% url 'courses:view_all_grades' slug=course.slug %}" class="text-center rounded-3 me-2">Grade</a>
 </div>
 <br>
-<h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
-<br>
+<h4 class="fw-semibold" style="color:#3343A1">{{ assignment.title }} </h4>
 
 <table>
     <tr align="center" style="color: white; background-color: #B9ADEE">

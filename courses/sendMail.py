@@ -28,8 +28,8 @@ def Create_Notification_Assignment(assignment):
     notification = Notification()
     notification.author = assignment.author
     notification.ForClass = assignment.ForClass
-    notification.title = assignment.title
-    notification.text = ""
+    notification.title = "Asignment: " + assignment.title
+    notification.text = "<br>" + "A new assignment was added to " + "<p> <a href=" + "127.0.0.0" + course.course.name + " - " + course.className + "</a></p>"  + "."
 
     notification.save()
     sendNotification(notification)

@@ -16,12 +16,12 @@ Course
 <div class="container">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
-        <a href="{% url 'courses:class_page' slug=course.slug %}">Course</a>
-        <a href="#" class="active">Participants</a>
+        <a href="{% url 'courses:class_page' slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+        <a href="{% url 'courses:participants' slug=course.slug %}" class="active text-center rounded-3 me-2">Participants</a>
         {% if user.is_staff and not user.is_superuser %}
-            <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+            <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
         {% else %}
-            <a href="#">Grade</a>
+            <a href="{% url 'courses:view_all_grades' slug=course.slug %}" class="text-center rounded-3 me-2">Grade</a>
         {% endif %}
         
     </div> 

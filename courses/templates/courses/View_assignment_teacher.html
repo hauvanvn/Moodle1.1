@@ -14,9 +14,9 @@ Course
 <div class="container">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
-        <a href="{% url "courses:class_page" slug=course.slug %}">Course</a>
-        <a href="{% url "courses:participants" slug=course.slug %}">Participants</a>
-        <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+        <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+        <a href="{% url "courses:participants" slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
     </div>
     <br>
     <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
