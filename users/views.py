@@ -7,7 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 
 from .sendMail import sendOtp
 from django.utils import timezone
-from datetime import datetime, timedelta
+from django.utils.timesince import timesince
 
 from moodle.nav_infomation import getIn4
 from courses.models import Notification
@@ -125,41 +125,15 @@ def view_all_announcements(request):
     for notify in notifications:
         proccessed_notifications.append(notify.ForClass.className + ' - ' + notify.title)
 
-        created_date = notify.date_created.strftime('%A, %d %B %Y, %I:%M %p')
+        created_date = timezone.localtime(notify.date_created).strftime('%Y-%m-%d %H:%M:%S')
+        print(notify.date_created)
 
-        delta = timezone.now() - notify.date_created
-        second_diff = delta.seconds
+        time_diff = timesince(notify.date_created)
 
-        days, remainder = divmod(second_diff, 86400)
-        hours, remainder = divmod(remainder, 3600)
-        minutes, remainder = divmod(remainder, 60)
-
-        time_diff = ''
-        if days:
-            time_diff += f"{days:02}"
-            if days == 1:
-                time_diff += " day "
-            else: time_diff += " days "
-
-        if hours:
-            time_diff += f"{hours:02}"
-            if hours == 1:
-                time_diff += " hour "
-            else: time_diff += " hours "
-
-        if minutes:
-            time_diff += f"{minutes:02}"
-            if minutes == 1:
-                time_diff += " minute "
-            else: time_diff += " minutes "
-
-        if len(time_diff) != 0:
-            time_diff += "ago"
-
-        proccessed_notifications.append(time_diff)
+        proccessed_notifications.append(time_diff + ' ago')
         proccessed_notifications.append(notify.author.avatar.url)
         proccessed_notifications.append(notify.title)
-        proccessed_notifications.append('by ' + notify.author.first_name + notify.author.last_name + ' - ' + created_date)
+        proccessed_notifications.append('By ' + notify.author.first_name + notify.author.last_name + ' - ' + created_date)
         proccessed_notifications.append(notify.text)
 
     return render(request, 'users/View_all_anouncements.html', 

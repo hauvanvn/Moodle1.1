@@ -20,7 +20,7 @@ Moodle_1.1 - View Announcement
             <div class="notification-header">
                 <div class="notification-title">
                     <h4>{{ notify.title }}</h4>
-                    <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created }}</span>
+                    <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created|date:"Y-m-d H:i:s" }}</span>
                 </div>
             </div>
             <div class="ck-content">
