@@ -7,6 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 
 from .sendMail import sendOtp
 from django.utils import timezone
+from datetime import datetime, timedelta
 
 from moodle.nav_infomation import getIn4
 from courses.models import Notification
@@ -120,6 +121,46 @@ def view_all_announcements(request):
     user, notifications, events = getIn4(request)
 
     notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')
+    proccessed_notifications = []
+    for notify in notifications:
+        proccessed_notifications.append(notify.ForClass.className + ' - ' + notify.title)
+
+        created_date = notify.date_created.strftime('%A, %d %B %Y, %I:%M %p')
+
+        delta = timezone.now() - notify.date_created
+        second_diff = delta.seconds
+
+        days, remainder = divmod(second_diff, 86400)
+        hours, remainder = divmod(remainder, 3600)
+        minutes, remainder = divmod(remainder, 60)
+
+        time_diff = ''
+        if days:
+            time_diff += f"{days:02}"
+            if days == 1:
+                time_diff += " day "
+            else: time_diff += " days "
+
+        if hours:
+            time_diff += f"{hours:02}"
+            if hours == 1:
+                time_diff += " hour "
+            else: time_diff += " hours "
+
+        if minutes:
+            time_diff += f"{minutes:02}"
+            if minutes == 1:
+                time_diff += " minute "
+            else: time_diff += " minutes "
+
+        if len(time_diff) != 0:
+            time_diff += "ago"
+
+        proccessed_notifications.append(time_diff)
+        proccessed_notifications.append(notify.author.avatar.url)
+        proccessed_notifications.append(notify.title)
+        proccessed_notifications.append('by ' + notify.author.first_name + notify.author.last_name + ' - ' + created_date)
+        proccessed_notifications.append(notify.text)
 
     return render(request, 'users/View_all_anouncements.html', 
-                  {'user': user, 'notifies': notifications, 'events': events})
+                  {'user': user, 'notifies': notifications, 'events': events, 'proccessed_notifications' : proccessed_notifications})

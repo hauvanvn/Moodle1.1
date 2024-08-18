@@ -3,10 +3,7 @@ from django.conf import settings
 from .models import Notification, CourseClass as Class
 from users.models import User
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-from django.utils import timezone
-from django.urls import reverse
+import string
 
 def sendNotification(notification):
     course = Class.objects.get(id=notification.ForClass.id)
@@ -30,7 +27,8 @@ def Create_Notification_Assignment(assignment):
     notification.author = assignment.author
     notification.ForClass = assignment.ForClass
     notification.title = "Asignment: " + assignment.title
-    notification.text = "<br>" + "A new assignment was added to " + "<p> <a href=" + "127.0.0.0" + course.course.name + " - " + course.className + "</a></p>"  + "."
+    # Replace 127.0.0.0 with link you want to redirect to.
+    notification.text = "<br>" + "A new assignment was added to " + "<a href=" + string.punctuation[1] + "127.0.0.0" + string.punctuation[1] + ">" + course.course.name + " - " + course.className + "." + "</a>"
 
     notification.save()
     sendNotification(notification)
