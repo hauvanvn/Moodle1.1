@@ -125,9 +125,8 @@ def view_all_announcements(request):
     for notify in notifications:
         proccessed_notifications.append(notify.ForClass.className + ' - ' + notify.title)
 
-        created_date = timezone.localtime(notify.date_created).strftime('%Y-%m-%d %H:%M:%S')
-        print(notify.date_created)
-
+        created_date = timezone.localtime(notify.date_created).strftime('%A, %d %B %Y, %I:%M %p')
+        
         time_diff = timesince(notify.date_created)
 
         proccessed_notifications.append(time_diff + ' ago')
