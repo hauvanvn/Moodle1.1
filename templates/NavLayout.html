@@ -363,7 +363,8 @@
                 const curDate = new Date(currentYear, currentMonth, i);
                 
                 let content = '<b>No event today</b>';
-                
+                let background = ''
+
                 let assign_list = []
                 for (let i = 0; i < Deadline_date_list.length; ++i){
                     var timeStamp = Date.parse(Deadline_date_list[i]);
@@ -376,6 +377,7 @@
                 }
                 
                 if (assign_list.length != 0){
+                    background = 'style="--bs-btn-bg: #ECEEFF"'
                     content = ''
                     for (let i = 0; i < assign_list.length; ++i){
                         content += assign_list[i] ;
@@ -390,7 +392,7 @@
                     data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="${content}">${i}</button>`;
                 } else {
                     days += `<button type="button" class="date btn btn-outline-light" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="${content}">${i}</button>`;
+                    data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="${content}" ${background}>${i}</button>`;
                 }
             }
         
