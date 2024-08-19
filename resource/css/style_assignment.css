@@ -1,6 +1,8 @@
 .pagination {
-    align-items: center;
+    align-items: auto;
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination a {
@@ -20,4 +22,13 @@
 .pagination a:hover:not(.active) {
     background-color: #ddd;
     border-radius: 5px;
+}
+
+.col-w {
+    width: calc((100% - 250px)/3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
