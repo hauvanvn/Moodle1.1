@@ -7,14 +7,18 @@
 Course: {{ course }}
 {% endblock title %}
 
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static 'css/style_course.css' %}">
+{% endblock extra_attach %}
+
 {% block content %}
 <br>
 <div class="container-fluid mb-4">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
-        <a href="#" class="active">Course</a>
-        <a href="{% url 'courses:participants' slug=course.slug %}">Participants</a>
-        <a href="{% url 'courses:post_announcement' slug=course.slug %}">Post</a>
+        <a href="{% url 'courses:class_page' slug=course.slug %}" class="active text-center rounded-3 me-2">Course</a>
+        <a href="{% url 'courses:participants' slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
     </div>
 </div>
 
@@ -111,7 +115,7 @@ Course: {{ course }}
                     </div>
                     <div class="col-11 d-flex align-items-center">
                         {% if file.type == "FILE" %}
-                            <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                            <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                         {% else %}
                             <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                         {% endif %}
@@ -211,7 +215,7 @@ Course: {{ course }}
                     </div>
                     <div class="col-11 d-flex align-items-center">
                         {% if file.type == "FILE" %}
-                            <a href="{% url 'courses:view_material' slug=course.slug filename=file.name %}" class="nav-link">{{ file.name }}</a>
+                            <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                         {% else %}
                             <a href="{{ file.link }}" class="nav-link">{{ file.name }}</a>
                         {% endif %}
@@ -248,7 +252,7 @@ Course: {{ course }}
                     </div>
 
                     <div class="col">
-                        {% render_field form.name class="form-control" type="text" id="assign" placeholder="Enter name" required="True" %}
+                        {% render_field aform.title class="form-control" type="text" id="assign" placeholder="Enter name" required="True" %}
                     </div>
                 </div>
 
@@ -258,7 +262,7 @@ Course: {{ course }}
                     </div>
     
                     <div class="col">
-                        {% render_field form.file class="form-control" type="file" id="assignFile"%}
+                        {% render_field aform.file class="form-control" type="file" id="assignFile" accept="application/pdf" required="True" %}
                     </div>
                 </div>
                 
@@ -268,7 +272,7 @@ Course: {{ course }}
                     </div>
 
                     <div class="col">
-                        <input type="datetime-local" id="dateEnd" class="form-control">
+                        {% render_field aform.date_closed type="datetime-local" id="dateEnd" class="form-control" required="True" %}
                     </div>
                 </div>
                 
@@ -280,4 +284,25 @@ Course: {{ course }}
         </div>
     </div>
 </div>
+
+{% for assignment in assignments %}
+    <div class="container-fluid">
+        <div class="card p-4 custom-card">
+            <div class="row align-items-center">
+                <div class="col-1">
+                    <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
+                </div>
+                <div class="col-11 d-flex align-items-center">
+                        <a href="{% url 'courses:view_assignment' slug=course.slug assignmentname=assignment.id %}" class="nav-link">{{ assignment.title }}</a>
+                    <form method="POST" class="ms-auto">
+                        {% csrf_token %}
+                        <button name="delete_assignment" value="{{ assignment.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endfor %}
+
 {% endblock content %}

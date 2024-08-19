@@ -1,0 +1,120 @@
+{% extends "NavLayout.html" %}
+
+{% load static %}
+
+{% block title %}
+Course
+{% endblock title %}
+
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static "css/style_assignment.css" %}">
+{% endblock extra_attach %}
+
+{% block content %}
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+        <a href="{% url "courses:participants" slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
+    </div>
+    <br>
+    <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
+    <br>
+
+    <table>
+        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
+            <th class = "col-w">Release</th>
+            <th class = "col-w">Due</th>
+            <th class = "col-w">Time remaining</th>
+            <th width = "250px">Submission</th>
+        </tr>
+        <tr align="center" style="background-color: rgb(224, 224, 224)">
+            <td>{{ assignment.date_opened }}</td>
+            <td>{{ assignment.date_closed }}</td>
+            <td>{{ assignment.date_opened|timesince:assignment.date_closed }}</td>
+            <td>{{ numsub }}/{{ numall }}</td>
+    </table>
+
+    <br>
+    <div class = "row">
+        <iframe class="pdf" 
+            src= "{{ assignment.file.url }}" height="700">
+        </iframe>
+    </div>
+    <br>
+
+    <table class="table_ass mb-4">
+        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
+            <th width="266">ID</th>
+            <th width="266">Score</th>
+            <th width="267">Grading</th>
+            <th width="267">Submission time</th>
+        </tr>
+        {% for submit in submissions %}
+        <tr>
+            <td>{{ submit.student }}</td>
+            {% if submit.submit.grade %}
+                <td>{{ submit.submit.grade }}</td>
+            {% else %}
+                <td>--</td>
+            {% endif %}
+            {% if submit.submit.author %}
+                <td><a href="{% url "courses:view_grading" slug=course.slug assignmentname=assignment.id submission=submit.submit.id %}">Grade this assignment</a></td>
+            {% else %}
+            <td><a href="#">Grade this assignment</a></td>
+            {% endif %}
+            <td>{{ submit.submit.date_upload }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="pagination">
+        {% if submissions.has_previous %}
+            <a href="?page={{ submissions.previous_page_number }}">< &nbsp Previous</a>
+        {% elif not submissions.has_previous %}
+            <a href="#" style="color: #828282;">< &nbsp Previous</a>
+        {% endif %}
+        
+        {% for i in submissions.paginator.page_range %}
+            {% if i == 1 %}
+                {% if submissions.number == i %}
+                    <a class=" active" href="">{{ i }}</a>
+                {% else %}
+                    <a class="" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+            {% if i != 1 and i != submissions.paginator.page_range|last %}
+                {% if submissions.number == i %}
+                    <a class=" active" href="">{{ i }}</a>
+                {% else %}
+                    {% if submissions.number|add:-4 == i %}
+                        <a class="" href="">...</a>
+                    {% endif %}
+                    {% if submissions.number|add:3 >= i and submissions.number|add:-3 <= i %}
+                        <a class="" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% if submissions.number|add:4 == i %}
+                        <a class="" href="">...</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if i == submissions.paginator.page_range|last %}
+                {% if submissions.number == i %}
+                    <a class=" active" href="">{{ submissions.paginator.page_range|last }}</a>
+                {% else %}
+                    <a class="" href="?page={{ submissions.paginator.page_range|last }}">{{ submissions.paginator.page_range|last }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if submissions.has_next %}
+            <a href="?page={{ submissions.next_page_number }}">Next &nbsp ></a>
+        {% elif not submissions.has_next %}
+            <a href="#" style="color: #828282;">Next &nbsp ></a>
+        {% endif %}
+    </div>  
+</div>
+{% endblock content %}

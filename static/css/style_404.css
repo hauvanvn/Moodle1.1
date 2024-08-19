@@ -1,0 +1,13 @@
+body {
+    background-image: url(images/Background.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.button1 {
+    background-color: #618CEE;
+    width: 12em;
+    height: 3em;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.25);
+}

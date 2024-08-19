@@ -16,11 +16,6 @@ body{
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.custom-button {
-    background-color: #507df0;
-    color: white;
-    border-radius: 20px;
-}
 .custom-button:hover {
     background-color: #4060d8;
 }
@@ -36,4 +31,9 @@ body{
     flex-wrap: wrap;
     gap: 20px; /* Khoảng cách giữa các cột */
     margin-bottom: 20px; /* Khoảng cách giữa các hàng */
+}
+
+.hr {
+    border: 1px solid #ccc;
+    width: 100%;
 }

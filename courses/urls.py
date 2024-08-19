@@ -24,7 +24,11 @@ urlpatterns = [
     path('', views.view_class_list, name='class_list'),
     path('<slug:slug>/', views.view_class_page, name='class_page'),
     path('<slug:slug>/participants/', views.view_participants, name='participants'),
-    path('<slug:slug>/annoucement/id=<int:id>/', views.view_announcement, name='view_announcement'),
+    path('<slug:slug>/annoucement/id=^<int:id>?/', views.view_announcement, name='view_announcement'),
     path('<slug:slug>/annoucement/post/', views.view_post_announcement, name='post_announcement'),
-    path('<slug:slug>/<str:filename>/', views.view_material, name='view_material'),  
+    path('<slug:slug>/material/^<str:filename>?/', views.view_material, name='view_material'),
+    path('<slug:slug>/assignment/id=^<str:assignmentname>?/', views.view_assignment, name='view_assignment'),
+    path('<slug:slug>/assignment/id=^<str:assignmentname>?/grading-id=?^<str:submission>?', views.view_grading, name='view_grading'),
+    path('<slug:slug>/assignment/id=^<str:assignmentname>?/grade-id=?^<str:submission>?', views.view_comment, name='view_comment'),
+    path('<slug:slug>/grades/', views.view_all_grades, name='view_all_grades'),
 ]

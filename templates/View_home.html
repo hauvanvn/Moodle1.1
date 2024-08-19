@@ -7,35 +7,83 @@ Learning Management System - fit@hcmus - 1.1
 {% endblock title %}
 
 {% block content %}
-<div class="card p-4 custom-card">
-    <div class="row align-items-center">
-        <div class="col">
-            <h2 class="text-primary">Problem of the day</h2>
-            <p class="text-secondary">Solve the N-Queen problem using local search with hill climbing and random neighbor selection.</p>
-            <button class="btn custom-button">Solve problem</button>
-        </div>
-        <div class="col-auto text-center">
-            <img src="{% static 'img/home/potd.png' %}" alt="Illustration" class="illustration">
+<style>
+    .gradient-text {
+        background: linear-gradient(to right, #AB94CC , #618CEE);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text-black {
+        color: black;
+    }
+    .gradient-course1 {
+        background: linear-gradient(to right, #5579CB, #7B99EA);
+        color: white;
+    }
+    .gradient-course1:hover {
+        background: linear-gradient(to right, #7B99EA, #5579CB);
+    }
+    .gradient-course2 {
+        background: linear-gradient(to right, #7B99EA, #9E94D4);
+        color: white;
+    }
+    .gradient-course2:hover {
+        background: linear-gradient(to right, #9E94D4, #7B99EA);
+    }
+    .gradient-course3 {
+        background: linear-gradient(to right, #9C93D4, #B194CD);
+        color: white;
+    }
+    .gradient-course3:hover {
+        background: linear-gradient(to right, #B194CD, #9C93D4);
+    }
+</style>
+
+<div class="container p-2">
+    <div class="card px-5 py-3 custom-card">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="fw-bold">
+                    <span class="text-primary gradient-text">PA2 - Submission</span>
+                    <span class="text-black"> is due</span>
+                </h2>
+                <br>
+                <p class="text fst-italic">
+                    <span>Saturday, 20 July, 23:00</span>
+                    <br>
+                    <span>Course event</span>
+                    <br>
+                    <span>Nhập môn công nghệ phần mềm - 22CLC08</span>
+                    <br>
+                </p>
+                <br>
+                <button class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-color: #618CEE">View more</button>
+            </div>
+            <div class="col-auto text-center">
+                <img src="{% static 'img/home/potd.png' %}" alt="Illustration" class="illustration">
+            </div>
         </div>
     </div>
-</div>
 
-<br>
+    <br>
 
-<div class="container">
-    <h4>Active courses</h4>
+    <h3 class="fw-bold" style="color: #111B88">Active courses</h3>
     <div class="row row-cols-3 g-2 course-box">
         {% for course in courses %}
-            <div class="col-md-4">
-                <a href="{% url 'courses:class_page' slug=course.course.slug %}" class="bg-white rounded-4 p-4 shadow border link-dark link-underline link-underline-opacity-0 d-block h-100" >
-                    <h3>{{ course.course }}</h3>
-                    {% for teacher in course.teacher %}
-                        <p>Teacher: {{ teacher.first_name }} {{ teacher.last_name }}</p>
-                    {% endfor %}
-                </a>
-            </div>
+            {% if not course.course.is_course_end %}
+                <div class="col-md-4">
+                    <a href="{% url 'courses:class_page' slug=course.course.slug %}"
+                       class="rounded-4 p-4 shadow border link-light link-underline link-underline-opacity-0 d-block h-100
+                       {% cycle 'gradient-course1' 'gradient-course2' 'gradient-course3' as gradient_class %}
+                       {{ gradient_class }}">
+                        <h4>{{ course.course }}</h4>
+                        {% for teacher in course.teacher %}
+                            <p>Teacher: {{ teacher.first_name }} {{ teacher.last_name }}</p>
+                        {% endfor %}
+                    </a>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
-
 {% endblock content %}

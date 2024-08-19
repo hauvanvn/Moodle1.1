@@ -5,17 +5,17 @@ from .nav_infomation import getIn4
 
 @login_required(login_url="users:login")
 def home(request):
-    name = request.user.id
+    user, notifications, events = getIn4(request)
     courses = []
-    notifications = []
 
     if Class.objects.exists():
-        courses_temp = Class.objects.filter(participants=name).order_by('-date_created')
+        courses_temp = Class.objects.filter(participants=user.id).order_by('-date_created')
         for course in courses_temp:
             teacher = course.participants.filter(is_staff=1)
             courses.append({'course': course, 'teacher': teacher})
-
     
-    user, notifications = getIn4(request)
 
-    return render(request, 'View_home.html', {'user': user, 'courses' : courses, 'notifies' : notifications})
+    return render(request, 'View_home.html', {'user': user, 'notifies' : notifications, 'events': events, 'courses' : courses})
+
+def Http404NotFound(request):
+    return render(request, '404.html')

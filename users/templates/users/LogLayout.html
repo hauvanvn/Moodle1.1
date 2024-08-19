@@ -14,11 +14,21 @@
     <title>
         {% block title %}
             Moodle 1.1
-            
         {% endblock %}
     </title>
-    <link rel="icon" href="{% static 'img/home/logo.png' %}">
+    <link rel="icon" type="image/icon" href="{% static 'img/favicon.ico' %}">
     
+    <style>
+        hr {
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        body {
+            background-image: url("{% static "img/Background.svg" %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 <body>
     {% block content %}

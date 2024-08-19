@@ -1,0 +1,69 @@
+{% extends "NavLayout.html" %}
+
+{% load static %}
+
+{% block title %}
+Course
+{% endblock title %}
+
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static "css/style_assignment.css" %}">
+{% endblock extra_attach %}
+
+{% block content %}
+<h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+<div class="box_course">
+    <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+    <a href="{% url "courses:participants" slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+    <a href="{% url 'courses:view_all_grades' slug=course.slug %}" class="text-center rounded-3 me-2">Grade</a>
+</div>
+<br>
+<h4 class="fw-semibold" style="color:#3343A1">{{ assignment.title }} </h4>
+
+<table>
+    <tr align="center" style="color: white; background-color: #B9ADEE">
+        <th class = "col-w">Release</th>
+        <th class = "col-w">Due</th>
+        <th class = "col-w">Time remaining</th>
+        <th width = "250px">Submission</th>
+    </tr>
+    <tr align="center" style="background-color: white">
+        <td>{{ assignment.date_opened }}</td>
+        <td>{{ assignment.date_closed }}</td>
+        <td>{{ assignment.date_opened|timesince:assignment.date_closed }}</td>
+        <td id="file-name">{{ submission }}</td>
+    </tr>
+</table>
+<br>
+
+<div class = "row">
+    <iframe class="pdf" 
+        src= "{{ assignment.file.url }}" height="700">
+    </iframe>
+</div>
+<br>
+{% if user.is_superuser %}
+{% else %}
+<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+    <button type="button" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0" disabled>Remove submission</button>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}  
+        <input type="file" name="submit_file" id="actual-btn" hidden/>
+        <label type="submit" name="add_assignment" for="actual-btn" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Add submission</label>
+    </form>
+</div>
+{% endif %}
+
+<script>
+    document.getElementById('actual-btn').addEventListener('change', function() {
+        var fileName = this.files[0].name;
+        document.getElementById('file-name').textContent = fileName;
+        
+        // Enable the "Edit submission" button
+        var editButton = document.querySelector('button[disabled]');
+        if (editButton) {
+            editButton.removeAttribute('disabled');
+        }
+    });
+</script>
+{% endblock content %}

@@ -3,11 +3,14 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import User, OtpToken
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 from .sendMail import sendOtp
 from django.utils import timezone
+from django.utils.timesince import timesince
 
 from moodle.nav_infomation import getIn4
+from courses.models import Notification
 # Create your views here.
 
 def loginPage(request):
@@ -84,5 +87,53 @@ def LogoutPage(request):
 
 @login_required(login_url='users:login')
 def View_Profile(request):
-    user, notifications = getIn4(request)
-    return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications})
+    user, notifications, events = getIn4(request)
+
+    if request.method == "POST":
+        if "reset_password" in request.POST:
+            old_password = request.POST.get('old_pass')
+            new_password = request.POST.get('new_pass')
+            confirm_password = request.POST.get('con_pass')
+
+            if user.check_password(old_password):
+                if new_password == confirm_password:
+                    user.set_password(new_password)
+                    user.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, "Change password successful!")
+                    return redirect('users:profile')
+                else:
+                    messages.warning(request, "New password not match to Verify password!")
+                    return redirect('users:profile')
+            else:
+                messages.warning(request, "Your old password is not correct!")
+                return redirect('users:profile')
+        else:
+            user.avatar = request.FILES['img']
+            user.save()
+            messages.success(request, "Change avatar successful!")
+            return redirect('users:profile')
+
+    return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications, 'events': events})
+
+@login_required(login_url='users:login')
+def view_all_announcements(request):
+    user, notifications, events = getIn4(request)
+
+    notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')
+    proccessed_notifications = []
+    for notify in notifications:
+        proccessed_notifications.append(notify.ForClass.className + ' - ' + notify.title)
+
+        created_date = timezone.localtime(notify.date_created).strftime('%A, %d %B %Y, %I:%M %p')
+        
+        time_diff = timesince(notify.date_created)
+
+        proccessed_notifications.append(time_diff + ' ago')
+        proccessed_notifications.append(notify.author.avatar.url)
+        proccessed_notifications.append(notify.title)
+        proccessed_notifications.append('By ' + notify.author.first_name + notify.author.last_name + ' - ' + created_date)
+        proccessed_notifications.append(notify.text)
+
+    return render(request, 'users/View_all_anouncements.html', 
+                  {'user': user, 'notifies': notifications, 'events': events, 'proccessed_notifications' : proccessed_notifications})
