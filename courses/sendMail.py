@@ -10,13 +10,13 @@ def sendNotification(notification):
     students = User.objects.filter(id__in=course.participants.all()).exclude(is_staff=1).exclude(is_superuser=1).order_by('username')
 
     subject = notification.title
-    message = f"""by {notification.author.first_name} {notification.author.last_name} - {notification.date_created.strftime('%A, %d %B %Y, %I:%M %p')}
+    message = f"""by {notification.author.first_name + ' ' + notification.author.last_name} - {notification.date_created.strftime('%A, %d %B %Y, %I:%M %p')}
         {notification.text}
     """
     
     sender = settings.EMAIL_HOST_USER
-    receiver = [User.objects.get(username='admin1').email]
-    #receiver = [st.email for st in students]
+    #receiver = [User.objects.get(username='admin1').email]
+    receiver = [st.email for st in students]
     send_mail(subject, message=message, from_email=sender, recipient_list=receiver, fail_silently=False, html_message=message)
 
 def Create_Notification_Assignment(assignment):

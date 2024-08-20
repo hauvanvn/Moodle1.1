@@ -1,4 +1,123 @@
+{% extends "NavLayout.html" %}
+
 {% load static %}
+
+{% block title %}
+All Notifications
+{% endblock title %}
+
+{% block extra_attach %}
+<link rel="stylesheet" href="{% static "css/style_notfications.css" %}">
+<script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
+{% endblock extra_attach %}
+
+{% block content %}
+<div class="container border bg-white shadow rounded-4 p-4 row">
+    <h2 class="ms-3" style="color: #3343A1"><b>Notifications:</b></h2>
+    <div class="col-4" style="overflow-y: auto; overflow-x:hidden; height:500px;">
+        <div class="box_noti row">
+            {% for notify in notifications %}
+                <a href="" id="notify_{{ forloop.counter }}" class="nav-link">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+                        <div class="col-11 text-truncate">
+                            <p class="truncate_style" style="margin: 2px;">{{ notify.title }}</p>
+                            <p style="margin: 2px; font-size: 10px;">{{ notify.date_created|timesince }} ago</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col" style="overflow-y: auto; overflow-x:hidden; height:500px; margin-left: 10px;">
+        <div class="row">
+            <div class="col-auto">
+                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
+            </div>
+            <div class="col text-truncate">
+                <p id="Title_Class" class="truncate_style" style="margin: 2px;"></p>
+                <p id="TimeUpload_fromNow" style="color: #828282; margin: 2px; font-size: 10px;"></p>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-auto">
+                <img id="AuthorAvatar" class="crop-avt avatar" src="" alt="Avatar">
+            </div>
+            <div class="col text-truncate">
+                <p class="fw-bold truncate_style" id="Title" style="margin: 2px;"></p>
+                <p id="Author_TimeUpload" style="color: #828282;"></p> 
+            </div>
+        </div>
+        <hr>
+        <div id="Text" class="ck-content">
+            <p>
+                Select a notification to view its content.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const Noti_title_class = document.getElementById("Title_Class");
+    const Noti_TimefromNow = document.getElementById("TimeUpload_fromNow");
+    const Noti_title = document.getElementById("Title");
+    const Noti_Author_TimeUpload = document.getElementById("Author_TimeUpload");
+    const Noti_text = document.getElementById("Text");
+
+    const proccessed_notifications = {{ proccessed_notifications|safe }}
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all anchor elements with the 'notify' prefix in their ID
+        const anchors = document.querySelectorAll('a[id^="notify_"]');
+        
+        anchors.forEach(anchor => {
+          anchor.addEventListener('click', function(event) {
+            // Your event handler logic here
+
+            var str_id = event.currentTarget.id;
+            str_id = str_id.slice(7);
+
+            var int_id = parseInt(str_id);
+            int_id = int_id - 1;
+
+            let title_class = '';
+            let time_now = '';
+            let avatar = '';
+            let title = '';
+            let author_time = '';
+            let text = '';
+
+            title_class = proccessed_notifications[int_id * 6];
+            time_now = proccessed_notifications[int_id * 6 + 1];
+            avatar = proccessed_notifications[int_id * 6 + 2];
+            title = proccessed_notifications[int_id * 6 + 3];
+            author_time = proccessed_notifications[int_id * 6 + 4];
+            text += proccessed_notifications[int_id * 6 + 5];
+
+            Noti_title_class.innerHTML = title_class;
+            Noti_TimefromNow.innerHTML = time_now
+            const Noti_Avatar = document.getElementById("AuthorAvatar").src = '..' + avatar;
+            Noti_title.innerHTML = title;
+            Noti_Author_TimeUpload.innerHTML = author_time;
+            Noti_text.innerHTML = text;
+
+            anchors.forEach(anchor => anchor.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            // Prevent default link behavior if needed
+            event.preventDefault();
+          });
+        });
+      });
+
+</script>
+{% endblock content %}
+
+{% comment %}  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,51 +200,8 @@
 
     <br>
     <h4 class="ms-3" style="color: #3343A1"><b>Notifications:</b></h4>
-    <div class="container border bg-white shadow rounded-4 p-4 notifications">
-        <div class="col-4" style="overflow-y: auto; overflow-x:hidden;">
-            <div class="box_noti row">
-                {% for notify in notifies %}
-                    <a href="" id="notify_{{ forloop.counter }}" class="nav-link">
-                        <div class="row">
-                            <div class="col-1">
-                                <i class="fa-regular fa-envelope"></i>
-                            </div>
-                            <div class="col-11">
-                                <p style="margin: 2px;">{{ notify.title }}</p>
-                                <p style="margin: 2px;">{{ notify.date_created|timesince }} ago</p>
-                            </div>
-                        </div>
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="col-8" style="overflow-y: auto; overflow-x:hidden; margin-left: 10px;">
-            <div class="row">
-                <div class="col-1">
-                    <i class="fa-regular fa-envelope" style="color: #828282;"></i>
-                </div>
-                <div class="col-10">
-                    <p id="Title_Class" style="margin: 2px;"></p>
-                    <p id="TimeUpload_fromNow" style="color: #828282; margin: 2px;"></p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-1">
-                    <img id="AuthorAvatar" class="crop-avt avatar" src="" alt="Avatar">
-                </div>
-                <div class="col-11">
-                    <p id="Title" style="margin: 2px;"></p>
-                    <p id="Author_TimeUpload" style="color: #828282;"></p> 
-                </div>
-            </div>
-            <div id="Text" class="ck-content">
-                <p>
-                    Select a notification to view its content.
-                </p>
-            </div>
-        </div>
+    <div class="container border bg-white shadow rounded-4 p-4 ">
+        
     </div>
 
     <div class="container-fluid py-3 px-5" style="background-image:linear-gradient( 
@@ -163,60 +239,9 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const Noti_title_class = document.getElementById("Title_Class");
-        const Noti_TimefromNow = document.getElementById("TimeUpload_fromNow");
-        const Noti_title = document.getElementById("Title");
-        const Noti_Author_TimeUpload = document.getElementById("Author_TimeUpload");
-        const Noti_text = document.getElementById("Text");
-
-        const proccessed_notifications = {{ proccessed_notifications|safe }}
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Select all anchor elements with the 'notify' prefix in their ID
-            const anchors = document.querySelectorAll('a[id^="notify_"]');
-            
-            anchors.forEach(anchor => {
-              anchor.addEventListener('click', function(event) {
-                // Your event handler logic here
-
-                var str_id = event.currentTarget.id;
-                str_id = str_id.slice(7);
-
-                var int_id = parseInt(str_id);
-                int_id = int_id - 1;
-
-                let title_class = '';
-                let time_now = '';
-                let avatar = '';
-                let title = '';
-                let author_time = '';
-                let text = '';
-
-                title_class = proccessed_notifications[int_id * 6];
-                time_now = proccessed_notifications[int_id * 6 + 1];
-                avatar = proccessed_notifications[int_id * 6 + 2];
-                title = proccessed_notifications[int_id * 6 + 3];
-                author_time = proccessed_notifications[int_id * 6 + 4];
-                text += proccessed_notifications[int_id * 6 + 5];
-
-                Noti_title_class.innerHTML = title_class;
-                Noti_TimefromNow.innerHTML = time_now
-                const Noti_Avatar = document.getElementById("AuthorAvatar").src = '..' + avatar;
-                Noti_title.innerHTML = title;
-                Noti_Author_TimeUpload.innerHTML = author_time;
-                Noti_text.innerHTML = text;
-
-                anchors.forEach(anchor => anchor.classList.remove('active'));
-                event.currentTarget.classList.add('active');
-                // Prevent default link behavior if needed
-                event.preventDefault();
-              });
-            });
-          });
-
-    </script>
+    
+    
 </body>
 </html>
 
+{% endcomment %}

@@ -71,7 +71,6 @@ class Notification(models.Model):
     ForClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     text = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
-    # text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -112,6 +112,11 @@
             text-align: left;
         }
 
+        .truncate_style{
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
     </style>
     
     {% block extra_attach %}
@@ -126,16 +131,18 @@
                     <img src="{% static "img/home/logo.png" %}" alt="logo" class="img-fluid" style="max-width: 80%;">
                 </a>
                 <div class="navbar-nav box_nav gap-4">
-                    <a href="{% url 'home' %}" class="nav-link fs-5 rounded-4" style = "{% if request.resolver_match.url_name == 'home' %} 
+                    <a href="{% url 'home' %}" class="nav-link fs-5 text-center rounded-4" style = "{% if request.resolver_match.url_name == 'home' %} 
                                                                             color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                                             {% elif request.resolver_match.url_name == 'profile' %}
                                                                             color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                                            {% else %} color:#FFFFFF {% endif %}">
+                                                                            {% elif request.resolver_match.url_name == 'view_all_grades' %}
+                                                                            color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
+                                                                            {% else %} color:#FFFFFF; {% endif %} width: 120px;">
                         <i class="bi bi-house-fill"></i>
                         Home
                     </a>
 
-                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5  rounded-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
+                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5 text-center rounded-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% elif request.resolver_match.url_name == 'class_page' %}
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
@@ -155,7 +162,7 @@
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% elif request.resolver_match.url_name == 'view_comment' %}
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% else %} color:#FFFFFF {% endif %}">
+                                                            {% else %} color:#FFFFFF; {% endif %} width: 120px;">
                         <i class="bi bi-book-fill"></i>
                         Courses
                     </a>
@@ -170,7 +177,7 @@
                 --bs-btn-active-bg: rgb(237, 237, 237); --bs-btn-active-color: #AEA7E9;">
                     <i class="bi bi-bell"></i>
                 </button>
-                <ul class="dropdown-menu pt-4 px-4" style="--bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
+                <ul class="dropdown-menu pt-4 px-4" style="max-width: 400px; --bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
                     {% for notify in notifies %}
                         <li>
                             <div class="dropdown-item card mb-3" style="background: rgba(229, 209, 252, 0.53)">
@@ -181,9 +188,11 @@
                                                 <i class="bi bi-bell"></i>
                                             </div>
         
-                                            <div class="col">
+                                            <div class="col d-inline-block text-truncate">
                                                 <p></p>
-                                                <p class="fw-light" style="color: #56407B; --bs-dropdown-link-active-bg: none; white-space: pre-wrap">{{ notify.title }}</p>
+                                                <p class="fw-light truncate_style" style="color: #56407B; --bs-dropdown-link-active-bg: none;">
+                                                    {{ notify.title }}
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
@@ -198,11 +207,40 @@
                 </ul>
                 
             </div>
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
+            <button type="button" class="btn btn-outline-secondary fs-5" data-bs-toggle="modal" data-bs-target="#LogoutModal" 
+            style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
                 <i class="bi bi-box-arrow-right"></i>
             </button>
         </div>
     </div>
+
+    <div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content rounded-4">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <img src="{% static "img/logOut.png" %}" alt="logOut">
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center align-items-center mt-5">
+                        <p class="fs-4 fw-bold" style="color: #111B88;">You are logging out!</p>
+                        <p class="mb-5" style="color: #7E57C2;">Confirm to leave?</p>
+                        <div>
+                            <button type="button" class="btn btn-secondary fw-bold me-3" data-bs-dismiss="modal" 
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #EDEDED; --bs-btn-border-color: none;">
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary fw-bold" onclick="location.href='{% url 'users:logout' %}';"
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #ACD5FF; --bs-btn-border-color: none;">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <div class="container-fluid" style="min-height: 90vh">
         <div class="row">

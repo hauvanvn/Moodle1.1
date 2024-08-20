@@ -6,14 +6,46 @@ Moodle_1.1 - View Announcement
 {% endblock title %}
 
 {% block extra_attach %}
-<link rel="stylesheet" href="{% static "css/style_viewPost.css" %}">
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.2/ckeditor5.css" />
+<link rel="stylesheet" href="{% static "css/style_notfications.css" %}">
+<script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
 {% endblock extra_attach %}
 
-{% block header %}{% endblock header %}
-
 {% block content %}
-<div class="main">
+<h2 class="ms-3" style="color: #3343A1"><b>Notification</b></h2>
+<div class="container border bg-white shadow rounded-4 p-4 ms-3 row">
+    <div style="overflow-y: auto; overflow-x:hidden; height:500px; margin-left: 10px;">
+        <div class="row">
+            <div class="col-auto">
+                <i class="fa-regular fa-envelope" style="color: #828282;"></i>
+            </div>
+            <div class="col text-truncate">
+                <p class="truncate_style" style="margin: 2px;">{{ notify.ForClass.className }}: {{ notify.title }} </p>
+                <p style="color: #828282; margin: 2px; font-size: 10px;">{{ notify.date_created|timesince }} ago</p>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-auto">
+                <img class="crop-avt avatar" src="{{ user.avatar.url }}" alt="Avatar">
+            </div>
+            <div class="col text-truncate">
+                <p class="fw-bold truncate_style" style="margin: 2px;">{{ notify.title }}</p>
+                <p style="color: #828282;">By {{ notify.author.first_name }} {{ notify.author.last_name }} - 
+                    {{ notify.date_created|date:"l, d F Y, g:i A" }}
+                </p> 
+            </div>
+        </div>
+        <hr>
+        <div class="ck-content">
+            <p>
+                {{ notify.text|safe }}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% comment %} <div class="main">
     <h2>View announcement</h2>
     <div class="notifications">
         <div class="notification">
@@ -30,5 +62,5 @@ Moodle_1.1 - View Announcement
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 {% endblock content %}
