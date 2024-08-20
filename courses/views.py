@@ -136,7 +136,6 @@ def view_participants(request, slug):
 
     page_number = request.GET.get("page")
     try:
-        mode = 0
         participants = page.page(page_number)
     except PageNotAnInteger:
         participants = page.page(1)
@@ -294,7 +293,18 @@ def view_all_grades(request, slug):
         return Http404NotFound(request)
     
     assignments = Assignment.objects.filter(ForClass=course).order_by('date_opened', 'date_opened')
-    submissions = Submission.objects.filter(ForAssignment__in=assignments, author=user).order_by('-date_upload')
+    list_submissions = Submission.objects.filter(ForAssignment__in=assignments, author=user).order_by('-date_upload')
+
+    page = Paginator(list_submissions, 20)
+
+    page_number = request.GET.get("page")
+    try:
+        submissions = page.page(page_number)
+    except PageNotAnInteger:
+        submissions = page.page(1)
+    except EmptyPage:
+        submissions = page.page(page.num_pages)
+
     return render(request, 'courses/View_all_grades_student.html',
                   {'user': user, 'notifies': notifications, 'events': events,
                    'course': course, 'submissions': submissions})

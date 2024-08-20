@@ -75,38 +75,40 @@ Course
             <a href="#" style="color: #828282;">< &nbsp Previous</a>
         {% endif %}
         
-        {% for i in participants.paginator.page_range %}
-            {% if i == 1 %}
-                {% if participants.number == i %}
-                    <a class=" active" href="">{{ i }}</a>
-                {% else %}
-                    <a class="" href="?page={{ i }}">{{ i }}</a>
-                {% endif %}
-            {% endif %}
-            {% if i != 1 and i != participants.paginator.page_range|last %}
-                {% if participants.number == i %}
-                    <a class=" active" href="">{{ i }}</a>
-                {% else %}
-                    {% if participants.number|add:-4 == i %}
-                        <a class="" href="">...</a>
-                    {% endif %}
-                    {% if participants.number|add:3 >= i and participants.number|add:-3 <= i %}
+        {% if participants.paginator.page_range != 1 %}
+            {% for i in participants.paginator.page_range %}
+                {% if i == 1 %}
+                    {% if participants.number == i %}
+                        <a class=" active" href="">{{ i }}</a>
+                    {% else %}
                         <a class="" href="?page={{ i }}">{{ i }}</a>
                     {% endif %}
-                    {% if participants.number|add:4 == i %}
-                        <a class="" href="">...</a>
+                {% endif %}
+                {% if i != 1 and i != participants.paginator.page_range|last %}
+                    {% if participants.number == i %}
+                        <a class=" active" href="">{{ i }}</a>
+                    {% else %}
+                        {% if participants.number|add:-4 == i %}
+                            <a class="" href="">...</a>
+                        {% endif %}
+                        {% if participants.number|add:3 >= i and participants.number|add:-3 <= i %}
+                            <a class="" href="?page={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% if participants.number|add:4 == i %}
+                            <a class="" href="">...</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
-            {% if i == participants.paginator.page_range|last %}
-                {% if participants.number == i %}
-                    <a class=" active" href="">{{ participants.paginator.page_range|last }}</a>
-                {% else %}
-                    <a class="" href="?page={{ participants.paginator.page_range|last }}">{{ participants.paginator.page_range|last }}</a>
+                {% if i == participants.paginator.page_range|last %}
+                    {% if participants.number == i %}
+                        <a class=" active" href="">{{ participants.paginator.page_range|last }}</a>
+                    {% else %}
+                        <a class="" href="?page={{ participants.paginator.page_range|last }}">{{ participants.paginator.page_range|last }}</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
-
+            {% endfor %}
+        {% endif %}
+        
         {% if participants.has_next %}
             <a href="?page={{ participants.next_page_number }}">Next &nbsp ></a>
         {% elif not participants.has_next %}
