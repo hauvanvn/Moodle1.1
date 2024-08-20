@@ -30,15 +30,7 @@ EMAIL_HOST_PASSWORD = 'imfr rair xqch vwza'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['20.187.44.16']
-=======
-ALLOWED_HOSTS = ['127.0.0.1']
->>>>>>> main
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+ALLOWED_HOSTS = ['52.247.246.123']
 
 # Application definition
 
@@ -94,16 +86,9 @@ WSGI_APPLICATION = 'moodle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'moodle',
-        'USER': 'moodle',
-        'PASSWORD': '121100',
-        'HOST': '127.0.0.1',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'sql_mode': 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION',
-        },
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -143,15 +128,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'resource')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
 customColorPalette = [
         {
