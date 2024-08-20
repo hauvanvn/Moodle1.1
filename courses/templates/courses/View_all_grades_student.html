@@ -53,38 +53,40 @@ Course
             <a href="#" style="color: #828282;">< &nbsp Previous</a>
         {% endif %}
         
-        {% for i in submissions.paginator.page_range %}
-            {% if i == 1 %}
-                {% if submissions.number == i %}
-                    <a class=" active" href="">{{ i }}</a>
-                {% else %}
-                    <a class="" href="?page={{ i }}">{{ i }}</a>
-                {% endif %}
-            {% endif %}
-            {% if i != 1 and i != submissions.paginator.page_range|last %}
-                {% if submissions.number == i %}
-                    <a class=" active" href="">{{ i }}</a>
-                {% else %}
-                    {% if submissions.number|add:-4 == i %}
-                        <a class="" href="">...</a>
-                    {% endif %}
-                    {% if submissions.number|add:3 >= i and submissions.number|add:-3 <= i %}
+        {% if submissions.paginator.page_range != 1 %}
+            {% for i in submissions.paginator.page_range %}
+                {% if i == 1 %}
+                    {% if submissions.number == i %}
+                        <a class=" active" href="">{{ i }}</a>
+                    {% else %}
                         <a class="" href="?page={{ i }}">{{ i }}</a>
                     {% endif %}
-                    {% if submissions.number|add:4 == i %}
-                        <a class="" href="">...</a>
+                {% endif %}
+                {% if i != 1 and i != submissions.paginator.page_range|last %}
+                    {% if submissions.number == i %}
+                        <a class=" active" href="">{{ i }}</a>
+                    {% else %}
+                        {% if submissions.number|add:-4 == i %}
+                            <a class="" href="">...</a>
+                        {% endif %}
+                        {% if submissions.number|add:3 >= i and submissions.number|add:-3 <= i %}
+                            <a class="" href="?page={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% if submissions.number|add:4 == i %}
+                            <a class="" href="">...</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
-            {% if i == submissions.paginator.page_range|last %}
-                {% if submissions.number == i %}
-                    <a class=" active" href="">{{ submissions.paginator.page_range|last }}</a>
-                {% else %}
-                    <a class="" href="?page={{ submissions.paginator.page_range|last }}">{{ submissions.paginator.page_range|last }}</a>
+                {% if i == submissions.paginator.page_range|last %}
+                    {% if submissions.number == i %}
+                        <a class=" active" href="">{{ submissions.paginator.page_range|last }}</a>
+                    {% else %}
+                        <a class="" href="?page={{ submissions.paginator.page_range|last }}">{{ submissions.paginator.page_range|last }}</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
-
+            {% endfor %}
+        {% endif %}
+        
         {% if submissions.has_next %}
             <a href="?page={{ submissions.next_page_number }}">Next &nbsp ></a>
         {% elif not submissions.has_next %}
