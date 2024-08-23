@@ -12,8 +12,8 @@ All Notifications
 {% endblock extra_attach %}
 
 {% block content %}
-<div class="container border bg-white shadow rounded-4 p-4 row">
-    <h2 class="ms-3" style="color: #3343A1"><b>Notifications:</b></h2>
+<h2 class="ms-3" style="color: #3343A1"><b>Notifications</b></h2>
+<div class="container border bg-white shadow rounded-3 p-4 row">
     <div class="col-4" style="overflow-y: auto; overflow-x:hidden; height:500px;">
         <div class="box_noti row">
             {% for notify in notifications %}
@@ -32,7 +32,7 @@ All Notifications
         </div>
     </div>
 
-    <div class="col" style="overflow-y: auto; overflow-x:hidden; height:500px; margin-left: 10px;">
+    <div class="col">
         <div class="row">
             <div class="col-auto">
                 <i class="fa-regular fa-envelope" style="color: #828282;"></i>
@@ -42,21 +42,23 @@ All Notifications
                 <p id="TimeUpload_fromNow" style="color: #828282; margin: 2px; font-size: 10px;"></p>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-auto">
-                <img id="AuthorAvatar" class="crop-avt avatar" src="" alt="Avatar">
+        <hr style="margin-top: 5px;">
+        <div class="card rounded-2" style="overflow-y: auto; overflow-x: hidden; height: 440px;">
+            <div class="row" style="margin-top: 15px; margin-left: 5px;">
+                <div class="col-auto">
+                    <img id="AuthorAvatar" class="crop-avt avatar" src="" alt="Avatar">
+                </div>
+                <div class="col text-truncate">
+                    <p class="fw-bold truncate_style" id="Title" style="margin: 2px;"></p>
+                    <p id="Author_TimeUpload" style="color: #828282;"></p> 
+                </div>
             </div>
-            <div class="col text-truncate">
-                <p class="fw-bold truncate_style" id="Title" style="margin: 2px;"></p>
-                <p id="Author_TimeUpload" style="color: #828282;"></p> 
+            <hr style="margin-top: 2px;">
+            <div id="Text" class="ck-content" style="margin-left: 15px;">
+                <p>
+                    Select a notification to view its content.
+                </p>
             </div>
-        </div>
-        <hr>
-        <div id="Text" class="ck-content">
-            <p>
-                Select a notification to view its content.
-            </p>
         </div>
     </div>
 </div>

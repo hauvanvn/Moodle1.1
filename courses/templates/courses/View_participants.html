@@ -29,39 +29,24 @@ Course
 
     <h4 style="color:#3343A1">Enrolled users</h4>
     <br>
-    <table border="table_ass mb-4">
-        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-            <th width="355">Name</th>
-            <th width="355">Role</th>
-            <th width="355">Class</th>
+    <table class="table_ass">
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Class</th>
         </tr>
         {% for participant in participants %}
-            {% if forloop.counter|divisibleby:2 %}
-                <tr align="center" style="background-color: rgb(224, 224, 224)">
-                    <td>{{ participant.first_name }} {{ participant.last_name }}</td>
-                    {% if participant.is_superuser %}
-                        <td>Admin</td>
-                    {% elif participant.is_staff %}
-                        <td>Teacher</td>
-                    {% else %}
-                        <td>Student</td>
-                    {% endif %}
-                    <td>{{ participant.inClass }}</td>
-                </tr>
-            {% else %}
-                <tr align="center" style="background-color: white">
-                    <td>{{ participant.first_name }} {{ participant.last_name }}</td>
-                    {% if participant.is_superuser %}
-                        <td>Admin</td>
-                    {% elif participant.is_staff %}
-                        <td>Teacher</td>
-                    {% else %}
-                        <td>Student</td>
-                    {% endif %}
-                    <td>{{ participant.inClass }}</td>
-                </tr>
-                </tr>
-            {% endif %}
+            <tr>
+                <td>{{ participant.first_name }} {{ participant.last_name }}</td>
+                {% if participant.is_superuser %}
+                    <td>Admin</td>
+                {% elif participant.is_staff %}
+                    <td>Teacher</td>
+                {% else %}
+                    <td>Student</td>
+                {% endif %}
+                <td>{{ participant.inClass }}</td>
+            </tr>
         {% endfor %}
     </table>
 </div>
@@ -79,14 +64,14 @@ Course
             {% for i in participants.paginator.page_range %}
                 {% if i == 1 %}
                     {% if participants.number == i %}
-                        <a class=" active" href="">{{ i }}</a>
+                        <a class="active" href="">{{ i }}</a>
                     {% else %}
                         <a class="" href="?page={{ i }}">{{ i }}</a>
                     {% endif %}
                 {% endif %}
                 {% if i != 1 and i != participants.paginator.page_range|last %}
                     {% if participants.number == i %}
-                        <a class=" active" href="">{{ i }}</a>
+                        <a class="active" href="">{{ i }}</a>
                     {% else %}
                         {% if participants.number|add:-4 == i %}
                             <a class="" href="">...</a>
@@ -101,7 +86,7 @@ Course
                 {% endif %}
                 {% if i == participants.paginator.page_range|last %}
                     {% if participants.number == i %}
-                        <a class=" active" href="">{{ participants.paginator.page_range|last }}</a>
+                        <a class="active" href="">{{ participants.paginator.page_range|last }}</a>
                     {% else %}
                         <a class="" href="?page={{ participants.paginator.page_range|last }}">{{ participants.paginator.page_range|last }}</a>
                     {% endif %}

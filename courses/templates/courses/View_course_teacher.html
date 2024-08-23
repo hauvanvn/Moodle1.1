@@ -35,7 +35,7 @@ Course: {{ course }}
     <h4 class="d-inline-block" style="color:#3343A1">General</h4>
     
     <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGen">
-        <i class="bi bi-plus-lg"></i>
+        <i class="fa-solid fa-plus" style="color: #828282;"></i>
     </button>
 </div>
 
@@ -121,7 +121,9 @@ Course: {{ course }}
                         {% endif %}
                         <form method="POST" class="ms-auto">
                             {% csrf_token %}
-                            <button name="delete_material" value="{{ file.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                            <button name="delete_material" value="{{ file.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none">
+                                <i class="fa-solid fa-trash-can" style="color: #828282;"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -135,7 +137,7 @@ Course: {{ course }}
     <h4 class="d-inline-block" style="color:#3343A1">Lecture</h4>
     
     <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLec">
-        <i class="bi bi-plus-lg"></i>
+        <i class="fa-solid fa-plus" style="color: #828282;"></i>
     </button>
 </div>
 
@@ -221,7 +223,9 @@ Course: {{ course }}
                         {% endif %}
                         <form method="POST" class="ms-auto">
                             {% csrf_token %}
-                            <button name="delete_material" value="{{ file.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                            <button name="delete_material" value="{{ file.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none">
+                                <i class="fa-solid fa-trash-can" style="color: #828282;"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -235,7 +239,7 @@ Course: {{ course }}
     <h4 class="d-inline-block" style="color:#3343A1">Assignment</h4>
     
     <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAssign">
-        <i class="bi bi-plus-lg"></i>
+        <i class="fa-solid fa-plus" style="color: #828282;"></i>
     </button>
 </div>
 
@@ -296,7 +300,9 @@ Course: {{ course }}
                         <a href="{% url 'courses:view_assignment' slug=course.slug assignmentname=assignment.id %}" class="nav-link">{{ assignment.title }}</a>
                     <form method="POST" class="ms-auto">
                         {% csrf_token %}
-                        <button name="delete_assignment" value="{{ assignment.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none"><i class="bi bi-trash-fill"></i></button>
+                        <button name="delete_assignment" value="{{ assignment.id }}" class="btn btn-outline-secondary" type="submit" style="--bs-btn-border-color: none">
+                            <i class="fa-solid fa-trash-can" style="color: #828282;"></i>
+                        </button>
                     </form>
                 </div>
             </div>
