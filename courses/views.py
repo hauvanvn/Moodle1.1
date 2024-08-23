@@ -90,6 +90,7 @@ def view_class_page(request, slug):
                     messages.success(request, "Upload " + name + " successful!")
                     return redirect('courses:class_page', slug=slug)
                 else:
+                    messages.warning(request, "Upload " + name + " error due to file size too big!")
                     return render(request, 'courses/View_course_teacher.html', 
                             {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments, 
@@ -106,6 +107,7 @@ def view_class_page(request, slug):
                     messages.success(request, "Upload " + title + " assignment successful!")
                     return redirect('courses:class_page', slug=slug)
                 else:
+                    messages.warning(request, "Upload " + title + " error due to file size too big!")
                     return render(request, 'courses/View_course_teacher.html', 
                             {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments,
@@ -244,8 +246,12 @@ def view_assignment(request, slug, assignmentname):
                 new_submit.author = user
                 new_submit.ForAssignment = assignment
                 new_submit.file = request.FILES['submit_file']
-                new_submit.save()
-                messages.success(request, "Submit successful!")
+                if new_submit.validate_unique():
+                    new_submit.save()
+                    messages.success(request, "Submit successful!")
+                else:
+                    messages.warning(request, "Submit error due to file size too big!")
+                
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
             else:
                 # Delete submission
