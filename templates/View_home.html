@@ -44,20 +44,20 @@ Learning Management System - fit@hcmus - 1.1
         <div class="row align-items-center">
             <div class="col">
                 <h2 class="fw-bold">
-                    <span class="text-primary gradient-text">PA2 - Submission</span>
+                    <span class="text-primary gradient-text">{{ assignment.title }}</span>
                     <span class="text-black"> is due</span>
                 </h2>
                 <br>
                 <p class="text fst-italic">
-                    <span>Saturday, 20 July, 23:00</span>
+                    <span>{{ assignment.date_closed }}</span>
                     <br>
                     <span>Course event</span>
                     <br>
-                    <span>Nhập môn công nghệ phần mềm - 22CLC08</span>
+                    <span>{{ assignment.ForClass }}</span>
                     <br>
                 </p>
                 <br>
-                <button class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-color: #618CEE">View more</button>
+                <button onclick="location.href='{% url 'courses:view_assignment' slug=assignment.ForClass.slug assignmentname=assignment.id %}';" class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-color: #618CEE">View more</button>
             </div>
             <div class="col-auto text-center">
                 <img src="{% static 'img/home/potd.png' %}" alt="Illustration" class="illustration">
