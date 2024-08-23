@@ -11,6 +11,7 @@ Course
 {% endblock extra_attach %}
 
 {% block content %}
+<br>
 <div class="container">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
@@ -21,7 +22,6 @@ Course
     <br>
     <h4 style="color:#3343A1">Submissions: {{ assignment.title }} </h4>
     <br>
-
     <table class="table_ass mb-4">
         <tr>
             <th class = "col-w">Release</th>
@@ -46,10 +46,10 @@ Course
 
     <table class="table_ass mb-4">
         <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-            <th width="266">ID</th>
-            <th width="266">Score</th>
-            <th width="267">Grading</th>
-            <th width="267">Submission time</th>
+            <th>ID</th>
+            <th>Score</th>
+            <th>Grading</th>
+            <th>Submission time</th>
         </tr>
         {% for submit in submissions %}
         <tr>
