@@ -43,24 +43,4 @@ Moodle_1.1 - View Announcement
         </div>
     </div>
 </div>
-
-
-{% comment %} <div class="main">
-    <h2>View announcement</h2>
-    <div class="notifications">
-        <div class="notification">
-            <div class="notification-header">
-                <div class="notification-title">
-                    <h4>{{ notify.title }}</h4>
-                    <span>By {{ notify.author.first_name }} {{ notify.author.last_name }} - {{ notify.date_created|date:"l, d F Y, g:i A" }}</span>
-                </div>
-            </div>
-            <div class="ck-content">
-                <p>
-                    {{ notify.text|safe }}
-                </p>
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
 {% endblock content %}

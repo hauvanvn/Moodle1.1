@@ -60,7 +60,7 @@ Course
             <a href="#" style="color: #828282;">< &nbsp Previous</a>
         {% endif %}
         
-        {% if participants.paginator.page_range != 1 %}
+        {% if participants.paginator.num_pages > 1 %}
             {% for i in participants.paginator.page_range %}
                 {% if i == 1 %}
                     {% if participants.number == i %}

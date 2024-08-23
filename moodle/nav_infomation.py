@@ -1,5 +1,7 @@
 from courses.models import Notification, Assignment, CourseClass
 
+from datetime import timezone
+
 def getIn4(request):
     user = request.user
     notifications = []
@@ -20,6 +22,7 @@ def getIn4(request):
 
         for event in events:
             datetime = event.date_closed
+            datetime = datetime.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
             event_list.append(event.title)
             event_list.append(datetime.strftime("%Y"))

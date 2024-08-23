@@ -8,9 +8,9 @@ import secrets
 # Create your models here.
 
 def file_size(value):
-    limit = 20 * 1024 * 1024 #MiB
+    limit = 25 * 1024 * 1024 #MiB
     if value.size > limit:
-        raise ValidationError('File too large. size should not exceed 20 MiB')
+        raise ValidationError('File too large. size should not exceed 25 MB')
 
 def upload_path_handle(instance, filename):
     return 'users/{id}/{file}'.format(id=instance.username, file=filename)
