@@ -20,14 +20,14 @@ Course
 <br>
 <h4 class="fw-semibold" style="color:#3343A1">{{ assignment.title }} </h4>
 
-<table>
-    <tr align="center" style="color: white; background-color: #B9ADEE">
+<table class="table_ass">
+    <tr>
         <th class = "col-w">Release</th>
         <th class = "col-w">Due</th>
         <th class = "col-w">Time remaining</th>
         <th width = "250px">Submission</th>
     </tr>
-    <tr align="center" style="background-color: white">
+    <tr>
         <td>{{ assignment.date_opened }}</td>
         <td>{{ assignment.date_closed }}</td>
         <td>{{ assignment.date_opened|timesince:assignment.date_closed }}</td>
