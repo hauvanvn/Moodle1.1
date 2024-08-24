@@ -26,7 +26,7 @@ def Create_Notification_Assignment(assignment):
     notification = Notification()
     notification.author = assignment.author
     notification.ForClass = assignment.ForClass
-    notification.title = "Asignment: " + assignment.title
+    notification.title = "Assignment: " + assignment.title
     # Replace 127.0.0.0 with link you want to redirect to.
     notification.text = "<br>" + "A new assignment was added to " + "<a href=" + string.punctuation[1] + settings.ALLOWED_HOSTS[0] + string.punctuation[1] + ">" + course.course.name + " - " + course.className + "." + "</a>"
 
