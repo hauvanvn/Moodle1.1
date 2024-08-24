@@ -109,6 +109,7 @@ def View_Profile(request):
                 messages.warning(request, "Your old password is not correct!")
                 return redirect('users:profile')
         else:
+            print("here")
             user.avatar = request.FILES['img']
             user.save()
             messages.success(request, "Change avatar successful!")

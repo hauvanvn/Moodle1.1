@@ -25,15 +25,18 @@ Profile
     <div class="row">
         <div class="col-auto text-center">
             <img src="{{ user.avatar.url }}" alt="Avatar" class="crop avatar">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" class="was-validated" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="img-upload" class="custom-img-upload mt-2 mb-2">
                     Avatar <i class="bi bi-upload"></i>
                 </label>
                 <input type="file" id="img-upload" name="img" accept="image/*" required="True">
+                <div class="invalid-feedback">
+                    Upload a picture to change avatar.
+                </div>
 
                 <div class="mt-3">
-                    <button type="button" class="btn btn-outline-light submit">
+                    <button type="submit" class="btn btn-outline-light submit">
                         <b>Change avatar</b>
                     </button>
                 </div>
