@@ -22,18 +22,14 @@ Course
 <br>
 <h4 style="color:#3343A1">Submission: {{ assignment.title }} </h4>
 
-<table>
-    <tr align="center" style="color: white; background-color: #B9ADEE">
-        <th class = "col-w">Grade</th>
-        <th class = "col-w">Range</th>
-        <th class = "col-w">Percentages</th>
-        <th width = "250px">Submission time</th>
+<table class="table_ass">
+    <tr align="center">
+        <th>Grade</th>
+        <th>Submission time</th>
     </tr>
-    <tr align="center" style="background-color: white">
+    <tr align="center">
         <td>{{ submit.grade }}</td>
-        <td>0 - 10</td>
-        <td>10%</td>
-        <td></td>
+        <td>{{ submit.date_upload }}</td>
     </tr>
 </table>
 <br>
