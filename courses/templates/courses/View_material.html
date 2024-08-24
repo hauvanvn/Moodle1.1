@@ -7,6 +7,15 @@
 {% endblock title %}
 
 {% block content %}
+<style>
+    .img-square {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+</style>
 <div class="row">
     <div class="col-auto"><img src="{% static 'img/course/file.svg' %}" alt="pdf" height = "50", width = "50"></div>
     <div class="col-auto"><h1 style="color:#3343A1">{{ file.name }}</h1></div>
@@ -19,16 +28,17 @@
             src= "{{ file.file.url }}" height="700">
         </iframe>
     </div>
-    <hr>
+    <br>
 
     <div>
-        <h2 style="color:#3343A1">Comments</h2>
+        <h4 style="color:#3343A1">Comments</h4>
 
         <form method="POST">
             {% csrf_token %}
-            <div class="row comment-row mb-2 align-self-center">
-                <div class="col-1">
-                    <img src="{{ user.avatar.url }}" alt="avatar" class="img-fluid" style="border-radius: 50%">
+            <div class="row comment-row mb-2 align-self-center justify-content-center">
+                <div class="col-1">              
+                    <img src="{{ user.avatar.url }}" alt="avatar" class = "img-square">
+
                 </div>
                 <div class="col">
                     <div class="input-group comment-input h-100">
@@ -44,9 +54,10 @@
         </form>
         <hr>
         {% for comment in comments %}
-            <div class="row d-flex align-items-start mb-3">
+            <div class="row d-flex align-items-start mb-3 justify-content-center align-items-center">
                 <div class="col-1">
-                    <img src="{{ comment.user.avatar.url }}" alt="avatar" class="img-fluid" style="border-radius: 50%;">
+                    <img src="{{ user.avatar.url }}" class= "img-square">
+
                 </div>
                 <div class="col-11">
                     <div class="card comment-card rounded-4 border-0">
