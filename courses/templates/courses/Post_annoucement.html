@@ -9,6 +9,7 @@ Moodle_1.1 - Post Announcement
 
 {% block extra_attach %}
     <link rel="stylesheet" href="{% static "css/style_post.css" %}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock extra_attach %}
 
 {% block header %}
@@ -17,7 +18,7 @@ Moodle_1.1 - Post Announcement
 {% block content %}
 <div class="main">
     <h2>Post announcement</h2>
-    <form method="POST"  enctype="multipart/form-data">
+    <form method="POST" name="announcement" id="announcement" enctype="multipart/form-data">
         {% csrf_token %}  
         <div class="form-group">
             <label for="title">Title</label>
@@ -27,6 +28,7 @@ Moodle_1.1 - Post Announcement
             <label for="description">Description</label>
             {{ form.media }}
             {{ form.text }}
+            
         </div>
         <div class="form-group ms-auto">
             <div class="d-grid justify-content-md-end">
@@ -37,4 +39,14 @@ Moodle_1.1 - Post Announcement
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    $('#announcement').submit(function() 
+    {
+        if (jQuery("#cke_1_contents iframe").contents().find("body").text() === "") {
+            alert('Please enter your announcement.');
+        return false;
+        }
+    });
+</script>
 {% endblock content %}
