@@ -246,12 +246,12 @@
 
     <div class="container-fluid" style="min-height: 90vh">
         <div class="row">
-            <div class="col col-xxl-9 col-xl-9 col-lg-8 col-md-7 col-sm-6 border-1 rounded-5 p-4">
+            <div class="col col-xxl-9 col-xl-8 col-lg-7 col-md-7 col-sm-6 border-1 rounded-5 p-4">
                 {% block content %}
                 {% endblock content %}
             </div>
 
-            <div class="col col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6 bg-white">
+            <div class="col col-xxl-3 col-xl-4 col-lg-5 col-md-5 col-sm-6 bg-white">
                 <div class=" mt-5 mb-2">
                     <a href="{% url 'users:profile' %}" class="d-flex flex-column align-items-center link-dark link-underline link-underline-opacity-0">
                         <img src="{{ user.avatar.url }}" alt="avatar" width="150" height="150" class="img-fluid" style="border-radius: 50%;"> 
