@@ -9,12 +9,14 @@ import datetime
 def home(request):
     user, notifications, events = getIn4(request)
     courses = []
+    assignment = {'title': 'No assignment', 'date_closed': '', 'ForClass': ''}
 
-    if Class.objects.exists():
+    if Class.objects.filter(participants=user.id).exists():
         courses_temp = Class.objects.filter(participants=user.id).order_by('-date_created')
 
-        ev = Assignment.objects.filter(ForClass__in=courses_temp).order_by('date_opened', 'date_opened')
-        assignment = min(ev, key=lambda date: abs(date.date_closed - datetime.datetime.now(datetime.timezone.utc)))
+        if Assignment.objects.filter(ForClass__in=courses_temp).exists():
+            ev = Assignment.objects.filter(ForClass__in=courses_temp).order_by('date_opened', 'date_opened')
+            assignment = min(ev, key=lambda date: abs(date.date_closed - datetime.datetime.now(datetime.timezone.utc)))
 
         for course in courses_temp:
             teacher = course.participants.filter(is_staff=1)

@@ -8,7 +8,6 @@ from users.models import User
 
 from moodle.nav_infomation import getIn4
 from moodle.views import Http404NotFound
-from django.http import HttpResponse
 
 from .sendMail import sendNotification, Create_Notification_Assignment
 import datetime
@@ -246,7 +245,8 @@ def view_assignment(request, slug, assignmentname):
                 new_submit.author = user
                 new_submit.ForAssignment = assignment
                 new_submit.file = request.FILES['submit_file']
-                if new_submit.validate_unique():
+
+                if new_submit.file.size <= 25 * 1024 * 1024: #File size
                     new_submit.save()
                     messages.success(request, "Submit successful!")
                 else:
@@ -255,7 +255,7 @@ def view_assignment(request, slug, assignmentname):
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
             else:
                 # Delete submission
-                submit = Submission.objects.get(auhor=user)
+                submit = Submission.objects.get(author=user, ForAssignment=assignment)
                 submit.delete()
                 messages.warning(request, "Delete submission successful!")
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)

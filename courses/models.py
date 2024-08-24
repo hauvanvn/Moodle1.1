@@ -94,6 +94,9 @@ class Assignment(models.Model):
 
     def __str__(self):
         return self.author.first_name + " " + self.author.last_name + ": " + self.title
+    
+    def is_closed(self):
+        return self.date_closed < datetime.datetime.now(datetime.timezone.utc)
 
 def upload_submission_file_path_handle(instance, filename):
     return 'courses/{c_id}/assignments/{id}/{user}/{file}'.format(c_id=instance.ForAssignment.ForClass.id, id=instance.ForAssignment.id, user=instance.author.username, file=filename)

@@ -57,7 +57,11 @@ Learning Management System - fit@hcmus - 1.1
                     <br>
                 </p>
                 <br>
-                <button onclick="location.href='{% url 'courses:view_assignment' slug=assignment.ForClass.slug assignmentname=assignment.id %}';" class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
+                {% if assignment.ForClass == '' %}
+                    <button class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
+                {% else %}
+                    <button onclick="location.href='{% url 'courses:view_assignment' slug=assignment.ForClass.slug assignmentname=assignment.id %}';" class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
+                {% endif %}
             </div>
             <div class="col-auto text-center">
                 <img src="{% static 'img/home/potd.png' %}" alt="Illustration" class="illustration">
