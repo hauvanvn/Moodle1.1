@@ -110,9 +110,14 @@ def View_Profile(request):
                 return redirect('users:profile')
         else:
             print("here")
-            user.avatar = request.FILES['img']
-            user.save()
-            messages.success(request, "Change avatar successful!")
+            avatar = request.FILES['img']
+            if avatar.size <= 25 * 1024 * 1024: #File size
+                user.avatar = avatar
+                user.save()
+                messages.success(request, "Change avatar successful!")
+            else:
+                messages.warning(request, "Avatar change error due to file size too big!")
+            
             return redirect('users:profile')
 
     return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications, 'events': events})
