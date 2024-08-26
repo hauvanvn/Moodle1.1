@@ -149,6 +149,7 @@ def view_participants(request, slug):
 
 @login_required(login_url='users:login')
 def view_material(request, slug, filename):
+    course = Class.objects.get(slug=slug)
     user, notifications, events = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
         return Http404NotFound(request)
@@ -164,7 +165,7 @@ def view_material(request, slug, filename):
 
     return render(request, 'courses/View_material.html', 
                   {'user': user, 'notifies': notifications, 'events': events,
-                   'file': file, 'comments': comments})
+                   'file': file, 'comments': comments, 'course': course})
 
 @login_required(login_url='users:login')
 def view_announcement(request, slug, id):

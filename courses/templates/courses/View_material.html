@@ -16,59 +16,70 @@
         border-radius: 50%;
     }
 </style>
-<div class="row">
-    <div class="col-auto"><img src="{% static 'img/course/file.svg' %}" alt="pdf" height = "50", width = "50"></div>
-    <div class="col-auto"><h1 style="color:#3343A1">{{ file.name }}</h1></div>
-</div>
 
 <br>
-<div class = "p-4 bg-white border-black shadow rounded-5">
-    <div class = "row">
-        <iframe class="pdf" 
-            src= "{{ file.file.url }}" height="700">
-        </iframe>
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+        <a href="{% url "courses:participants" slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="{% url 'courses:view_all_grades' slug=course.slug %}" class="text-center rounded-3 me-2">Grade</a>
     </div>
     <br>
+    <div class="row">
+        <div class="col-auto"><img src="{% static 'img/course/file.svg' %}" alt="pdf" height = "50", width = "50"></div>
+        <div class="col-auto"><h1 style="color:#3343A1">{{ file.name }}</h1></div>
+    </div>
 
-    <div>
-        <h4 style="color:#3343A1">Comments</h4>
+    <br>
+    <div class = "p-4 bg-white border-black shadow rounded-5">
+        <div class = "row">
+            <iframe class="pdf" 
+                src= "{{ file.file.url }}" height="700">
+            </iframe>
+        </div>
+        <br>
 
-        <form method="POST">
-            {% csrf_token %}
-            <div class="row comment-row mb-2 align-self-center justify-content-center">
-                <div class="col-1">              
-                    <img src="{{ user.avatar.url }}" alt="avatar" class = "img-square">
+        <div>
+            <h4 style="color:#3343A1">Comments</h4>
 
-                </div>
-                <div class="col">
-                    <div class="input-group comment-input h-100">
-                        <textarea name="comment" type="text" class="form-control border-0 rounded-4" placeholder="Insert comment" style="background-color: #EDEDED; resize: none;" rows="1" required="True"></textarea>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row comment-row mb-2 align-self-center justify-content-center">
+                    <div class="col-1">              
+                        <img src="{{ user.avatar.url }}" alt="avatar" class = "img-square">
+
                     </div>
-                </div>
-            </div>
-            <div class="d-grid d-md-flex justify-content-md-end">
-                <button type="submit" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </form>
-        <hr>
-        {% for comment in comments %}
-            <div class="row d-flex align-items-start mb-3 justify-content-center align-items-center">
-                <div class="col-1">
-                    <img src="{{ user.avatar.url }}" class= "img-square">
-
-                </div>
-                <div class="col-11">
-                    <div class="card comment-card rounded-4 border-0">
-                        <div class="card-body rounded-4" style="background-color: #EDEDED;">
-                            <h6 class="card-title mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
-                            <p class="card-text" style = "font-size: 15px">{{ comment.text }}</p>
+                    <div class="col">
+                        <div class="input-group comment-input h-100">
+                            <textarea name="comment" type="text" class="form-control border-0 rounded-4" placeholder="Insert comment" style="background-color: #EDEDED; resize: none;" rows="1" required="True"></textarea>
                         </div>
                     </div>
                 </div>
-            </div>  
-        {% endfor %}
+                <div class="d-grid d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn" style="--bs-btn-color: #111B88; background-color: #FAEBC0">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+            <hr>
+            {% for comment in comments %}
+                <div class="row d-flex align-items-start mb-3 justify-content-center align-items-center">
+                    <div class="col-1">
+                        <img src="{{ user.avatar.url }}" class= "img-square">
+
+                    </div>
+                    <div class="col-11">
+                        <div class="card comment-card rounded-4 border-0">
+                            <div class="card-body rounded-4" style="background-color: #EDEDED;">
+                                <h6 class="card-title mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
+                                <p class="card-text" style = "font-size: 15px">{{ comment.text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            {% endfor %}
+        </div>
     </div>
 </div>
 
