@@ -98,11 +98,11 @@ body{
     height: 35px;
 }
 
-.table_ass tr:nth-child(even) {
+.table_ass tr:nth-child(odd) {
     background-color: rgb(224, 224, 224);
 }
 
-.table_ass tr:nth-child(odd) {
+.table_ass tr:nth-child(even) {
     background-color: white;
 }
 
