@@ -56,14 +56,14 @@ Course
                     <h5 style ="color:#3343A1">Choose input file</h5>
                 </div>
                 <div class = "col">
-                        <input name="submit_file" class="form-control" type="file" accept="application/pdf" id="fileUpload">
+                    <input name="submit_file" class="form-control" type="file" accept="application/pdf" id="fileUpload">
                 </div>
             </div>
         </div>
     
         <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-3">
             <button type="remove" class="btn" name="remove_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0" id="remove">Remove submission</button>
-            <button type="submit" class="btn" name="add_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0" id="submit">Add submission</button>
+            <button type="submit" class="btn" name="add_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0" id="submit" disabled>Add submission</button>
         </div>
     </form>
 
@@ -76,6 +76,8 @@ Course
         const removeButton = document.getElementById('remove');
         const submitButton = document.getElementById('submit');
 
+        const fileInput = document.getElementById('fileUpload');
+
         if (hasSubmission !== "--") {
             submitButton.setAttribute('disabled', true);
         } else {
@@ -86,6 +88,12 @@ Course
             removeButton.setAttribute('disabled', true);
             submitButton.setAttribute('disabled', true);
         }
+
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                submitButton.removeAttribute('disabled');
+            }
+        });
     });
 </script>
 {% endblock content %}
