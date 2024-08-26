@@ -71,12 +71,12 @@ Course
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const assignmentClosed = {{ assignment.is_closed|lower }};
-        const submission = "{{ submission }}";
+        const hasSubmission = "{{ submission }}";
 
         const removeButton = document.getElementById('remove');
         const submitButton = document.getElementById('submit');
 
-        if (submission !== "--") {
+        if (hasSubmission !== "--") {
             submitButton.setAttribute('disabled', true);
         } else {
             removeButton.setAttribute('disabled', true);
