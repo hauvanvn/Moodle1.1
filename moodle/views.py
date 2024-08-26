@@ -15,7 +15,7 @@ def home(request):
         courses_temp = Class.objects.filter(participants=user.id).order_by('-date_created')
 
         if Assignment.objects.filter(ForClass__in=courses_temp).exists():
-            ev = Assignment.objects.filter(ForClass__in=courses_temp).order_by('date_opened', 'date_opened')
+            ev = [x for x in Assignment.objects.filter(ForClass__in=courses_temp).order_by('date_opened', 'date_opened') if not x.is_closed()]
             assignment = min(ev, key=lambda date: abs(date.date_closed - datetime.datetime.now(datetime.timezone.utc)))
 
         for course in courses_temp:

@@ -30,7 +30,7 @@ Course
     <tr>
         <td>{{ assignment.date_opened }}</td>
         <td>{{ assignment.date_closed }}</td>
-        <td>{{ assignment.date_opened|timesince:assignment.date_closed }}</td>
+        <td>{{ assignment.date_closed|timeuntil }}</td>
         <td id="file-name">{{ submission }}</td>
     </tr>
 </table>
