@@ -62,22 +62,29 @@ Course
         </div>
     
         <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-3">
-            <button type="remove" class="btn" name="remove_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Remove submission</button>
-            <button type="submit" class="btn" name="add_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0">Add submission</button>
+            <button type="remove" class="btn" name="remove_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0" id="remove">Remove submission</button>
+            <button type="submit" class="btn" name="add_assignment" style="--bs-btn-color: #111B88; background-color: #FAEBC0" id="submit">Add submission</button>
         </div>
     </form>
 
 </div>
-
 <script>
-    document.getElementById('actual-btn').addEventListener('change', function() {
-        var fileName = this.files[0].name;
-        document.getElementById('file-name').textContent = fileName;
-        
-        // Enable the "Edit submission" button
-        var editButton = document.querySelector('button[disabled]');
-        if (editButton) {
-            editButton.removeAttribute('disabled');
+    document.addEventListener("DOMContentLoaded", function() {
+        const assignmentClosed = {{ assignment.is_closed|lower }};
+        const submission = "{{ submission }}";
+
+        const removeButton = document.getElementById('remove');
+        const submitButton = document.getElementById('submit');
+
+        if (submission !== "--") {
+            submitButton.setAttribute('disabled', true);
+        } else {
+            removeButton.setAttribute('disabled', true);
+        }
+
+        if (assignmentClosed) {
+            removeButton.setAttribute('disabled', true);
+            submitButton.setAttribute('disabled', true);
         }
     });
 </script>
