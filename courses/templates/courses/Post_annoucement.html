@@ -18,7 +18,7 @@ Moodle_1.1 - Post Announcement
 {% block content %}
 <div class="main">
     <h2>Post announcement</h2>
-    <form method="POST" name="announcement" id="announcement" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}  
         <div class="form-group">
             <label for="title">Title</label>
@@ -39,14 +39,4 @@ Moodle_1.1 - Post Announcement
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $('#announcement').submit(function() 
-    {
-        if (jQuery("#cke_1_contents iframe").contents().find("body").text() === "") {
-            alert('Please enter your announcement.');
-        return false;
-        }
-    });
-</script>
 {% endblock content %}

@@ -57,6 +57,8 @@ Course
                 <td>{{ submit.student }}</td>
                 {% if submit.submit.grade %}
                     <td>{{ submit.submit.grade }}</td>
+                {% elif submit.submit.grade == 0 %}
+                    <td>0</td>
                 {% else %}
                     <td>--</td>
                 {% endif %}
