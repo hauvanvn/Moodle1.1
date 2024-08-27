@@ -16,27 +16,37 @@ Moodle_1.1 - Post Announcement
 {% endblock header %}
 
 {% block content %}
-<div class="main">
-    <h2>Post announcement</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}  
-        <div class="form-group">
-            <label for="title">Title</label>
-            {% render_field form.title type="text" required=True %}
-        </div>
-        <div>
-            <label for="description">Description</label>
-            {{ form.media }}
-            {{ form.text }}
-            
-        </div>
-        <div class="form-group ms-auto">
-            <div class="d-grid justify-content-md-end">
-                <button type="submit" class="btn btn-primary" style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-border-color: none;">
-                    Finish
-                </button>
-              </div>
-        </div>
-    </form>
+<div class="container">
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url 'courses:class_page' slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
+        <a href="{% url 'courses:participants' slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="#" class="active text-center rounded-3 me-2">Post</a>
+    </div>
+    <br>
+
+    <div class="main p-0">
+        <h2>Post announcement</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}  
+            <div class="form-group">
+                <label for="title">Title</label>
+                {% render_field form.title type="text" required=True %}
+            </div>
+            <div>
+                <label for="description">Description</label>
+                {{ form.media }}
+                {{ form.text }}
+                
+            </div>
+            <div class="form-group ms-auto">
+                <div class="d-grid justify-content-md-end">
+                    <button type="submit" class="btn btn-primary" style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-border-color: none;">
+                        Finish
+                    </button>
+                  </div>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock content %}

@@ -199,7 +199,7 @@ def view_post_announcement(request, slug):
                           {'user': user, 'notifies': notifications, 'events': events, 'form': form})
 
     return render(request, 'courses/Post_annoucement.html', 
-                  {'user': user, 'notifies': notifications, 'events': events, 'form': AnnouncementForm()})
+                  {'user': user, 'course': course, 'notifies': notifications, 'events': events, 'form': AnnouncementForm()})
 
 @login_required(login_url='users:login')
 def view_assignment(request, slug, assignmentname):
