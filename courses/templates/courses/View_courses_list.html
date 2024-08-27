@@ -33,7 +33,7 @@ My courses
     <div id="activeDiv">
         {% for course in courses %}
             {% if not course.is_course_end %}
-                <div class="container-fluid border rounded-4 p-3 mt-3" style="background-color: #FFFCF5;">
+                <div class="container-fluid rounded-4 p-3 mt-3 shadow" style="background-color: #FFFCF5;">
                     <div class="row">
                         <div class="col-auto">
                             <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
@@ -45,8 +45,8 @@ My courses
 
                         <div class="col-3 d-flex align-items-end flex-column">
                             <p>Start: {{ course.date_created }} </p>
-                            <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
-                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-border-color: none;">
+                            <a class="btn mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
+                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-hover-bg: #DACCA6">
                                 View more
                             </a>
                         </div>
@@ -59,7 +59,7 @@ My courses
     <div id="completedDiv">
         {% for course in courses %}
             {% if course.is_course_end %}
-                <div class="container-fluid border rounded-4 p-3 mt-3" style="background-color: #FFFCF5;">
+                <div class="container-fluid rounded-4 p-3 mt-3 shadow" style="background-color: #FFFCF5;">
                     <div class="row">
                         <div class="col-auto">
                             <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
@@ -71,8 +71,8 @@ My courses
 
                         <div class="col-3 d-flex align-items-end flex-column">
                             <p>Start: {{ course.date_created }} </p>
-                            <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
-                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-border-color: none;">
+                            <a class="btn mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
+                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-hover-bg: #DACCA6">
                                 View more
                             </a>
                         </div>

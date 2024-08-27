@@ -40,14 +40,13 @@ Learning Management System - fit@hcmus - 1.1
 </style>
 <br>
 <div class="container p-2">
-    <div class="card px-5 py-3 custom-card">
+    <div class="card px-5 py-3 custom-card border-0">
         <div class="row align-items-center">
             <div class="col">
-                <h2 class="fw-bold">
+                <h3 class="fw-bold">
                     <span class="text-primary gradient-text">{{ assignment.title }}</span>
                     <span class="text-black"> is due</span>
-                </h2>
-                <br>
+                </h3>
                 <p class="text fst-italic">
                     <span>{{ assignment.date_closed }}</span>
                     <br>
@@ -60,7 +59,7 @@ Learning Management System - fit@hcmus - 1.1
                 {% if assignment.ForClass == '' %}
                     <button class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
                 {% else %}
-                    <button onclick="location.href='{% url 'courses:view_assignment' slug=assignment.ForClass.slug assignmentname=assignment.id %}';" class="btn" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
+                    <button onclick="location.href='{% url 'courses:view_assignment' slug=assignment.ForClass.slug assignmentname=assignment.id %}';" class="btn rounded-3" style="--bs-btn-bg: #618CEE; color: white; --bs-btn-hover-bg: #5579CB">View more</button>
                 {% endif %}
             </div>
             <div class="col-auto text-center">
@@ -80,10 +79,13 @@ Learning Management System - fit@hcmus - 1.1
                        class="rounded-4 p-4 shadow border link-light link-underline link-underline-opacity-0 d-block h-100
                        {% cycle 'gradient-course1' 'gradient-course2' 'gradient-course3' as gradient_class %}
                        {{ gradient_class }}">
-                        <h4>{{ course.course }}</h4>
+                        <p class= "fw-bold">{{ course.course }}</p>
+                        <p>
                         {% for teacher in course.teacher %}
-                            <p>Teacher: {{ teacher.first_name }} {{ teacher.last_name }}</p>
+                            <span>Teacher: {{ teacher.first_name }} {{ teacher.last_name }}</span>
+                            <br>
                         {% endfor %}
+                        </p>
                     </a>
                 </div>
             {% endif %}
