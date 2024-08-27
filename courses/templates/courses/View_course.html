@@ -11,8 +11,7 @@ Course: {{ course }}
 {% endblock extra_attach %}
 
 {% block content %}
-<br>
-<div class="container">
+<div class="container p-2">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
         <a href="{% url 'courses:class_page' slug=course.slug %}" class="active text-center rounded-3 me-2">Course</a>

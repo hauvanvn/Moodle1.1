@@ -178,7 +178,7 @@
                 --bs-btn-active-bg: rgb(237, 237, 237); --bs-btn-active-color: #AEA7E9;">
                     <i class="fa-solid fa-bell"></i>
                 </button>
-                <ul class="dropdown-menu pt-4" style="max-width: 400px; --bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
+                <ul class="dropdown-menu pt-4" style="max-width: 400px; --bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #AA94CD">
                     <div class="px-4">
                     {% for notify in notifies %}
                         <li>
@@ -203,12 +203,11 @@
                         </li>
                     {% endfor %}
                     </div>
-                    <div style="background-color: #AA94CD;" class="px-4 pb-1">
-                    <li><hr class="dropdown-divider"></li>
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <a href="{% url "users:all_announcements" %}" class="fw-bold link-underline link-underline-opacity-0" style="color: #FFFFFF;">View all notifications</a>
+                    <div style="background-color: #AA94CD;" class="px-4 py-1 rounded-bottom-1">
+                        <div class="d-flex flex-row-reverse align-items-center">
+                            <a href="{% url "users:all_announcements" %}" class="fw-bold link-underline link-underline-opacity-0" style="color: #FFFFFF;">View all notifications</a>
+                        </div>
                     </div>
-                </div>
                 </ul>
                 
             </div>
