@@ -15,14 +15,13 @@ Course: {{ course }}
 <br>
 
 <div class="container">
-    <div class="container-fluid mb-4">
-        <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
-        <div class="box_course">
-            <a href="{% url 'courses:class_page' slug=course.slug %}" class="active text-center rounded-3 me-2">Course</a>
-            <a href="{% url 'courses:participants' slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
-            <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
-        </div>
+    <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
+    <div class="box_course">
+        <a href="{% url 'courses:class_page' slug=course.slug %}" class="active text-center rounded-3 me-2">Course</a>
+        <a href="{% url 'courses:participants' slug=course.slug %}" class="text-center rounded-3 me-2">Participants</a>
+        <a href="{% url 'courses:post_announcement' slug=course.slug %}" class="text-center rounded-3 me-2">Post</a>
     </div>
+    <br>
 
     {% if messages %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -113,7 +112,7 @@ Course: {{ course }}
     {% for file in files %}
         {% if file.group == "GENERAL" %}
             <div class="container-fluid">
-                <div class="card p-4 custom-card">
+                <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                     <div class="row align-items-center">
                         <div class="col-1">
                             <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
@@ -218,7 +217,7 @@ Course: {{ course }}
     {% for file in files %}
         {% if file.group == "LECTURE" %}
             <div class="container-fluid">
-                <div class="card p-4 custom-card">
+                <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                     <div class="row align-items-center">
                         <div class="col-1">
                             <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
@@ -302,7 +301,7 @@ Course: {{ course }}
 
     {% for assignment in assignments %}
         <div class="container-fluid">
-            <div class="card p-4 custom-card">
+            <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                 <div class="row align-items-center">
                     <div class="col-1">
                         <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">

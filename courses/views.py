@@ -42,13 +42,13 @@ def view_class_page(request, slug):
             # Delete material
             file_delete = FileUpload.objects.get(id=request.POST.get('delete_material'))
             file_delete.delete()
-            messages.success(request, "Delete successful!")
+            messages.success(request, "Delete successfully!")
             return redirect('courses:class_page', slug=slug)
         elif 'delete_assignment' in request.POST:
             # Delete assignment
             assignment = Assignment.objects.get(id=request.POST.get('delete_assignment'))
             assignment.delete()
-            messages.success(request, "Delete successful!")
+            messages.success(request, "Delete successfully!")
             return redirect('courses:class_page', slug=slug)
         else:
             # Add material
@@ -86,7 +86,7 @@ def view_class_page(request, slug):
                 
                 if form.is_valid():
                     form.save()
-                    messages.success(request, "Upload " + name + " successful!")
+                    messages.success(request, "Upload " + name + " successfully!")
                     return redirect('courses:class_page', slug=slug)
                 else:
                     messages.warning(request, "Upload " + name + " error due to file size too big!")
@@ -103,7 +103,7 @@ def view_class_page(request, slug):
                 if aform.is_valid():
                     aform.save()
                     Create_Notification_Assignment(aform.instance)
-                    messages.success(request, "Upload " + title + " assignment successful!")
+                    messages.success(request, "Upload assignment " + title + " successfully!")
                     return redirect('courses:class_page', slug=slug)
                 else:
                     messages.warning(request, "Upload " + title + " error due to file size too big!")
@@ -192,7 +192,7 @@ def view_post_announcement(request, slug):
         if form.is_valid:
             notify = form.save()
             sendNotification(notify)
-            messages.success(request, 'Successfully post announcement!')
+            messages.success(request, 'successfullyly post announcement!')
             return redirect('courses:class_page', slug=slug)
         else:
             return render(request, 'courses/Post_annoucement.html', 
@@ -249,7 +249,7 @@ def view_assignment(request, slug, assignmentname):
 
                 if new_submit.file.size <= 25 * 1024 * 1024: #File size
                     new_submit.save()
-                    messages.success(request, "Submit successful!")
+                    messages.success(request, "Submit successfully!")
                 else:
                     messages.warning(request, "Submit error due to file size too big!")
                 
@@ -258,7 +258,7 @@ def view_assignment(request, slug, assignmentname):
                 # Delete submission
                 submit = Submission.objects.get(author=user, ForAssignment=assignment)
                 submit.delete()
-                messages.warning(request, "Delete submission successful!")
+                messages.warning(request, "Delete submission successfully!")
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
 
         if Submission.objects.filter(author=user, ForAssignment=assignment).exists():
