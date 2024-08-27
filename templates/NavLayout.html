@@ -44,7 +44,7 @@
         .calendar .month {
             flex-grow: 1;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #618CEE;
             margin: 0 10px; /* Optional: adds a small margin for spacing */
@@ -56,10 +56,9 @@
         }
 
         .calendar .day {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 700;
             color: #618CEE;
-            width: 14.28%;
             text-align: center;
         }
 
@@ -255,7 +254,7 @@
             </div>
 
             <div class="col col-xxl-3 col-xl-4 col-lg-5 col-md-5 col-sm-6 bg-white">
-                <div class=" mt-5 mb-2">
+                <div class=" mt-5">
                     <a href="{% url 'users:profile' %}" class="d-flex flex-column align-items-center link-dark link-underline link-underline-opacity-0">
                         <img src="{{ user.avatar.url }}" alt="avatar" width="200" height="200" style="border-radius: 50%; object-fit: cover;"> 
                         <p class="mt-3 fs-5 fw-bold" style="color: #618CEE">{{ user.first_name }} {{ user.last_name }}</p>
@@ -282,13 +281,13 @@
                         </button>
                     </div>
                     <div class="calendar days">
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
+                        <div class="day me-2">Mon</div>
+                        <div class="day me-2">Tue</div>
+                        <div class="day me-1">Wed</div>
                         <div class="day">Thu</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                        <div class="day">Sun</div>
+                        <div class="day ms-1">Fri</div>
+                        <div class="day ms-2">Sat</div>
+                        <div class="day ms-2">Sun</div>
                     </div>
                     <div class="calendar dates" id="dates"></div>
                 </div>
