@@ -225,16 +225,17 @@
                     <div class="col-auto">
                         <img src="{% static "img/logOut.png" %}" alt="logOut">
                     </div>
-                    <div class="col d-flex flex-column justify-content-center align-items-center mt-5">
-                        <p class="fs-4 fw-bold" style="color: #111B88;">You are logging out!</p>
-                        <p class="mb-5" style="color: #7E57C2;">Confirm to leave?</p>
+                    <div class="col d-flex flex-column justify-content-center align-items-center my-3">
+                        <br>
+                        <p class="fs-4 fw-bold" style="color: #111B88; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">You are logging out!</p>
+                        <p class="mb-5 fw-bold" style="color: #7E57C2;">Confirm to leave?</p>
                         <div>
-                            <button type="button" class="btn btn-secondary fw-bold shadow-lg me-3" data-bs-dismiss="modal" 
-                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #EDEDED; --bs-btn-border-color: none;">
+                            <button type="button" class="btn fw-bold shadow me-3" data-bs-dismiss="modal" 
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #EDEDED; --bs-btn-border-color: none; --bs-btn-hover-bg: #D2D2D2">
                                 Close
                             </button>
-                            <button type="button" class="btn btn-primary fw-bold shadow-lg" onclick="location.href='{% url 'users:logout' %}';"
-                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #EDEDED; --bs-btn-border-color: none;">
+                            <button type="button" class="btn btn-primary fw-bold shadow" onclick="location.href='{% url 'users:logout' %}';"
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #ACD5FF; --bs-btn-border-color: none;">
                                 Confirm
                             </button>
                         </div>
