@@ -11,8 +11,7 @@ Course: {{ course }}
 {% endblock extra_attach %}
 
 {% block content %}
-<br>
-<div class="container">
+<div class="container p-2">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
         <a href="{% url 'courses:class_page' slug=course.slug %}" class="active text-center rounded-3 me-2">Course</a>
@@ -24,12 +23,12 @@ Course: {{ course }}
     <h4 style="color:#3343A1">General</h4>
         {% for file in files %}
             {% if file.group == "GENERAL" %}
-                <div class="card p-4 custom-card">
+                <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                     <div class="row  align-items-center">
                         <div class="col-1">
                             <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
                         </div>
-                        <div class="col-11">
+                        <div class="col-11" style="color: #3343A1;">
                             {% if file.type == "FILE" %}
                                 <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                             {% else %}
@@ -44,12 +43,12 @@ Course: {{ course }}
     <h4 style="color:#3343A1">Lecture</h4>
         {% for file in files %}
             {% if file.group == "LECTURE" %}
-                <div class="card p-4 custom-card">
+                <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                     <div class="row align-items-center">
                         <div class="col-1">
                             <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
                         </div>
-                        <div class="col-11">
+                        <div class="col-11" style="color: #3343A1;">
                             {% if file.type == "FILE" %}
                                 <a href="{% url 'courses:view_material' slug=course.slug filename=file.id %}" class="nav-link">{{ file.name }}</a>
                             {% else %}
@@ -63,12 +62,12 @@ Course: {{ course }}
         {% endfor %}
     <h4 style="color:#3343A1">Assignment</h4>
         {% for assignment in assignments %}
-                <div class="card p-4 custom-card">
+                <div class="card p-4 custom-card" style="--bs-card-bg: #FFFCF5;">
                     <div class="row align-items-center">
                         <div class="col-1">
                             <img src="{% static 'img/course/File.png' %}" alt="file" class="img-fluid" style="max-width: auto;">
                         </div>
-                        <div class="col-11 d-flex align-items-center">
+                        <div class="col-11 d-flex align-items-center" style="color: #3343A1;">
                                 <a href="{% url 'courses:view_assignment' slug=course.slug assignmentname=assignment.id %}" class="nav-link">{{ assignment.title }}</a>
                         </div>
                     </div>

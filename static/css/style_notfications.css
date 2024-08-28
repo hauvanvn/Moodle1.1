@@ -32,9 +32,3 @@
     display: block;
     object-fit: cover;
 }
-
-.crop-avt {
-    width: 40px;
-    height: 40px;
-    object-position: 50% 50%;
-}

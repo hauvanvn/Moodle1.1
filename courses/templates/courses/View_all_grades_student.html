@@ -11,7 +11,7 @@ Course
 {% endblock extra_attach %}
 
 {% block content %}
-<div class="container">
+<div class="container p-2">
     <h2 style="color:#3343A1"><b>{{ course }}</b></h2>
     <div class="box_course">
         <a href="{% url "courses:class_page" slug=course.slug %}" class="text-center rounded-3 me-2">Course</a>
@@ -23,11 +23,11 @@ Course
     <br>
 
     <table class="table_ass mb-4">
-        <tr align="center" style="color: white; background-color: rgb(163, 179, 254)">
-            <th width="266">Grade item</th>
-            <th width="266">Grade</th>
-            <th width="267">Comment</th>
-            <th width="267">Submission time</th>
+        <tr>
+            <th>Grade item</th>
+            <th>Grade</th>
+            <th>Comment</th>
+            <th>Submission time</th>
         </tr>
         {% for submit in submissions %}
             <tr>
@@ -53,7 +53,7 @@ Course
             <a href="#" style="color: #828282;">< &nbsp Previous</a>
         {% endif %}
         
-        {% if submissions.paginator.page_range != 1 %}
+        {% if submissions.paginator.num_pages > 1 %}
             {% for i in submissions.paginator.page_range %}
                 {% if i == 1 %}
                     {% if submissions.number == i %}

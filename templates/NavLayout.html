@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/Nav.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ef8ac6a7f2.js" crossorigin="anonymous"></script>
     <title>
         {% block title %}
             Moodle 1.1
@@ -43,7 +44,7 @@
         .calendar .month {
             flex-grow: 1;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #618CEE;
             margin: 0 10px; /* Optional: adds a small margin for spacing */
@@ -55,10 +56,9 @@
         }
 
         .calendar .day {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 700;
             color: #618CEE;
-            width: 14.28%;
             text-align: center;
         }
 
@@ -112,6 +112,11 @@
             text-align: left;
         }
 
+        .truncate_style{
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
     </style>
     
     {% block extra_attach %}
@@ -126,16 +131,18 @@
                     <img src="{% static "img/home/logo.png" %}" alt="logo" class="img-fluid" style="max-width: 80%;">
                 </a>
                 <div class="navbar-nav box_nav gap-4">
-                    <a href="{% url 'home' %}" class="nav-link fs-5 rounded-4" style = "{% if request.resolver_match.url_name == 'home' %} 
+                    <a href="{% url 'home' %}" class="nav-link fs-5 text-center rounded-4" style = "{% if request.resolver_match.url_name == 'home' %} 
                                                                             color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                                             {% elif request.resolver_match.url_name == 'profile' %}
                                                                             color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                                            {% else %} color:#FFFFFF {% endif %}">
-                        <i class="bi bi-house-fill"></i>
+                                                                            {% elif request.resolver_match.url_name == 'all_announcements' %}
+                                                                            color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
+                                                                            {% else %} color:#FFFFFF; {% endif %} width: 120px;">
+                        <i class="fa-solid fa-house"></i>
                         Home
                     </a>
 
-                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5  rounded-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
+                    <a href="{% url 'courses:class_list' %}" class="nav-link fs-5 text-center rounded-4" style = " {% if request.resolver_match.url_name == 'class_list' %} 
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% elif request.resolver_match.url_name == 'class_page' %}
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
@@ -155,8 +162,8 @@
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
                                                             {% elif request.resolver_match.url_name == 'view_comment' %}
                                                                 color:#AEA7E9; font-weight: 700 !important; background-color: rgb(237, 237, 237);
-                                                            {% else %} color:#FFFFFF {% endif %}">
-                        <i class="bi bi-book-fill"></i>
+                                                            {% else %} color:#FFFFFF; {% endif %} width: 120px;">
+                        <i class="fa-solid fa-book-open"></i>
                         Courses
                     </a>
                 </div>
@@ -168,22 +175,25 @@
                 <button class="btn btn-outline-secondary fs-5 dropdown-toggle" type="button" data-bs-toggle="dropdown" 
                 style="--bs-btn-border-color: none; --bs-btn-color: #fff; --bs-btn-hover-bg: #ddd;
                 --bs-btn-active-bg: rgb(237, 237, 237); --bs-btn-active-color: #AEA7E9;">
-                    <i class="bi bi-bell"></i>
+                    <i class="fa-solid fa-bell"></i>
                 </button>
-                <ul class="dropdown-menu pt-4 px-4" style="--bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #B5A2D3">
+                <ul class="dropdown-menu pt-4" style="max-width: 400px; --bs-dropdown-min-width: 400px; padding: 0; --bs-dropdown-border-color: #AA94CD">
+                    <div class="px-4">
                     {% for notify in notifies %}
                         <li>
-                            <div class="dropdown-item card mb-3" style="background: rgba(229, 209, 252, 0.53)">
+                            <div class="dropdown-item card custom-card rounded-2 mb-3 border-0" style="background: rgba(229, 209, 252, 0.53)">
                                 <div class="card-body" style="--bs-card-spacer-y: 0">
                                     <a href="{% url 'courses:view_announcement' slug=notify.ForClass.slug id=notify.id %}" class="link-dark link-underline link-underline-opacity-0"> 
                                         <div class="row d-flex align-items-center">
-                                            <div class="col-auto fs-5" style="color: #717171;">
-                                                <i class="bi bi-bell"></i>
+                                            <div class="col-auto fs-5" style="color: #56407B;">
+                                                <i class="fa-regular fa-envelope"></i>
                                             </div>
         
-                                            <div class="col">
+                                            <div class="col d-inline-block text-truncate">
                                                 <p></p>
-                                                <p class="fw-light" style="color: #56407B; --bs-dropdown-link-active-bg: none; white-space: pre-wrap">{{ notify.title }}</p>
+                                                <p class="fw-light truncate_style" style="color: #56407B; --bs-dropdown-link-active-bg: none;">
+                                                    {{ notify.title }}
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
@@ -191,32 +201,64 @@
                             </div>
                         </li>
                     {% endfor %}
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <a href="{% url "users:all_announcements" %}" class="fw-bold link-underline link-underline-opacity-0" style="color: #56407B;">View all notifications</a>
                     </div>
-                    <li><hr class="dropdown-divider"></li>
+                    <div style="background-color: #AA94CD;" class="px-4 py-1 rounded-bottom-1">
+                        <div class="d-flex flex-row-reverse align-items-center">
+                            <a href="{% url "users:all_announcements" %}" class="fw-bold link-underline link-underline-opacity-0" style="color: #FFFFFF;">View all notifications</a>
+                        </div>
+                    </div>
                 </ul>
                 
             </div>
-            <button type="button" class="btn btn-outline-secondary fs-5" onclick="location.href='{% url 'users:logout' %}';" style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
-                <i class="bi bi-box-arrow-right"></i>
+            <button type="button" class="btn btn-outline-secondary fs-5" data-bs-toggle="modal" data-bs-target="#LogoutModal" 
+            style="--bs-btn-border-color: none; --bs-btn-hover-bg: #ddd; --bs-btn-active-bg: #ddd; --bs-btn-color: #fff">
+                <i class="fa-solid fa-right-from-bracket"></i>
             </button>
         </div>
     </div>
 
+    <div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content rounded-4" style="background-color: #FFF8E4;">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <img src="{% static "img/logOut.png" %}" alt="logOut">
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center align-items-center my-3">
+                        <br>
+                        <p class="fs-4 fw-bold" style="color: #111B88; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">You are logging out!</p>
+                        <p class="mb-5 fw-bold" style="color: #7E57C2;">Confirm to leave?</p>
+                        <div>
+                            <button type="button" class="btn fw-bold shadow me-3" data-bs-dismiss="modal" 
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #EDEDED; --bs-btn-border-color: none; --bs-btn-hover-bg: #D2D2D2">
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary fw-bold shadow" onclick="location.href='{% url 'users:logout' %}';"
+                            style="width: 85px; --bs-btn-color: #111B88; --bs-btn-bg: #ACD5FF; --bs-btn-border-color: none;">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="container-fluid" style="min-height: 90vh">
         <div class="row">
-            <div class="col-9 border-1 rounded-5 p-4">
+            <div class="col col-xxl-9 col-xl-8 col-lg-7 col-md-7 col-sm-6 border-1 rounded-5 p-4">
                 {% block content %}
                 {% endblock content %}
             </div>
 
-            <div class="col bg-white">
-                <div class=" mt-5 mb-2">
+            <div class="col col-xxl-3 col-xl-4 col-lg-5 col-md-5 col-sm-6 bg-white">
+                <div class=" mt-5">
                     <a href="{% url 'users:profile' %}" class="d-flex flex-column align-items-center link-dark link-underline link-underline-opacity-0">
-                        <img src="{{ user.avatar.url }}" alt="avatar" width="150" height="150" class="img-fluid" style="border-radius: 50%;"> 
-                        <p class="mt-3 fs-5 fw-bold" style="color: #618CEE">{{ user.first_name }} {{ user.last_name }}</p>
-                        <p class="fs-6">{% if user.is_superuser %}
+                        <img src="{{ user.avatar.url }}" alt="avatar" width="200" height="200" style="border-radius: 50%; object-fit: cover;"> 
+                        <p class="mt-3 fs-4 fw-bold" style="color: #111B88">{{ user.first_name }} {{ user.last_name }}</p>
+                        <p class="fs-6" style="color: #828282">{% if user.is_superuser %}
                                 Admin
                             {% elif user.is_staff %}
                                 Teacher
@@ -230,22 +272,22 @@
 
                 <div class="d-flex calendar">
                     <div class="calendar header d-flex flex-row">
-                        <button id="prev">
-                            <i class="bi bi-chevron-left"></i>
+                        <button id="prev" type="button" class="btn btn-outline-light" style="background-color: #ECEEFF; color: #618CEE;">
+                            <i class="fa-solid fa-chevron-left"></i>
                         </button>
                         <div class="calendar month" id="monthYear"></div>
-                        <button id="next">
-                            <i class="bi bi-chevron-right"></i>
+                        <button id="next" type="button" class="btn btn-outline-light" style="background-color: #ECEEFF; color: #618CEE;">
+                            <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </div>
                     <div class="calendar days">
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
+                        <div class="day me-2">Mon</div>
+                        <div class="day me-2">Tue</div>
+                        <div class="day me-1">Wed</div>
                         <div class="day">Thu</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                        <div class="day">Sun</div>
+                        <div class="day ms-1">Fri</div>
+                        <div class="day ms-2">Sat</div>
+                        <div class="day ms-2">Sun</div>
                     </div>
                     <div class="calendar dates" id="dates"></div>
                 </div>

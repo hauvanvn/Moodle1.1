@@ -1,6 +1,0 @@
-.text-ellipsis {
-        width: 200px; /* Đặt chiều rộng cố định */
-        white-space: nowrap; /* Không xuống dòng */
-        overflow: hidden; /* Ẩn phần bị tràn */
-        text-overflow: ellipsis; /* Thêm dấu ba chấm */
-}

@@ -71,7 +71,6 @@ class Notification(models.Model):
     ForClass = models.ForeignKey(CourseClass, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     text = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
-    # text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -95,6 +94,9 @@ class Assignment(models.Model):
 
     def __str__(self):
         return self.author.first_name + " " + self.author.last_name + ": " + self.title
+    
+    def is_closed(self):
+        return self.date_closed < datetime.datetime.now(datetime.timezone.utc)
 
 def upload_submission_file_path_handle(instance, filename):
     return 'courses/{c_id}/assignments/{id}/{user}/{file}'.format(c_id=instance.ForAssignment.ForClass.id, id=instance.ForAssignment.id, user=instance.author.username, file=filename)

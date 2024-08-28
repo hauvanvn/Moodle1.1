@@ -13,7 +13,7 @@
 }
 
 .pagination a.active {
-    background-color: rgb(163, 179, 254);
+    background-color: #B0A8EA;
     font-weight: bold;
     border-radius: 5px;
     color: white;
@@ -28,7 +28,7 @@
     width: calc((100% - 250px)/3);
 }
 
-table {
+/* table {
     width: 100%;
     border-collapse: collapse;
-}
+} */

@@ -39,7 +39,7 @@ body{
     padding: 15px 30px;
     text-decoration: none;
     width: 150px;
-    color: rgb(163, 179, 254);
+    color: #B0A8EA;
     background-color: rgb(237, 237, 237);
 }
 
@@ -83,24 +83,26 @@ body{
 
 .table_ass {
     text-align: center;
+    width: 100%; 
+    table-layout: fixed;
 }
 
 .table_ass th {
-    background-color: rgb(163, 179, 254);
+    background-color: #B0A8EA;
     color: white;
     text-decoration: solid;
     height: 40px;
 }
 
-.table_ass tr {
-    height: 30px;
-}
-
-.table_ass tr:nth-child(even) {
-    background-color: rgb(224, 224, 224);
+.table_ass td {
+    height: 35px;
 }
 
 .table_ass tr:nth-child(odd) {
+    background-color: rgb(224, 224, 224);
+}
+
+.table_ass tr:nth-child(even) {
     background-color: white;
 }
 

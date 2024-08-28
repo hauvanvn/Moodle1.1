@@ -109,16 +109,22 @@ def View_Profile(request):
                 messages.warning(request, "Your old password is not correct!")
                 return redirect('users:profile')
         else:
-            user.avatar = request.FILES['img']
-            user.save()
-            messages.success(request, "Change avatar successful!")
+            print("here")
+            avatar = request.FILES['img']
+            if avatar.size <= 25 * 1024 * 1024: #File size
+                user.avatar = avatar
+                user.save()
+                messages.success(request, "Change avatar successful!")
+            else:
+                messages.warning(request, "Avatar change error due to file size too big!")
+            
             return redirect('users:profile')
 
     return render(request, 'users/View_profile.html', {'user': user, 'notifies': notifications, 'events': events})
 
 @login_required(login_url='users:login')
 def view_all_announcements(request):
-    user, notifications, events = getIn4(request)
+    user, notifications_nav, events = getIn4(request)
 
     notifications = Notification.objects.filter(ForClass__participants__exact=user.id).order_by('-date_created')
     proccessed_notifications = []
@@ -132,8 +138,8 @@ def view_all_announcements(request):
         proccessed_notifications.append(time_diff + ' ago')
         proccessed_notifications.append(notify.author.avatar.url)
         proccessed_notifications.append(notify.title)
-        proccessed_notifications.append('By ' + notify.author.first_name + notify.author.last_name + ' - ' + created_date)
+        proccessed_notifications.append('By ' + notify.author.first_name + ' ' + notify.author.last_name + ' - ' + created_date)
         proccessed_notifications.append(notify.text)
 
     return render(request, 'users/View_all_anouncements.html', 
-                  {'user': user, 'notifies': notifications, 'events': events, 'proccessed_notifications' : proccessed_notifications})
+                  {'user': user, 'notifies': notifications_nav, 'notifications' : notifications, 'events': events, 'proccessed_notifications' : proccessed_notifications})

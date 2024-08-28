@@ -7,74 +7,81 @@ My courses
 {% endblock title %}
 
 {% block content %}
-<br>
-<div class="container-fluid">
-    <p class="fs-3 fw-bold" style="color: #3343A1;">My Courses</p>
-</div>
+<div class="container p-2">
+    <div class="container-fluid">
+        <p class="fs-3 fw-bold" style="color: #3343A1;">My Courses</p>
+    </div>
 
-<div class="container-fluid">
-    <input type="radio" class="btn-check" name="options" id="option1" checked>
-    <label class="btn" for="option1" style="--bs-btn-active-color: blue; border-color: transparent">
-        All
-    </label>
+    <div class="container-fluid">
+        <input type="radio" class="btn-check" name="options" id="option1" checked>
+        <label class="btn" for="option1" id="sort1" style="--bs-btn-active-color: #3343A1; border-color: transparent; font-weight: 700;">
+            All
+        </label>
 
-    <input type="radio" class="btn-check" name="options" id="option2">
-    <label class="btn" for="option2" style="--bs-btn-active-color: blue; border-color: transparent">
-        Completed
-    </label>
+        <input type="radio" class="btn-check" name="options" id="option2">
+        <label class="btn" for="option2" id="sort2" style="--bs-btn-active-color: #3343A1; border-color: transparent">
+            Completed
+        </label>
 
-    <input type="radio" class="btn-check" name="options" id="option3">
-    <label class="btn" for="option3" style="--bs-btn-active-color: blue; border-color: transparent">
-        Active
-    </label>
-</div>
+        <input type="radio" class="btn-check" name="options" id="option3">
+        <label class="btn" for="option3" id="sort3" style="--bs-btn-active-color: #3343A1; border-color: transparent">
+            Active
+        </label>
+    </div>
 
-<div id="activeDiv">
-    {% for course in courses %}
-        {% if not course.is_course_end %}
-            <div class="container-fluid border rounded-5 p-3 mt-3 bg-white">
-                <div class="row">
-                    <div class="col-auto">
-                        <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
-                    </div>
+    <div id="activeDiv">
+        {% for course in courses %}
+            {% if not course.is_course_end %}
+                <div class="container-fluid rounded-4 p-3 mt-3 shadow" style="background-color: #FFFCF5;">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
+                        </div>
 
-                    <div class="col d-flex align-items-start flex-column">
-                        <p class="fs-4" style="color: #3343A1">{{ course }}</p>
-                    </div>
+                        <div class="col d-flex align-items-start flex-column">
+                            <p class="fs-4" style="color: #3343A1">{{ course }}</p>
+                        </div>
 
-                    <div class="col-3 d-flex align-items-end flex-column">
-                        <p>Start: {{ course.date_created }} </p>
-                        <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-</div>
-
-<div id="completedDiv">
-    {% for course in courses %}
-        {% if course.is_course_end %}
-            <div class="container-fluid border rounded-5 p-3 mt-3 bg-white">
-                <div class="row">
-                    <div class="col-auto">
-                        <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
-                    </div>
-
-                    <div class="col d-flex align-items-start flex-column">
-                        <p class="fs-4" style="color: #3343A1">{{ course }}</p>
-                    </div>
-
-                    <div class="col-3 d-flex align-items-end flex-column">
-                        <p>Start: {{ course.date_created }} </p>
-                        <a class="btn btn-secondary mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button">View more</a>
+                        <div class="col-3 d-flex align-items-end flex-column">
+                            <p>Start: {{ course.date_created }} </p>
+                            <a class="btn mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
+                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-hover-bg: #DACCA6">
+                                View more
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-</div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
+    <div id="completedDiv">
+        {% for course in courses %}
+            {% if course.is_course_end %}
+                <div class="container-fluid rounded-4 p-3 mt-3 shadow" style="background-color: #FFFCF5;">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="{% static 'img/course/Rectangle.png' %}" alt="rectangle" style="max-width: 80%; max-height: auto;">
+                        </div>
+
+                        <div class="col d-flex align-items-start flex-column">
+                            <p class="fs-4" style="color: #3343A1">{{ course }}</p>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-end flex-column">
+                            <p>Start: {{ course.date_created }} </p>
+                            <a class="btn mt-auto" href="{% url 'courses:class_page' slug=course.slug %}" role="button"
+                            style="--bs-btn-color: #111B88; --bs-btn-bg: #FAEBC0; --bs-btn-hover-bg: #DACCA6">
+                                View more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
 <script>
     const activeCourseDiv = document.getElementById('activeDiv');
     const completedCourseDiv = document.getElementById('completedDiv');
@@ -83,20 +90,35 @@ My courses
     const completedRadio = document.getElementById('option2');
     const activeRadio = document.getElementById('option3');
 
+    const sort1 = document.getElementById('sort1');
+    const sort2 = document.getElementById('sort2');
+    const sort3 = document.getElementById('sort3');
+
     allRadio.addEventListener('change', () => {
         activeCourseDiv.style.display = 'block';
         completedCourseDiv.style.display = 'block';
+
+        sort1.style.fontWeight = "700";
+        sort2.style.fontWeight = "400";
+        sort3.style.fontWeight = "400";
     });
 
     activeRadio.addEventListener('change', () => {
         activeCourseDiv.style.display = 'block';
         completedCourseDiv.style.display = 'none';
+
+        sort1.style.fontWeight = "400";
+        sort2.style.fontWeight = "400";
+        sort3.style.fontWeight = "700";
     });
 
     completedRadio.addEventListener('change', () => {
         activeCourseDiv.style.display = 'none';
         completedCourseDiv.style.display = 'block';
+
+        sort1.style.fontWeight = "400";
+        sort2.style.fontWeight = "700";
+        sort3.style.fontWeight = "400";
     });
 </script>
-
 {% endblock content %}

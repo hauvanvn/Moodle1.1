@@ -8,7 +8,6 @@ from users.models import User
 
 from moodle.nav_infomation import getIn4
 from moodle.views import Http404NotFound
-from django.http import HttpResponse
 
 from .sendMail import sendNotification, Create_Notification_Assignment
 import datetime
@@ -43,13 +42,13 @@ def view_class_page(request, slug):
             # Delete material
             file_delete = FileUpload.objects.get(id=request.POST.get('delete_material'))
             file_delete.delete()
-            messages.success(request, "Delete successful!")
+            messages.success(request, "Delete successfully!")
             return redirect('courses:class_page', slug=slug)
         elif 'delete_assignment' in request.POST:
             # Delete assignment
             assignment = Assignment.objects.get(id=request.POST.get('delete_assignment'))
             assignment.delete()
-            messages.success(request, "Delete successful!")
+            messages.success(request, "Delete successfully!")
             return redirect('courses:class_page', slug=slug)
         else:
             # Add material
@@ -87,9 +86,10 @@ def view_class_page(request, slug):
                 
                 if form.is_valid():
                     form.save()
-                    messages.success(request, "Upload " + name + " successful!")
+                    messages.success(request, "Upload " + name + " successfully!")
                     return redirect('courses:class_page', slug=slug)
                 else:
+                    messages.warning(request, "Upload " + name + " error due to file size too big!")
                     return render(request, 'courses/View_course_teacher.html', 
                             {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments, 
@@ -103,9 +103,10 @@ def view_class_page(request, slug):
                 if aform.is_valid():
                     aform.save()
                     Create_Notification_Assignment(aform.instance)
-                    messages.success(request, "Upload " + title + " assignment successful!")
+                    messages.success(request, "Upload assignment " + title + " successfully!")
                     return redirect('courses:class_page', slug=slug)
                 else:
+                    messages.warning(request, "Upload " + title + " error due to file size too big!")
                     return render(request, 'courses/View_course_teacher.html', 
                             {'user': user, 'notifies': notifications, 'events': events,
                              'course' : course, 'files': files, 'assignments': assignments,
@@ -148,6 +149,7 @@ def view_participants(request, slug):
 
 @login_required(login_url='users:login')
 def view_material(request, slug, filename):
+    course = Class.objects.get(slug=slug)
     user, notifications, events = getIn4(request)
     if user not in Class.objects.get(slug=slug).participants.all():
         return Http404NotFound(request)
@@ -163,7 +165,7 @@ def view_material(request, slug, filename):
 
     return render(request, 'courses/View_material.html', 
                   {'user': user, 'notifies': notifications, 'events': events,
-                   'file': file, 'comments': comments})
+                   'file': file, 'comments': comments, 'course': course})
 
 @login_required(login_url='users:login')
 def view_announcement(request, slug, id):
@@ -190,14 +192,14 @@ def view_post_announcement(request, slug):
         if form.is_valid:
             notify = form.save()
             sendNotification(notify)
-            messages.success(request, 'Successfully post announcement!')
+            messages.success(request, 'successfullyly post announcement!')
             return redirect('courses:class_page', slug=slug)
         else:
             return render(request, 'courses/Post_annoucement.html', 
                           {'user': user, 'notifies': notifications, 'events': events, 'form': form})
 
     return render(request, 'courses/Post_annoucement.html', 
-                  {'user': user, 'notifies': notifications, 'events': events, 'form': AnnouncementForm()})
+                  {'user': user, 'course': course, 'notifies': notifications, 'events': events, 'form': AnnouncementForm()})
 
 @login_required(login_url='users:login')
 def view_assignment(request, slug, assignmentname):
@@ -244,14 +246,19 @@ def view_assignment(request, slug, assignmentname):
                 new_submit.author = user
                 new_submit.ForAssignment = assignment
                 new_submit.file = request.FILES['submit_file']
-                new_submit.save()
-                messages.success(request, "Submit successful!")
+
+                if new_submit.file.size <= 25 * 1024 * 1024: #File size
+                    new_submit.save()
+                    messages.success(request, "Submit successfully!")
+                else:
+                    messages.warning(request, "Submit error due to file size too big!")
+                
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
             else:
                 # Delete submission
-                submit = Submission.objects.get(auhor=user)
+                submit = Submission.objects.get(author=user, ForAssignment=assignment)
                 submit.delete()
-                messages.warning(request, "Delete submission successful!")
+                messages.warning(request, "Delete submission successfully!")
                 return redirect('courses:view_assignment', slug=slug, assignmentname=assignmentname)
 
         if Submission.objects.filter(author=user, ForAssignment=assignment).exists():
