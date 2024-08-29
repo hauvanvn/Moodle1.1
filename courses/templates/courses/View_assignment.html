@@ -22,6 +22,15 @@ Course
     <br>
     <h4 class="fw-semibold" style="color:#3343A1">{{ assignment.title }} </h4>
 
+    {% if messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <table class="table_ass">
         <tr>
             <th class = "col-w">Release</th>
@@ -83,6 +92,10 @@ Course
 
         if (hasSubmission == "--") {
             removeButton.setAttribute('disabled', true);
+        }
+        else {
+            submitButton.setAttribute('disabled', true);
+            fileInput.setAttribute('disabled', true);
         }
 
         if (assignmentClosed) {
