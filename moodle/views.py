@@ -16,7 +16,10 @@ def home(request):
 
         if Assignment.objects.filter(ForClass__in=courses_temp).exists():
             ev = [x for x in Assignment.objects.filter(ForClass__in=courses_temp).order_by('date_opened', 'date_opened') if not x.is_closed()]
-            assignment = min(ev, key=lambda date: abs(date.date_closed - datetime.datetime.now(datetime.timezone.utc)))
+            if len(ev) == 0:
+                assignment = {'title': 'No assignment', 'date_closed': '', 'ForClass': ''}
+            else:
+                assignment = min(ev, key=lambda date: abs(date.date_closed - datetime.datetime.now(datetime.timezone.utc)))
 
         for course in courses_temp:
             teacher = course.participants.filter(is_staff=1)
